@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16F67CF91C9FA2C7245DF4DF /* Pods_Squat_Counter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 221E69456523D623C561BE3B /* Pods_Squat_Counter.framework */; };
+		48BC129B0C2498ECD6175944 /* Pods_Squat_CounterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11FEE14567DF7843ADD8707E /* Pods_Squat_CounterTests.framework */; };
+		737747983061FBDA2E6C73DC /* Pods_Squat_Counter_Squat_CounterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54248474EB946082289488B7 /* Pods_Squat_Counter_Squat_CounterUITests.framework */; };
 		849C2C812A59C85A00FD039B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2C802A59C85A00FD039B /* AppDelegate.swift */; };
 		849C2C832A59C85A00FD039B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2C822A59C85A00FD039B /* SceneDelegate.swift */; };
 		849C2C852A59C85A00FD039B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2C842A59C85A00FD039B /* ViewController.swift */; };
@@ -16,6 +19,8 @@
 		849C2C982A59C85B00FD039B /* Squat_CounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2C972A59C85B00FD039B /* Squat_CounterTests.swift */; };
 		849C2CA22A59C85B00FD039B /* Squat_CounterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2CA12A59C85B00FD039B /* Squat_CounterUITests.swift */; };
 		849C2CA42A59C85B00FD039B /* Squat_CounterUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2CA32A59C85B00FD039B /* Squat_CounterUITestsLaunchTests.swift */; };
+		84C405BA2A5B300D0054FFF0 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C405B92A5B300D0054FFF0 /* UIUtilities.swift */; };
+		84C405BC2A5B32D30054FFF0 /* MLKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C405BB2A5B32D30054FFF0 /* MLKitExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +41,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		11FEE14567DF7843ADD8707E /* Pods_Squat_CounterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Squat_CounterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		221E69456523D623C561BE3B /* Pods_Squat_Counter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Squat_Counter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2818F1E23ABEB9F06EBC88F9 /* Pods-Squat CounterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Squat CounterTests.release.xcconfig"; path = "Target Support Files/Pods-Squat CounterTests/Pods-Squat CounterTests.release.xcconfig"; sourceTree = "<group>"; };
+		441FAE469B5C3BE722297DB7 /* Pods-Squat CounterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Squat CounterTests.debug.xcconfig"; path = "Target Support Files/Pods-Squat CounterTests/Pods-Squat CounterTests.debug.xcconfig"; sourceTree = "<group>"; };
+		54248474EB946082289488B7 /* Pods_Squat_Counter_Squat_CounterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Squat_Counter_Squat_CounterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CCEF2E6DCBF1F2490D1F4FA /* Pods-Squat Counter-Squat CounterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Squat Counter-Squat CounterUITests.release.xcconfig"; path = "Target Support Files/Pods-Squat Counter-Squat CounterUITests/Pods-Squat Counter-Squat CounterUITests.release.xcconfig"; sourceTree = "<group>"; };
 		849C2C7D2A59C85A00FD039B /* Squat Counter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Squat Counter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		849C2C802A59C85A00FD039B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		849C2C822A59C85A00FD039B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +60,11 @@
 		849C2C9D2A59C85B00FD039B /* Squat CounterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Squat CounterUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		849C2CA12A59C85B00FD039B /* Squat_CounterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squat_CounterUITests.swift; sourceTree = "<group>"; };
 		849C2CA32A59C85B00FD039B /* Squat_CounterUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squat_CounterUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		84C405B92A5B300D0054FFF0 /* UIUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
+		84C405BB2A5B32D30054FFF0 /* MLKitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLKitExtensions.swift; sourceTree = "<group>"; };
+		B50B3A79C320DEE6F253645D /* Pods-Squat Counter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Squat Counter.debug.xcconfig"; path = "Target Support Files/Pods-Squat Counter/Pods-Squat Counter.debug.xcconfig"; sourceTree = "<group>"; };
+		B5F73FB7F2449A9F92F985EB /* Pods-Squat Counter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Squat Counter.release.xcconfig"; path = "Target Support Files/Pods-Squat Counter/Pods-Squat Counter.release.xcconfig"; sourceTree = "<group>"; };
+		DA79B76FB48C026C05005549 /* Pods-Squat Counter-Squat CounterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Squat Counter-Squat CounterUITests.debug.xcconfig"; path = "Target Support Files/Pods-Squat Counter-Squat CounterUITests/Pods-Squat Counter-Squat CounterUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16F67CF91C9FA2C7245DF4DF /* Pods_Squat_Counter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48BC129B0C2498ECD6175944 /* Pods_Squat_CounterTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,12 +88,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				737747983061FBDA2E6C73DC /* Pods_Squat_Counter_Squat_CounterUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		22B3FA624396CD4BD068721D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				221E69456523D623C561BE3B /* Pods_Squat_Counter.framework */,
+				54248474EB946082289488B7 /* Pods_Squat_Counter_Squat_CounterUITests.framework */,
+				11FEE14567DF7843ADD8707E /* Pods_Squat_CounterTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		849C2C742A59C85A00FD039B = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +112,8 @@
 				849C2C962A59C85B00FD039B /* Squat CounterTests */,
 				849C2CA02A59C85B00FD039B /* Squat CounterUITests */,
 				849C2C7E2A59C85A00FD039B /* Products */,
+				8800FF29E90DC5F15F324592 /* Pods */,
+				22B3FA624396CD4BD068721D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,6 +133,8 @@
 				849C2C802A59C85A00FD039B /* AppDelegate.swift */,
 				849C2C822A59C85A00FD039B /* SceneDelegate.swift */,
 				849C2C842A59C85A00FD039B /* ViewController.swift */,
+				84C405B92A5B300D0054FFF0 /* UIUtilities.swift */,
+				84C405BB2A5B32D30054FFF0 /* MLKitExtensions.swift */,
 				849C2C862A59C85A00FD039B /* Main.storyboard */,
 				849C2C892A59C85B00FD039B /* Assets.xcassets */,
 				849C2C8B2A59C85B00FD039B /* LaunchScreen.storyboard */,
@@ -127,6 +160,19 @@
 			path = "Squat CounterUITests";
 			sourceTree = "<group>";
 		};
+		8800FF29E90DC5F15F324592 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B50B3A79C320DEE6F253645D /* Pods-Squat Counter.debug.xcconfig */,
+				B5F73FB7F2449A9F92F985EB /* Pods-Squat Counter.release.xcconfig */,
+				DA79B76FB48C026C05005549 /* Pods-Squat Counter-Squat CounterUITests.debug.xcconfig */,
+				5CCEF2E6DCBF1F2490D1F4FA /* Pods-Squat Counter-Squat CounterUITests.release.xcconfig */,
+				441FAE469B5C3BE722297DB7 /* Pods-Squat CounterTests.debug.xcconfig */,
+				2818F1E23ABEB9F06EBC88F9 /* Pods-Squat CounterTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -134,9 +180,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 849C2CA72A59C85B00FD039B /* Build configuration list for PBXNativeTarget "Squat Counter" */;
 			buildPhases = (
+				162DA5C339E88D4BDFD2EE7F /* [CP] Check Pods Manifest.lock */,
 				849C2C792A59C85A00FD039B /* Sources */,
 				849C2C7A2A59C85A00FD039B /* Frameworks */,
 				849C2C7B2A59C85A00FD039B /* Resources */,
+				3417D49349ADBA71D268A768 /* [CP] Embed Pods Frameworks */,
+				5446B078CC7F2E56B3161437 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -151,6 +200,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 849C2CAA2A59C85B00FD039B /* Build configuration list for PBXNativeTarget "Squat CounterTests" */;
 			buildPhases = (
+				79A81EF46B9B21B83D0DEAA5 /* [CP] Check Pods Manifest.lock */,
 				849C2C8F2A59C85B00FD039B /* Sources */,
 				849C2C902A59C85B00FD039B /* Frameworks */,
 				849C2C912A59C85B00FD039B /* Resources */,
@@ -169,9 +219,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 849C2CAD2A59C85B00FD039B /* Build configuration list for PBXNativeTarget "Squat CounterUITests" */;
 			buildPhases = (
+				71C76964396815DC0C1B9CD5 /* [CP] Check Pods Manifest.lock */,
 				849C2C992A59C85B00FD039B /* Sources */,
 				849C2C9A2A59C85B00FD039B /* Frameworks */,
 				849C2C9B2A59C85B00FD039B /* Resources */,
+				5E7892B3914A7FC984B8143C /* [CP] Embed Pods Frameworks */,
+				4511091594DC7F8CD0F8EA54 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -253,6 +306,143 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		162DA5C339E88D4BDFD2EE7F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Squat Counter-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3417D49349ADBA71D268A768 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Squat Counter/Pods-Squat Counter-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Squat Counter/Pods-Squat Counter-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Squat Counter/Pods-Squat Counter-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4511091594DC7F8CD0F8EA54 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Squat Counter-Squat CounterUITests/Pods-Squat Counter-Squat CounterUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Squat Counter-Squat CounterUITests/Pods-Squat Counter-Squat CounterUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Squat Counter-Squat CounterUITests/Pods-Squat Counter-Squat CounterUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5446B078CC7F2E56B3161437 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Squat Counter/Pods-Squat Counter-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Squat Counter/Pods-Squat Counter-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Squat Counter/Pods-Squat Counter-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E7892B3914A7FC984B8143C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Squat Counter-Squat CounterUITests/Pods-Squat Counter-Squat CounterUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Squat Counter-Squat CounterUITests/Pods-Squat Counter-Squat CounterUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Squat Counter-Squat CounterUITests/Pods-Squat Counter-Squat CounterUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		71C76964396815DC0C1B9CD5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Squat Counter-Squat CounterUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		79A81EF46B9B21B83D0DEAA5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Squat CounterTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		849C2C792A59C85A00FD039B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -260,6 +450,8 @@
 			files = (
 				849C2C852A59C85A00FD039B /* ViewController.swift in Sources */,
 				849C2C812A59C85A00FD039B /* AppDelegate.swift in Sources */,
+				84C405BA2A5B300D0054FFF0 /* UIUtilities.swift in Sources */,
+				84C405BC2A5B32D30054FFF0 /* MLKitExtensions.swift in Sources */,
 				849C2C832A59C85A00FD039B /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -432,7 +624,9 @@
 		};
 		849C2CA82A59C85B00FD039B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B50B3A79C320DEE6F253645D /* Pods-Squat Counter.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -443,8 +637,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -452,6 +647,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.evrisevr.Squat-Counter";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -460,7 +658,9 @@
 		};
 		849C2CA92A59C85B00FD039B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B5F73FB7F2449A9F92F985EB /* Pods-Squat Counter.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -471,8 +671,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -480,6 +681,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.evrisevr.Squat-Counter";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -488,6 +692,7 @@
 		};
 		849C2CAB2A59C85B00FD039B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 441FAE469B5C3BE722297DB7 /* Pods-Squat CounterTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -508,6 +713,7 @@
 		};
 		849C2CAC2A59C85B00FD039B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2818F1E23ABEB9F06EBC88F9 /* Pods-Squat CounterTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -528,8 +734,9 @@
 		};
 		849C2CAE2A59C85B00FD039B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA79B76FB48C026C05005549 /* Pods-Squat Counter-Squat CounterUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B8JM9B93DS;
@@ -546,8 +753,9 @@
 		};
 		849C2CAF2A59C85B00FD039B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5CCEF2E6DCBF1F2490D1F4FA /* Pods-Squat Counter-Squat CounterUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B8JM9B93DS;

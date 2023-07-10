@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "javier-santos-guzman-9MR78HGoflw-unsplash (1).jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "javier-santos-guzman-9MR78HGoflw-unsplash (1)@2x.jpg",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "javier-santos-guzman-9MR78HGoflw-unsplash (1)@3x.jpg",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
