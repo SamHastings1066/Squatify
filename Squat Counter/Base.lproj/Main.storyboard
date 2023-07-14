@@ -17,17 +17,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lNg-wJ-Jb4" userLabel="Camera View">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="r9i-HH-Fag">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prR-Pw-Ylx">
+                                <rect key="frame" x="51" y="703" width="95" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5qB-o2-6yT">
+                                <rect key="frame" x="239" y="703" width="95" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gtb-43-1Yv">
+                                <rect key="frame" x="51" y="760" width="95" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g8D-P6-fQg">
+                                <rect key="frame" x="239" y="760" width="95" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <viewLayoutGuide key="safeArea" id="c19-ku-cPy"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="r9i-HH-Fag" firstAttribute="leading" secondItem="c19-ku-cPy" secondAttribute="leading" id="DeX-Sr-q5S"/>
+                            <constraint firstItem="r9i-HH-Fag" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="JVE-s3-xbe"/>
+                            <constraint firstItem="c19-ku-cPy" firstAttribute="trailing" secondItem="r9i-HH-Fag" secondAttribute="trailing" id="esy-a5-zae"/>
+                            <constraint firstItem="r9i-HH-Fag" firstAttribute="centerX" secondItem="c19-ku-cPy" secondAttribute="centerX" id="fHf-Y1-YKl"/>
+                            <constraint firstItem="r9i-HH-Fag" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="iPn-So-CW3"/>
+                        </constraints>
                     </view>
                     <connections>
-                        <outlet property="cameraView" destination="lNg-wJ-Jb4" id="2ck-X0-TwG"/>
+                        <outlet property="cameraView" destination="r9i-HH-Fag" id="3Fs-rp-9Eq"/>
+                        <outlet property="wristALabel" destination="prR-Pw-Ylx" id="p69-pr-0Jw"/>
+                        <outlet property="wristXLabel" destination="5qB-o2-6yT" id="N9a-Ic-ZqK"/>
+                        <outlet property="wristYLabel" destination="Gtb-43-1Yv" id="Nm5-1h-3ec"/>
+                        <outlet property="wristZLabel" destination="g8D-P6-fQg" id="tFd-pd-HqU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

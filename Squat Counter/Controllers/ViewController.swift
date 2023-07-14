@@ -13,29 +13,29 @@ import MLKit
 class ViewController: UIViewController {
     
     
+    
     private var isUsingFrontCamera = true
     private var previewLayer: AVCaptureVideoPreviewLayer!
     private lazy var captureSession = AVCaptureSession()
     private lazy var sessionQueue = DispatchQueue(label: Constant.sessionQueueLabel)
     private var lastFrame: CMSampleBuffer?
     
-    //private var captureSession: AVCaptureSession?
-//    private var videoOutput: AVCaptureVideoDataOutput?
+    private var workout = Workout()
+    private var squat = Squat()
+    private var stopwatch = Stopwatch()
+    private var featureEmbedder = FeatureEmbedder()
+    private lazy var poseClassifier = PoseClassifier(exercises: [self.squat])
+    private var repCount = 0
     
-//    private var poseDetector: PoseDetector? = nil
-//    private var previewLayer: AVCaptureVideoPreviewLayer!
-//    private lazy var captureSession = AVCaptureSession()
-//    private lazy var sessionQueue = DispatchQueue(label: Constant.sessionQueueLabel)
-//    private var lastFrame: CMSampleBuffer?
     
-    private lazy var previewOverlayView: UIImageView = {
-
-      precondition(isViewLoaded)
-      let previewOverlayView = UIImageView(frame: .zero)
-      previewOverlayView.contentMode = UIView.ContentMode.scaleAspectFill
-      previewOverlayView.translatesAutoresizingMaskIntoConstraints = false
-      return previewOverlayView
-    }()
+//    private lazy var previewOverlayView: UIImageView = {
+//
+//      precondition(isViewLoaded)
+//      let previewOverlayView = UIImageView(frame: .zero)
+//      previewOverlayView.contentMode = UIView.ContentMode.scaleAspectFill
+//      previewOverlayView.translatesAutoresizingMaskIntoConstraints = false
+//      return previewOverlayView
+//    }()
 
     private lazy var annotationOverlayView: UIView = {
       precondition(isViewLoaded)
@@ -45,29 +45,43 @@ class ViewController: UIViewController {
     }()
     
     private var poseDetector: PoseDetector? = nil
+    
 
     //MARK: - IBOutlets
     
     @IBOutlet weak var cameraView: UIView!
+    
+    @IBOutlet weak var wristALabel: UILabel!
+    @IBOutlet weak var wristXLabel: UILabel!
+    @IBOutlet weak var wristYLabel: UILabel!
+    @IBOutlet weak var wristZLabel: UILabel!
     
     //MARK: - UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        setUpPreviewOverlayView()
+        previewLayer.frame = cameraView.bounds
+        previewLayer.videoGravity = .resizeAspectFill
+        cameraView.layer.addSublayer(previewLayer)
+        //setUpPreviewOverlayView()
         setUpAnnotationOverlayView()
         setUpCaptureSessionOutput()
         setUpCaptureSessionInput()
         
-//        // Base pose detector with streaming, when depending on the PoseDetection SDK
-//        let options = PoseDetectorOptions()
-//        options.detectorMode = .stream
-//        poseDetector = PoseDetector.poseDetector(options: options)
+        // Base pose detector with streaming, when depending on the PoseDetection SDK
         let options = PoseDetectorOptions()
+        // Accurate pose detector with streaming, when depending on the PoseDetectionAccurate SDK
+        // let options = AccuratePoseDetectorOptions()
+        options.detectorMode = .stream
         self.poseDetector = PoseDetector.poseDetector(options: options)
         
-        //setupCamera()
+        poseClassifier.onPoseCompleted = { pose, timeBetweenReps, metricValues in
+            self.workout.addRep(exercise: pose, time: timeBetweenReps ?? 0.0, metricValues: metricValues)
+            // print(self.workout.workoutArray)
+        }
+        stopwatch.start()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -80,6 +94,18 @@ class ViewController: UIViewController {
       super.viewDidDisappear(animated)
 
       stopSession()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // This line will disable the idle timer (prevent the screen from auto-locking)
+        UIApplication.shared.isIdleTimerDisabled = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // This line will re-enable the idle timer (allow the screen to auto-lock)
+        UIApplication.shared.isIdleTimerDisabled = false
     }
 
     override func viewDidLayoutSubviews() {
@@ -107,56 +133,67 @@ class ViewController: UIViewController {
             print("Self is nil!")
             return
           }
-          strongSelf.updatePreviewOverlayViewWithLastFrame()
+          // strongSelf.updatePreviewOverlayViewWithLastFrame()
+            strongSelf.removeDetectionAnnotations()
           if let detectionError = detectionError {
             print("Failed to detect poses with error: \(detectionError.localizedDescription).")
             return
           }
           guard !poses.isEmpty else {
-            print("Pose detector returned no results.")
+            //print("Pose detector returned no results.")
             return
           }
 
           // Pose detected. Currently, only single person detection is supported.
           poses.forEach { pose in
-            let poseOverlayView = UIUtilities.createPoseOverlayView(
-              forPose: pose,
-              inViewWithBounds: strongSelf.annotationOverlayView.bounds,
-              lineWidth: Constant.lineWidth,
-              dotRadius: Constant.smallDotRadius,
-              positionTransformationClosure: { (position) -> CGPoint in
-                return strongSelf.normalizedPoint(
-                  fromVisionPoint: position, width: width, height: height)
-              }
-            )
-            strongSelf.annotationOverlayView.addSubview(poseOverlayView)
-            
-//            let leftHip = pose.landmark(ofType: .leftHip)
-//            let leftKnee = pose.landmark(ofType: .leftKnee)
-//
-//            let hipPosition = leftHip.position
-//            let kneePosition = leftKnee.position
-//
-//            // We only care about 2D (x and y) here
-//            let deltaY = kneePosition.y - hipPosition.y
-//            let deltaX = kneePosition.x - hipPosition.x
-//              
-//            // Compute the angle in degrees
-//            let angleInDegrees = atan2(deltaY, deltaX) * 180.0 / .pi
-//
-//            // Note: The result of atan2(y, x) is the angle in radians counterclockwise from the x-axis to the point (x, y).
-//            // If the person is standing upright and the camera is at a normal angle, the hip will usually be higher in the image than the knee, meaning the y value will be smaller (since in most computer graphics coordinate systems, y values get larger going down the screen). Therefore, deltaY might often be negative, and the resulting angle might be more than 180. You may need to subtract the result from 360 to get the angle relative to a horizontal line.
-//            
-//            let correctedAngle = 360 - angleInDegrees
-//            print("Angle between femur and horizontal is \(correctedAngle)")
+              featureEmbedder.updatePose(from: pose)
+              featureEmbedder.updateEmbeddingDict()
               
-
-//                          // Example: get the left shoulder landmark
-//                          let leftShoulder = pose.landmark(ofType: .leftShoulder)
-//                          // Use the landmark for something, e.g.:
-//                          print("Left shoulder position: \(leftShoulder.position)")
-//                          print("Left shoulder in frame likelihood: \(leftShoulder.inFrameLikelihood)")
-              ////            print(pose.landmarks)
+              //here
+              let isRepCompleted = repCount != workout.workoutArray.count
+              
+              if (isRepCompleted) {
+                  repCount = workout.workoutArray.count;
+                  // play rep count
+              }
+              
+              //print("getting here")
+              
+              if let embeddingDict = featureEmbedder.embeddingDict {
+                  poseClassifier.updatePose(embeddingDict: embeddingDict, stopwatch: stopwatch)
+                  // print("getting here")
+              }
+              
+              
+              let poseOverlayView = UIUtilities.createPoseOverlayView(
+                forPose: pose,
+                inViewWithBounds: strongSelf.annotationOverlayView.bounds,
+                lineWidth: Constant.lineWidth,
+                dotRadius: Constant.smallDotRadius,
+                positionTransformationClosure: { (position) -> CGPoint in
+                    return strongSelf.normalizedPoint(
+                        fromVisionPoint: position, width: width, height: height)
+                }
+              )
+              strongSelf.annotationOverlayView.addSubview(poseOverlayView)
+                
+              
+              DispatchQueue.main.async {
+                  do {
+                      let leftFemurAngle = try self.featureEmbedder.leftFemurAngle()
+                      let leftHipAngle = try self.featureEmbedder.leftHipAngle()
+                      let leftKneeAngle = try self.featureEmbedder.leftKneeAngle()
+                      let squatCount = self.workout.workoutArray.count
+                      self.wristALabel.text = "Squats: \(Int(squatCount))"
+                      self.wristXLabel.text = "Fem: \(Int(leftFemurAngle))"
+                      self.wristYLabel.text = "Hip: \(Int(leftHipAngle))"
+                      self.wristZLabel.text = "Kne: \(Int(leftKneeAngle))"
+                  } catch {
+                      print("Error calculating left femur angle: \(error)")
+                      // Handle the error as appropriate for your app.
+                  }
+              }
+              
 
           }
         }
@@ -249,16 +286,16 @@ class ViewController: UIViewController {
       }
     }
     
-    private func setUpPreviewOverlayView() {
-      cameraView.addSubview(previewOverlayView)
-      NSLayoutConstraint.activate([
-        previewOverlayView.centerXAnchor.constraint(equalTo: cameraView.centerXAnchor),
-        previewOverlayView.centerYAnchor.constraint(equalTo: cameraView.centerYAnchor),
-        previewOverlayView.leadingAnchor.constraint(equalTo: cameraView.leadingAnchor),
-        previewOverlayView.trailingAnchor.constraint(equalTo: cameraView.trailingAnchor),
-
-      ])
-    }
+//    private func setUpPreviewOverlayView() {
+//      cameraView.addSubview(previewOverlayView)
+//      NSLayoutConstraint.activate([
+//        previewOverlayView.centerXAnchor.constraint(equalTo: cameraView.centerXAnchor),
+//        previewOverlayView.centerYAnchor.constraint(equalTo: cameraView.centerYAnchor),
+//        previewOverlayView.leadingAnchor.constraint(equalTo: cameraView.leadingAnchor),
+//        previewOverlayView.trailingAnchor.constraint(equalTo: cameraView.trailingAnchor),
+//
+//      ])
+//    }
 
     private func setUpAnnotationOverlayView() {
       cameraView.addSubview(annotationOverlayView)
@@ -282,15 +319,15 @@ class ViewController: UIViewController {
       return nil
     }
     
-    private func updatePreviewOverlayViewWithLastFrame() {
-      guard let lastFrame = lastFrame,
-        let imageBuffer = CMSampleBufferGetImageBuffer(lastFrame)
-      else {
-        return
-      }
-      self.updatePreviewOverlayViewWithImageBuffer(imageBuffer)
-      self.removeDetectionAnnotations()
-    }
+//    private func updatePreviewOverlayViewWithLastFrame() {
+//      guard let lastFrame = lastFrame,
+//        let imageBuffer = CMSampleBufferGetImageBuffer(lastFrame)
+//      else {
+//        return
+//      }
+//      self.updatePreviewOverlayViewWithImageBuffer(imageBuffer)
+//      self.removeDetectionAnnotations()
+//    }
     
     private func removeDetectionAnnotations() {
       for annotationView in annotationOverlayView.subviews {
@@ -298,14 +335,14 @@ class ViewController: UIViewController {
       }
     }
     
-    private func updatePreviewOverlayViewWithImageBuffer(_ imageBuffer: CVImageBuffer?) {
-      guard let imageBuffer = imageBuffer else {
-        return
-      }
-      let orientation: UIImage.Orientation = isUsingFrontCamera ? .leftMirrored : .right
-      let image = UIUtilities.createUIImage(from: imageBuffer, orientation: orientation)
-      previewOverlayView.image = image
-    }
+//    private func updatePreviewOverlayViewWithImageBuffer(_ imageBuffer: CVImageBuffer?) {
+//      guard let imageBuffer = imageBuffer else {
+//        return
+//      }
+//      let orientation: UIImage.Orientation = isUsingFrontCamera ? .leftMirrored : .right
+//      let image = UIUtilities.createUIImage(from: imageBuffer, orientation: orientation)
+//      previewOverlayView.image = image
+//    }
     
     private func normalizedPoint(
       fromVisionPoint point: VisionPoint,

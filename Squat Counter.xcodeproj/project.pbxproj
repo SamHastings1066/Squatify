@@ -10,6 +10,15 @@
 		16F67CF91C9FA2C7245DF4DF /* Pods_Squat_Counter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 221E69456523D623C561BE3B /* Pods_Squat_Counter.framework */; };
 		48BC129B0C2498ECD6175944 /* Pods_Squat_CounterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11FEE14567DF7843ADD8707E /* Pods_Squat_CounterTests.framework */; };
 		737747983061FBDA2E6C73DC /* Pods_Squat_Counter_Squat_CounterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54248474EB946082289488B7 /* Pods_Squat_Counter_Squat_CounterUITests.framework */; };
+		8483CDCC2A6033A90018D5DB /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483CDCB2A6033A90018D5DB /* Exercise.swift */; };
+		8483CDCF2A6033C00018D5DB /* Squat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483CDCE2A6033C00018D5DB /* Squat.swift */; };
+		8483CDD12A6038830018D5DB /* Metric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483CDD02A6038830018D5DB /* Metric.swift */; };
+		8483CDD32A60490E0018D5DB /* PoseClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483CDD22A60490E0018D5DB /* PoseClassifier.swift */; };
+		8483CDD52A6050D60018D5DB /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483CDD42A6050D60018D5DB /* Stopwatch.swift */; };
+		8483CDD72A6053370018D5DB /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483CDD62A6053370018D5DB /* Workout.swift */; };
+		8483CDD92A6055400018D5DB /* Rep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483CDD82A6055400018D5DB /* Rep.swift */; };
+		849123622A5C67050040E9E9 /* FeatureEmbedder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849123612A5C67050040E9E9 /* FeatureEmbedder.swift */; };
+		849123652A5C6E8F0040E9E9 /* GeometricFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849123642A5C6E8F0040E9E9 /* GeometricFunctions.swift */; };
 		849C2C812A59C85A00FD039B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2C802A59C85A00FD039B /* AppDelegate.swift */; };
 		849C2C832A59C85A00FD039B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2C822A59C85A00FD039B /* SceneDelegate.swift */; };
 		849C2C852A59C85A00FD039B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2C842A59C85A00FD039B /* ViewController.swift */; };
@@ -47,6 +56,15 @@
 		441FAE469B5C3BE722297DB7 /* Pods-Squat CounterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Squat CounterTests.debug.xcconfig"; path = "Target Support Files/Pods-Squat CounterTests/Pods-Squat CounterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		54248474EB946082289488B7 /* Pods_Squat_Counter_Squat_CounterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Squat_Counter_Squat_CounterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CCEF2E6DCBF1F2490D1F4FA /* Pods-Squat Counter-Squat CounterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Squat Counter-Squat CounterUITests.release.xcconfig"; path = "Target Support Files/Pods-Squat Counter-Squat CounterUITests/Pods-Squat Counter-Squat CounterUITests.release.xcconfig"; sourceTree = "<group>"; };
+		8483CDCB2A6033A90018D5DB /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
+		8483CDCE2A6033C00018D5DB /* Squat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squat.swift; sourceTree = "<group>"; };
+		8483CDD02A6038830018D5DB /* Metric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metric.swift; sourceTree = "<group>"; };
+		8483CDD22A60490E0018D5DB /* PoseClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseClassifier.swift; sourceTree = "<group>"; };
+		8483CDD42A6050D60018D5DB /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
+		8483CDD62A6053370018D5DB /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		8483CDD82A6055400018D5DB /* Rep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rep.swift; sourceTree = "<group>"; };
+		849123612A5C67050040E9E9 /* FeatureEmbedder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureEmbedder.swift; sourceTree = "<group>"; };
+		849123642A5C6E8F0040E9E9 /* GeometricFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometricFunctions.swift; sourceTree = "<group>"; };
 		849C2C7D2A59C85A00FD039B /* Squat Counter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Squat Counter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		849C2C802A59C85A00FD039B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		849C2C822A59C85A00FD039B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +123,53 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8483CDCD2A6033AF0018D5DB /* Exercises */ = {
+			isa = PBXGroup;
+			children = (
+				8483CDD42A6050D60018D5DB /* Stopwatch.swift */,
+				8483CDCB2A6033A90018D5DB /* Exercise.swift */,
+				8483CDCE2A6033C00018D5DB /* Squat.swift */,
+				8483CDD22A60490E0018D5DB /* PoseClassifier.swift */,
+				8483CDD62A6053370018D5DB /* Workout.swift */,
+			);
+			path = Exercises;
+			sourceTree = "<group>";
+		};
+		8491235E2A5C5E560040E9E9 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				849C2C842A59C85A00FD039B /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		8491235F2A5C5E740040E9E9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				84C405BB2A5B32D30054FFF0 /* MLKitExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		849123602A5C5E890040E9E9 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				84C405B92A5B300D0054FFF0 /* UIUtilities.swift */,
+				849123642A5C6E8F0040E9E9 /* GeometricFunctions.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		849123632A5C670C0040E9E9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				849123612A5C67050040E9E9 /* FeatureEmbedder.swift */,
+				8483CDD02A6038830018D5DB /* Metric.swift */,
+				8483CDD82A6055400018D5DB /* Rep.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		849C2C742A59C85A00FD039B = {
 			isa = PBXGroup;
 			children = (
@@ -131,14 +196,16 @@
 			isa = PBXGroup;
 			children = (
 				849C2C802A59C85A00FD039B /* AppDelegate.swift */,
-				849C2C822A59C85A00FD039B /* SceneDelegate.swift */,
-				849C2C842A59C85A00FD039B /* ViewController.swift */,
-				84C405B92A5B300D0054FFF0 /* UIUtilities.swift */,
-				84C405BB2A5B32D30054FFF0 /* MLKitExtensions.swift */,
-				849C2C862A59C85A00FD039B /* Main.storyboard */,
 				849C2C892A59C85B00FD039B /* Assets.xcassets */,
-				849C2C8B2A59C85B00FD039B /* LaunchScreen.storyboard */,
 				849C2C8E2A59C85B00FD039B /* Info.plist */,
+				849C2C822A59C85A00FD039B /* SceneDelegate.swift */,
+				8491235E2A5C5E560040E9E9 /* Controllers */,
+				849123602A5C5E890040E9E9 /* Utilities */,
+				8491235F2A5C5E740040E9E9 /* Extensions */,
+				849C2C862A59C85A00FD039B /* Main.storyboard */,
+				849C2C8B2A59C85B00FD039B /* LaunchScreen.storyboard */,
+				849123632A5C670C0040E9E9 /* Models */,
+				8483CDCD2A6033AF0018D5DB /* Exercises */,
 			);
 			path = "Squat Counter";
 			sourceTree = "<group>";
@@ -449,10 +516,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				849C2C852A59C85A00FD039B /* ViewController.swift in Sources */,
+				8483CDCC2A6033A90018D5DB /* Exercise.swift in Sources */,
+				8483CDCF2A6033C00018D5DB /* Squat.swift in Sources */,
+				8483CDD72A6053370018D5DB /* Workout.swift in Sources */,
 				849C2C812A59C85A00FD039B /* AppDelegate.swift in Sources */,
+				849123622A5C67050040E9E9 /* FeatureEmbedder.swift in Sources */,
 				84C405BA2A5B300D0054FFF0 /* UIUtilities.swift in Sources */,
 				84C405BC2A5B32D30054FFF0 /* MLKitExtensions.swift in Sources */,
+				8483CDD52A6050D60018D5DB /* Stopwatch.swift in Sources */,
+				8483CDD92A6055400018D5DB /* Rep.swift in Sources */,
+				8483CDD12A6038830018D5DB /* Metric.swift in Sources */,
+				849123652A5C6E8F0040E9E9 /* GeometricFunctions.swift in Sources */,
 				849C2C832A59C85A00FD039B /* SceneDelegate.swift in Sources */,
+				8483CDD32A60490E0018D5DB /* PoseClassifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
