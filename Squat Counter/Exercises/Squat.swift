@@ -20,18 +20,19 @@ class Squat: Exercise {
                 { embedding in return embedding["rightKneeAngle"]! > 81 }
             ],
             exitConditions: [
-                { embedding in return embedding["leftFemurAngle"]! > 60 },
-                { embedding in return embedding["rightFemurAngle"]! > 60 },
+                //{ embedding in return embedding["leftFemurAngle"]! > 60 },
+                //{ embedding in return embedding["rightFemurAngle"]! > 60 },
                 { embedding in return embedding["leftHipAngle"]! > 110 },
                 { embedding in return embedding["rightHipAngle"]! > 110 },
-                { embedding in return embedding["leftKneeAngle"]! < 79 },
-                { embedding in return embedding["rightKneeAngle"]! < 79 }
+                //{ embedding in return embedding["leftKneeAngle"]! < 89 },
+                //{ embedding in return embedding["rightKneeAngle"]! < 89 }
             ],
             metricsToMonitor: [
                 Metric(
                     name: "minSquatDepth",
                     value: { embeddingDict in return round(embeddingDict["averageFemurAngle"]! * 100) / 100 },
-                    minOrMax: .min
+                    //minOrMax: .min
+                    minOrMax: "min"
                 )
             ]
         )

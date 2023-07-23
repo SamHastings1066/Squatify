@@ -31,7 +31,8 @@ class Exercise {
     func updateMetrics(embeddingDict: Dictionary<String, Double>) {
         for metric in self.metricsToMonitor {
             let newValue = metric.value(embeddingDict)
-            if (self.metricValues[metric.name] == nil) || (metric.minOrMax == .min && newValue < self.metricValues[metric.name]!) || (metric.minOrMax == .max && newValue > self.metricValues[metric.name]!) {
+            //if (self.metricValues[metric.name] == nil) || (metric.minOrMax == .min && newValue < self.metricValues[metric.name]!) || (metric.minOrMax == .max && newValue > self.metricValues[metric.name]!) {
+            if (self.metricValues[metric.name] == nil) || (metric.minOrMax == "min" && newValue < self.metricValues[metric.name]!) || (metric.minOrMax == "max" && newValue > self.metricValues[metric.name]!) {
                 self.metricValues[metric.name] = newValue
             }
         }

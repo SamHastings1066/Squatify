@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,6 +15,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        
+//        let dummyData = DummyModel()
+//        dummyData.name = "Sam"
+//        dummyData.age = 38
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
+        
+        do {
+            let realm = try Realm()
+        } catch {
+            print("Error initialising new Realm \(error)")
+        }
+        
+//        do {
+//            let realm = try Realm()
+//            try realm.write{
+//                let allDummyModels = realm.objects(DummyModel.self)
+//                realm.delete(allDummyModels)
+//            }
+//        } catch {
+//            print("Error initialising new Realm \(error)")
+//        }
+        
+        
         return true
     }
 

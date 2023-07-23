@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 class Workout {
     var workoutArray: [Rep]

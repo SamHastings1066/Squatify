@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct Rep {
-    var exercise: String
-    var time: Double
-    var metricValues: [String: Double]
+    var exercise: String = ""
+    var time: Double = 0.0
+    var metricValues: [String: Double] = [:]
 }
+
+

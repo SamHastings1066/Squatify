@@ -10,9 +10,12 @@ import Foundation
 struct Metric {
     var name: String
     var value: (Dictionary<String, Double>) -> Double
-    var minOrMax: MetricType
+    //var minOrMax: MetricType
+    var minOrMax: String
 }
 
 enum MetricType {
     case min, max
 }
+
+
