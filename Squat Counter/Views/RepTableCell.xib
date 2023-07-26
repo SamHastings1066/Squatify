@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RepTableCell" id="KGk-i7-Jjw" customClass="RepTableCell" customModule="Squat_Counter" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sVD-dQ-tin">
+                        <rect key="frame" x="5" y="5" width="310" height="34"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YUX-75-32J">
+                                <rect key="frame" x="5" y="0.0" width="300" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="YUX-75-32J" firstAttribute="leading" secondItem="sVD-dQ-tin" secondAttribute="leading" constant="5" id="892-KW-OGz"/>
+                            <constraint firstAttribute="bottom" secondItem="YUX-75-32J" secondAttribute="bottom" id="9yA-aJ-Jkt"/>
+                            <constraint firstAttribute="trailing" secondItem="YUX-75-32J" secondAttribute="trailing" constant="5" id="cEn-J6-D3x"/>
+                            <constraint firstItem="YUX-75-32J" firstAttribute="top" secondItem="sVD-dQ-tin" secondAttribute="top" id="mBb-VL-DJj"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="sVD-dQ-tin" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="Avd-wc-vt7"/>
+                    <constraint firstAttribute="trailing" secondItem="sVD-dQ-tin" secondAttribute="trailing" constant="5" id="HyX-eL-euO"/>
+                    <constraint firstAttribute="bottom" secondItem="sVD-dQ-tin" secondAttribute="bottom" constant="5" id="Jl9-Eg-FKa"/>
+                    <constraint firstItem="sVD-dQ-tin" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="zL9-Nh-J2L"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="CellLabel" destination="YUX-75-32J" id="Bxv-RU-ids"/>
+                <outlet property="cellView" destination="sVD-dQ-tin" id="nHe-dH-CwU"/>
+            </connections>
+            <point key="canvasLocation" x="138.93129770992365" y="20.422535211267608"/>
+        </tableViewCell>
+    </objects>
+</document>

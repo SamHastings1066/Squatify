@@ -12,7 +12,7 @@ class Exercise {
     var entryConditions: [(Dictionary<String, Double>) -> Bool]
     var exitConditions: [(Dictionary<String, Double>) -> Bool]
     var metricsToMonitor: [Metric]
-    var metricValues: Dictionary<String, Double>
+    var metricValues: Dictionary<String, Double> // ["minSquatDepth": 7.88]
 
     init(name: String, entryConditions: [(Dictionary<String, Double>) -> Bool], exitConditions: [(Dictionary<String, Double>) -> Bool], metricsToMonitor: [Metric]) {
         self.name = name

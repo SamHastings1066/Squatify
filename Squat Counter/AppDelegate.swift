@@ -20,22 +20,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let dummyData = DummyModel()
 //        dummyData.name = "Sam"
 //        dummyData.age = 38
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
-        
-        do {
-            let realm = try Realm()
-        } catch {
-            print("Error initialising new Realm \(error)")
-        }
+//        print(Realm.Configuration.defaultConfiguration.fileURL!)
         
 //        do {
 //            let realm = try Realm()
+//        } catch {
+//            print("Error initialising new Realm \(error)")
+//        }
+        
+//        // to delete all objects in the RealmRep class from my Realm database
+//        do {
+//            let realm = try Realm()
 //            try realm.write{
-//                let allDummyModels = realm.objects(DummyModel.self)
-//                realm.delete(allDummyModels)
+//                let allRealmRepModels = realm.objects(RealmRep.self)
+//                realm.delete(allRealmRepModels)
 //            }
 //        } catch {
 //            print("Error initialising new Realm \(error)")
+//        }
+        
+//        // to completely wipe my Realm database, delete the Realm file:
+//        let realmURL = Realm.Configuration.defaultConfiguration.fileURL!
+//        do {
+//            try FileManager.default.removeItem(at: realmURL)
+//        } catch {
+//            print("Unable to delete Realm file: \(error.localizedDescription)")
 //        }
         
         

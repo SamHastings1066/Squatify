@@ -16,6 +16,9 @@
 		8413B0262A631EF80020015D /* AnnulusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8413B0252A631EF80020015D /* AnnulusView.swift */; };
 		8440C01B2A6AEC940068308E /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 8440C01A2A6AEC940068308E /* Realm */; };
 		8440C01D2A6AEC940068308E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8440C01C2A6AEC940068308E /* RealmSwift */; };
+		8440C0422A6CBBA10068308E /* RealmRep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8440C0412A6CBBA10068308E /* RealmRep.swift */; };
+		8440C0442A6E06180068308E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8440C0432A6E06180068308E /* Constants.swift */; };
+		8440C0462A6E08EF0068308E /* SummaryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8440C0452A6E08EF0068308E /* SummaryVC.swift */; };
 		8447B7AE2A65F0B5000C6A59 /* SpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8447B7AD2A65F0B5000C6A59 /* SpeechService.swift */; };
 		8447B7B42A66CAAD000C6A59 /* RestOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8447B7B32A66CAAD000C6A59 /* RestOverlayViewController.swift */; };
 		8448B3D92A6830F20086A9FE /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8448B3D82A6830F20086A9FE /* CountdownTimer.swift */; };
@@ -29,6 +32,11 @@
 		848DCE812A62F1A400EFBCCD /* GradientOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848DCE802A62F1A400EFBCCD /* GradientOverlayView.swift */; };
 		849123622A5C67050040E9E9 /* FeatureEmbedder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849123612A5C67050040E9E9 /* FeatureEmbedder.swift */; };
 		849123652A5C6E8F0040E9E9 /* GeometricFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849123642A5C6E8F0040E9E9 /* GeometricFunctions.swift */; };
+		849903BD2A6F2F990086A9FB /* RealmSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849903BC2A6F2F990086A9FB /* RealmSet.swift */; };
+		849903BF2A6F2FA50086A9FB /* RealmWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849903BE2A6F2FA50086A9FB /* RealmWorkout.swift */; };
+		849903C32A705BBE0086A9FB /* RepTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849903C12A705BBE0086A9FB /* RepTableCell.swift */; };
+		849903C42A705BBE0086A9FB /* RepTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849903C22A705BBE0086A9FB /* RepTableCell.xib */; };
+		849903C62A706F2D0086A9FB /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849903C52A706F2D0086A9FB /* CalendarVC.swift */; };
 		849C2C812A59C85A00FD039B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2C802A59C85A00FD039B /* AppDelegate.swift */; };
 		849C2C832A59C85A00FD039B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2C822A59C85A00FD039B /* SceneDelegate.swift */; };
 		849C2C852A59C85A00FD039B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2C842A59C85A00FD039B /* ViewController.swift */; };
@@ -40,6 +48,7 @@
 		849C2CA42A59C85B00FD039B /* Squat_CounterUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2CA32A59C85B00FD039B /* Squat_CounterUITestsLaunchTests.swift */; };
 		84C405BA2A5B300D0054FFF0 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C405B92A5B300D0054FFF0 /* UIUtilities.swift */; };
 		84C405BC2A5B32D30054FFF0 /* MLKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C405BB2A5B32D30054FFF0 /* MLKitExtensions.swift */; };
+		84E7B35E2A7161C000A77DD7 /* HorizonCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 84E7B35D2A7161C000A77DD7 /* HorizonCalendar */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +79,9 @@
 		8413B0212A6319040020015D /* RobotoMono-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Medium.ttf"; sourceTree = "<group>"; };
 		8413B0232A631B070020015D /* CourierPrime-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CourierPrime-Bold.ttf"; sourceTree = "<group>"; };
 		8413B0252A631EF80020015D /* AnnulusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnulusView.swift; sourceTree = "<group>"; };
+		8440C0412A6CBBA10068308E /* RealmRep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRep.swift; sourceTree = "<group>"; };
+		8440C0432A6E06180068308E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8440C0452A6E08EF0068308E /* SummaryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryVC.swift; sourceTree = "<group>"; };
 		8447B7AD2A65F0B5000C6A59 /* SpeechService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechService.swift; sourceTree = "<group>"; };
 		8447B7B32A66CAAD000C6A59 /* RestOverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestOverlayViewController.swift; sourceTree = "<group>"; };
 		8448B3D82A6830F20086A9FE /* CountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
@@ -83,6 +95,11 @@
 		848DCE802A62F1A400EFBCCD /* GradientOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientOverlayView.swift; sourceTree = "<group>"; };
 		849123612A5C67050040E9E9 /* FeatureEmbedder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureEmbedder.swift; sourceTree = "<group>"; };
 		849123642A5C6E8F0040E9E9 /* GeometricFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometricFunctions.swift; sourceTree = "<group>"; };
+		849903BC2A6F2F990086A9FB /* RealmSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSet.swift; sourceTree = "<group>"; };
+		849903BE2A6F2FA50086A9FB /* RealmWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmWorkout.swift; sourceTree = "<group>"; };
+		849903C12A705BBE0086A9FB /* RepTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepTableCell.swift; sourceTree = "<group>"; };
+		849903C22A705BBE0086A9FB /* RepTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RepTableCell.xib; sourceTree = "<group>"; };
+		849903C52A706F2D0086A9FB /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
 		849C2C7D2A59C85A00FD039B /* Squat Counter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Squat Counter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		849C2C802A59C85A00FD039B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		849C2C822A59C85A00FD039B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +127,7 @@
 			files = (
 				8440C01D2A6AEC940068308E /* RealmSwift in Frameworks */,
 				8440C01B2A6AEC940068308E /* Realm in Frameworks */,
+				84E7B35E2A7161C000A77DD7 /* HorizonCalendar in Frameworks */,
 				16F67CF91C9FA2C7245DF4DF /* Pods_Squat_Counter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -179,6 +197,8 @@
 			children = (
 				849C2C842A59C85A00FD039B /* ViewController.swift */,
 				8447B7B32A66CAAD000C6A59 /* RestOverlayViewController.swift */,
+				8440C0452A6E08EF0068308E /* SummaryVC.swift */,
+				849903C52A706F2D0086A9FB /* CalendarVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -208,8 +228,22 @@
 				849123612A5C67050040E9E9 /* FeatureEmbedder.swift */,
 				8483CDD02A6038830018D5DB /* Metric.swift */,
 				8483CDD82A6055400018D5DB /* Rep.swift */,
+				8440C0412A6CBBA10068308E /* RealmRep.swift */,
+				849903BC2A6F2F990086A9FB /* RealmSet.swift */,
+				849903BE2A6F2FA50086A9FB /* RealmWorkout.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		849903C02A705B580086A9FB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				849C2C862A59C85A00FD039B /* Main.storyboard */,
+				849C2C8B2A59C85B00FD039B /* LaunchScreen.storyboard */,
+				849903C12A705BBE0086A9FB /* RepTableCell.swift */,
+				849903C22A705BBE0086A9FB /* RepTableCell.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		849C2C742A59C85A00FD039B = {
@@ -237,16 +271,16 @@
 		849C2C7F2A59C85A00FD039B /* Squat Counter */ = {
 			isa = PBXGroup;
 			children = (
+				849903C02A705B580086A9FB /* Views */,
 				8413B0202A6318CE0020015D /* Fonts */,
 				849C2C802A59C85A00FD039B /* AppDelegate.swift */,
 				849C2C892A59C85B00FD039B /* Assets.xcassets */,
 				849C2C8E2A59C85B00FD039B /* Info.plist */,
 				849C2C822A59C85A00FD039B /* SceneDelegate.swift */,
+				8440C0432A6E06180068308E /* Constants.swift */,
 				8491235E2A5C5E560040E9E9 /* Controllers */,
 				849123602A5C5E890040E9E9 /* Utilities */,
 				8491235F2A5C5E740040E9E9 /* Extensions */,
-				849C2C862A59C85A00FD039B /* Main.storyboard */,
-				849C2C8B2A59C85B00FD039B /* LaunchScreen.storyboard */,
 				849123632A5C670C0040E9E9 /* Models */,
 				8483CDCD2A6033AF0018D5DB /* Exercises */,
 				848DCE822A62F1C100EFBCCD /* UI */,
@@ -306,6 +340,7 @@
 			packageProductDependencies = (
 				8440C01A2A6AEC940068308E /* Realm */,
 				8440C01C2A6AEC940068308E /* RealmSwift */,
+				84E7B35D2A7161C000A77DD7 /* HorizonCalendar */,
 			);
 			productName = "Squat Counter";
 			productReference = 849C2C7D2A59C85A00FD039B /* Squat Counter.app */;
@@ -385,6 +420,7 @@
 			mainGroup = 849C2C742A59C85A00FD039B;
 			packageReferences = (
 				8440C0192A6AEC940068308E /* XCRemoteSwiftPackageReference "realm-swift" */,
+				84E7B35C2A7161C000A77DD7 /* XCRemoteSwiftPackageReference "HorizonCalendar" */,
 			);
 			productRefGroup = 849C2C7E2A59C85A00FD039B /* Products */;
 			projectDirPath = "";
@@ -404,6 +440,7 @@
 			files = (
 				849C2C8D2A59C85B00FD039B /* LaunchScreen.storyboard in Resources */,
 				8413B0222A6319040020015D /* RobotoMono-Medium.ttf in Resources */,
+				849903C42A705BBE0086A9FB /* RepTableCell.xib in Resources */,
 				849C2C8A2A59C85B00FD039B /* Assets.xcassets in Resources */,
 				849C2C882A59C85A00FD039B /* Main.storyboard in Resources */,
 				8413B0242A631B070020015D /* CourierPrime-Bold.ttf in Resources */,
@@ -569,18 +606,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				849C2C852A59C85A00FD039B /* ViewController.swift in Sources */,
+				849903BF2A6F2FA50086A9FB /* RealmWorkout.swift in Sources */,
+				8440C0442A6E06180068308E /* Constants.swift in Sources */,
 				8483CDCC2A6033A90018D5DB /* Exercise.swift in Sources */,
 				8483CDCF2A6033C00018D5DB /* Squat.swift in Sources */,
+				849903C62A706F2D0086A9FB /* CalendarVC.swift in Sources */,
 				8483CDD72A6053370018D5DB /* Workout.swift in Sources */,
 				8409C8E92A61BA35009C728B /* UXUtils.swift in Sources */,
 				8448B3D92A6830F20086A9FE /* CountdownTimer.swift in Sources */,
+				8440C0422A6CBBA10068308E /* RealmRep.swift in Sources */,
+				8440C0462A6E08EF0068308E /* SummaryVC.swift in Sources */,
 				8447B7AE2A65F0B5000C6A59 /* SpeechService.swift in Sources */,
+				849903BD2A6F2F990086A9FB /* RealmSet.swift in Sources */,
 				849C2C812A59C85A00FD039B /* AppDelegate.swift in Sources */,
 				849123622A5C67050040E9E9 /* FeatureEmbedder.swift in Sources */,
 				84C405BA2A5B300D0054FFF0 /* UIUtilities.swift in Sources */,
 				84C405BC2A5B32D30054FFF0 /* MLKitExtensions.swift in Sources */,
 				8483CDD52A6050D60018D5DB /* Stopwatch.swift in Sources */,
 				8483CDD92A6055400018D5DB /* Rep.swift in Sources */,
+				849903C32A705BBE0086A9FB /* RepTableCell.swift in Sources */,
 				8483CDD12A6038830018D5DB /* Metric.swift in Sources */,
 				849123652A5C6E8F0040E9E9 /* GeometricFunctions.swift in Sources */,
 				8447B7B42A66CAAD000C6A59 /* RestOverlayViewController.swift in Sources */,
@@ -776,7 +820,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -813,7 +857,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -967,6 +1011,14 @@
 				minimumVersion = 10.41.1;
 			};
 		};
+		84E7B35C2A7161C000A77DD7 /* XCRemoteSwiftPackageReference "HorizonCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/HorizonCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -979,6 +1031,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8440C0192A6AEC940068308E /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		84E7B35D2A7161C000A77DD7 /* HorizonCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 84E7B35C2A7161C000A77DD7 /* XCRemoteSwiftPackageReference "HorizonCalendar" */;
+			productName = HorizonCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

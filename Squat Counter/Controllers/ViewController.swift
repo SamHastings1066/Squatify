@@ -10,6 +10,7 @@ import AVFoundation
 import MLImage
 import MLKit
 import Combine
+import RealmSwift
 
 
 class ViewController: UIViewController {
@@ -74,7 +75,7 @@ class ViewController: UIViewController {
     //MARK: - IBActions
        
     @IBAction func restButtonPushed(_ sender: Any) {
-        print(workout.workoutArray)
+        //print(workout.workoutArray)
         // Reset repCount
         repCount = 0
         self.repCountLabel.text = "0"
@@ -91,6 +92,52 @@ class ViewController: UIViewController {
     }
     
     @IBAction func stopButtonPushed(_ sender: UIButton) {
+        isMonitoringPose = false
+        stopwatch.stop()
+        // First, initialize a new Realm
+        let realm = try! Realm()
+
+        // Next, we create the RealmWorkout object
+        let realmWorkout = RealmWorkout()
+        realmWorkout.workoutDate = Date() // set the workoutDate to current date
+        realmWorkout.startTime = Date() // set startTime to current time, replace with actual startTime
+        realmWorkout.endTime = Date() // set endTime to current time, replace with actual endTime
+
+        // Now, we loop over all workouts in setArray to create the RealmSet and RealmRep objects
+        for (setNum, workout) in setArray.enumerated() {
+            let realmSet = RealmSet()
+            realmSet.setNum = setNum + 1 // setNum in 1-indexed form
+            realmSet.exerciseName = workout.workoutArray.first?.exercise // replace this if multiple exercises can exist in a set
+            realmSet.numReps = workout.workoutArray.count
+
+            // For each rep in workout, create a RealmRep and append it to the current RealmSet
+            for (repNum, rep) in workout.workoutArray.enumerated() {
+                let realmRep = RealmRep()
+                realmRep.repNum = repNum + 1 // repNum in 1-indexed form
+                realmRep.repTime = rep.time
+                realmRep.minSquatDepth = rep.metricValues["minSquatDepth"] ?? 0.0
+
+                // Append the RealmRep to the current RealmSet
+                realmSet.reps.append(realmRep)
+            }
+
+            // After all reps in a workout have been processed, append the RealmSet to the current RealmWorkout
+            realmWorkout.sets.append(realmSet)
+        }
+
+        // Finally, write all data into Realm in a write transaction
+        do {
+            try realm.write {
+                realm.add(realmWorkout)
+            }
+        } catch {
+            print("Failed to write data into Realm: \(error)")
+        }
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let summaryVC = storyboard.instantiateViewController(withIdentifier: "SummaryVC") as! SummaryVC
+        summaryVC.realmWorkout = realmWorkout
+        self.present(summaryVC, animated: true, completion: nil)
     }
     
     
@@ -116,7 +163,7 @@ class ViewController: UIViewController {
         
         poseClassifier.onPoseCompleted = { pose, timeBetweenReps, metricValues in
             self.workout.addRep(exercise: pose, time: timeBetweenReps ?? 0.0, metricValues: metricValues)
-            print(self.workout.workoutArray)
+            //print(self.workout.workoutArray)
         }
         
         stopwatch.$elapsedTime
