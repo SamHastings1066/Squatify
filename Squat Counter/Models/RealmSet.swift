@@ -9,11 +9,11 @@ import Foundation
 import RealmSwift
 
 class RealmSet: Object {
-    @objc dynamic var setId: String = UUID().uuidString
-    @objc dynamic var setNum: Int = 0
-    @objc dynamic var numReps: Int = 0
-    @objc dynamic var exerciseName: String? = nil
-    @objc dynamic var weight: String = "air"
+    @Persisted var setId: String = UUID().uuidString
+    @Persisted var setNum: Int = 0
+    @Persisted var numReps: Int = 0
+    @Persisted var exerciseName: String? = nil
+    @Persisted var weight: String = "air"
     
     let reps = List<RealmRep>()
     let parentWorkout = LinkingObjects(fromType: RealmWorkout.self, property: "sets")

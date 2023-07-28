@@ -9,10 +9,10 @@ import Foundation
 import RealmSwift
 
 class RealmRep: Object {
-    @objc dynamic var repId: String = UUID().uuidString
-    @objc dynamic var repNum: Int = 0
-    @objc dynamic var repTime: Double = 0.0
-    @objc dynamic var minSquatDepth: Double = 0.0
+    @Persisted var repId: String = UUID().uuidString
+    @Persisted var repNum: Int = 0
+    @Persisted var repTime: Double = 0.0
+    @Persisted var minSquatDepth: Double = 0.0
 
     let parentSet = LinkingObjects(fromType: RealmSet.self, property: "reps")
 

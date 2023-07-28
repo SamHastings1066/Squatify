@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SquatVC.swift
 //  Squat Counter
 //
 //  Created by sam hastings on 08/07/2023.
@@ -13,7 +13,7 @@ import Combine
 import RealmSwift
 
 
-class ViewController: UIViewController {
+class SquatVC: UIViewController {
     
     
     
@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     private var lastFrame: CMSampleBuffer?
     
     private var workout = Workout()
+    private var startTime: Date?
     var setArray: [Workout] = []
     private var squat = Squat()
     private var stopwatch = Stopwatch()
@@ -32,6 +33,7 @@ class ViewController: UIViewController {
     private lazy var poseClassifier = PoseClassifier(exercises: [self.squat])
     private var repCount = 0
     private var isMonitoringPose = true
+    private let calendar = Calendar.current
     
     let synthesizer = AVSpeechSynthesizer()
     
@@ -85,65 +87,88 @@ class ViewController: UIViewController {
         setArray.append(workout)
         stopwatch.pause()
         isMonitoringPose = false
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let restOverlayer = storyboard.instantiateViewController(withIdentifier: "RestOverlayViewController") as! RestOverlayViewController
-        restOverlayer.delegate = self
-        restOverlayer.appear(sender: self)
+        // NAVIGATION
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let restOverlayer = storyboard.instantiateViewController(withIdentifier: "RestVC") as! RestVC
+//        restOverlayer.delegate = self
+//        restOverlayer.appear(sender: self)
+        performSegue(withIdentifier: "SquatToRestOverlay", sender: self)
+
     }
     
     @IBAction func stopButtonPushed(_ sender: UIButton) {
         isMonitoringPose = false
         stopwatch.stop()
-        // First, initialize a new Realm
-        let realm = try! Realm()
-
-        // Next, we create the RealmWorkout object
-        let realmWorkout = RealmWorkout()
-        realmWorkout.workoutDate = Date() // set the workoutDate to current date
-        realmWorkout.startTime = Date() // set startTime to current time, replace with actual startTime
-        realmWorkout.endTime = Date() // set endTime to current time, replace with actual endTime
-
-        // Now, we loop over all workouts in setArray to create the RealmSet and RealmRep objects
-        for (setNum, workout) in setArray.enumerated() {
-            let realmSet = RealmSet()
-            realmSet.setNum = setNum + 1 // setNum in 1-indexed form
-            realmSet.exerciseName = workout.workoutArray.first?.exercise // replace this if multiple exercises can exist in a set
-            realmSet.numReps = workout.workoutArray.count
-
-            // For each rep in workout, create a RealmRep and append it to the current RealmSet
-            for (repNum, rep) in workout.workoutArray.enumerated() {
-                let realmRep = RealmRep()
-                realmRep.repNum = repNum + 1 // repNum in 1-indexed form
-                realmRep.repTime = rep.time
-                realmRep.minSquatDepth = rep.metricValues["minSquatDepth"] ?? 0.0
-
-                // Append the RealmRep to the current RealmSet
-                realmSet.reps.append(realmRep)
-            }
-
-            // After all reps in a workout have been processed, append the RealmSet to the current RealmWorkout
-            realmWorkout.sets.append(realmSet)
-        }
-
-        // Finally, write all data into Realm in a write transaction
-        do {
-            try realm.write {
-                realm.add(realmWorkout)
-            }
-        } catch {
-            print("Failed to write data into Realm: \(error)")
-        }
+        self.hidesBottomBarWhenPushed = true
+        // NAVIGATION
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let summaryVC = storyboard.instantiateViewController(withIdentifier: "SummaryVC") as! SummaryVC
+//        summaryVC.realmWorkout = realmWorkout
+//        self.navigationController?.pushViewController(summaryVC, animated: true)
+        self.performSegue(withIdentifier: "SquatToSummary", sender: self)
+        self.hidesBottomBarWhenPushed = false
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let summaryVC = storyboard.instantiateViewController(withIdentifier: "SummaryVC") as! SummaryVC
-        summaryVC.realmWorkout = realmWorkout
-        self.present(summaryVC, animated: true, completion: nil)
     }
     
+    //MARK: - Navigation functions
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SquatToRestOverlay" {
+            let destinationVC = segue.destination as! RestVC
+            destinationVC.delegate = self
+            //destinationVC.appear(sender: self)
+        } else if segue.identifier == "SquatToSummary" {
+            let destinationVC = segue.destination as! SummaryVC
+            // First, initialize a new Realm
+            let realm = try! Realm()
+
+            // Next, we create the RealmWorkout object
+            let realmWorkout = RealmWorkout()
+            let today = Date()
+            realmWorkout.workoutDate = today // set the workoutDate to current date
+            realmWorkout.workoutDay = calendar.ordinality(of: .day, in: .era, for: today)
+            realmWorkout.startTime = startTime
+            realmWorkout.endTime = today
+
+            // Now, we loop over all workouts in setArray to create the RealmSet and RealmRep objects
+            for (setNum, workout) in setArray.enumerated() {
+                let realmSet = RealmSet()
+                realmSet.setNum = setNum + 1 // setNum in 1-indexed form
+                realmSet.exerciseName = workout.workoutArray.first?.exercise // replace this if multiple exercises can exist in a set
+                realmSet.numReps = workout.workoutArray.count
+
+                // For each rep in workout, create a RealmRep and append it to the current RealmSet
+                for (repNum, rep) in workout.workoutArray.enumerated() {
+                    let realmRep = RealmRep()
+                    realmRep.repNum = repNum + 1 // repNum in 1-indexed form
+                    realmRep.repTime = rep.time
+                    realmRep.minSquatDepth = rep.metricValues["minSquatDepth"] ?? 0.0
+
+                    // Append the RealmRep to the current RealmSet
+                    realmSet.reps.append(realmRep)
+                }
+
+                // After all reps in a workout have been processed, append the RealmSet to the current RealmWorkout
+                realmWorkout.sets.append(realmSet)
+            }
+
+            // Finally, write all data into Realm in a write transaction
+            do {
+                try realm.write {
+                    realm.add(realmWorkout)
+                }
+            } catch {
+                print("Failed to write data into Realm: \(error)")
+            }
+            destinationVC.realmWorkout = realmWorkout
+        }
+    }
     
     //MARK: - UIViewController
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.hidesBackButton = true
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer.frame = cameraView.bounds
@@ -177,6 +202,8 @@ class ViewController: UIViewController {
                 .assign(to: \.text, on: stopwatchLabel)
                 .store(in: &cancellables)
         stopwatch.start()
+        
+        startTime = Date()
         
         
         
@@ -212,6 +239,8 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
         // This line will disable the idle timer (prevent the screen from auto-locking)
         UIApplication.shared.isIdleTimerDisabled = true
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -481,7 +510,7 @@ class ViewController: UIViewController {
 
 
 
-extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
+extension SquatVC: AVCaptureVideoDataOutputSampleBufferDelegate {
     
     func captureOutput(
         _ output: AVCaptureOutput,
@@ -514,7 +543,8 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     }
 }
 
-extension ViewController: RestOverlayViewControllerDelegate {
+// NAVIGATION
+extension SquatVC: RestVCDelegate {
     func didDismissOverlay() {
         self.stopwatch.continue()
         isMonitoringPose = true

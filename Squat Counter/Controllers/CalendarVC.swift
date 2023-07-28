@@ -7,18 +7,31 @@
 
 import UIKit
 import HorizonCalendar
+import RealmSwift
 
-final class CalendarVC: UIViewController {
+class CalendarVC: UIViewController {
+    
+    var workouts: Results<RealmWorkout>?
+    var filteredWorkouts: Results<RealmWorkout>?
+    var dateSelected: Date?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        overrideUserInterfaceStyle = .dark
+        
+        do {
+            let realm = try Realm()
+            workouts = realm.objects(RealmWorkout.self)
+        } catch let error as NSError {
+            print("Error loading Realm \(error.localizedDescription)")
+        }
+        
+        //overrideUserInterfaceStyle = .dark
         createCalendar()
     }
     
     private func createCalendar(){
-        //HorizonCalender approach
         let calendar = Calendar.current
+        let dummyDate = calendar.date(from: DateComponents(year: 2023, month: 8, day: 22))!
         let startDate = calendar.date(from: DateComponents(year:  2023, month: 1, day: 1))!
         let endDate = calendar.date(from: DateComponents(year:  2023, month: 12, day: 31))!
         let content = CalendarViewContent(
@@ -27,13 +40,73 @@ final class CalendarVC: UIViewController {
             monthsLayout: .vertical(options: VerticalMonthsLayoutOptions())
         )
             .interMonthSpacing(10)
-            //.overlayItemProvider(for: <#T##Set<CalendarViewContent.OverlaidItemLocation>#>, <#T##overlayItemProvider: (CalendarViewContent.OverlayLayoutContext) -> AnyCalendarItemModel##(CalendarViewContent.OverlayLayoutContext) -> AnyCalendarItemModel##(_ overlayLayoutContext: CalendarViewContent.OverlayLayoutContext) -> AnyCalendarItemModel#>)
-            //.dayItemProvider(<#T##dayItemProvider: (Day) -> AnyCalendarItemModel##(Day) -> AnyCalendarItemModel##(_ day: Day) -> AnyCalendarItemModel#>)
-        let calendarView = CalendarView(initialContent: content)
-        calendarView.daySelectionHandler = {day in
-            let output = "Selected: " + String(describing: day.components)
-            print(output)
+            .dayItemProvider { day in
+                
+                var content = DayLabel.Content(day: day, textColor: .black)  // Default textColor to blue
+                
+//                var invariantViewProperties = DayLabel.InvariantViewProperties(
+//                    font: UIFont.systemFont(ofSize: 18),
+//                    //textColor: .darkGray,
+//                    backgroundColor: .clear)
+//
+//
+//                let date = calendar.date(from: DateComponents(year: day.components.year, month: day.components.month, day: day.components.day))!
+//                if date == dummyDate {
+//                    content.textColor = .systemGreen  // Change textColor to blue if it's the dummyDate
+//                }
+                let dateComponents = DateComponents(year: day.components.year,
+                                                    month: day.components.month,
+                                                    day: day.components.day)
+//                if let date = calendar.date(from: dateComponents) {
+//                    // Truncate date to beginning of day to align with workoutDate.
+//                    let startOfDay = calendar.startOfDay(for: date)
+//
+//                    // Look for a workout that matches the current day.
+//                    if let loadedWorkouts = self.workouts {
+//                        if loadedWorkouts.contains(where: { workout in
+//                            guard let workoutDate = workout.workoutDate else { return false }
+//                            let workoutStartOfDay = calendar.startOfDay(for: workoutDate)
+//                            return workoutStartOfDay == startOfDay
+//                        }) {
+//                            content.textColor = .systemGreen  // Change textColor if there's a workout on this day
+//                        }
+//                    }
+//                }
+                if let date = calendar.date(from: dateComponents),
+                       let ordinalDay = calendar.ordinality(of: .day, in: .era, for: date) {
+                            if let loadedWorkouts = self.workouts {
+                                let matchingWorkouts = loadedWorkouts.filter("workoutDay == %@", ordinalDay)
+                                if !matchingWorkouts.isEmpty {
+                                    content.textColor = .systemGreen  // Change textColor if there's a workout on this day
+                                }
+                            }
+                    }
+
+                return DayLabel.calendarItemModel(
+                        invariantViewProperties: .init(font: UIFont.systemFont(ofSize: 18), backgroundColor: .clear),
+                        viewModel: content)
         }
+            
+        let calendarView = CalendarView(initialContent: content)
+        calendarView.daySelectionHandler = { [weak self] day in
+            
+            let dateComponents = DateComponents(year: day.components.year,
+                                                month: day.components.month,
+                                                day: day.components.day)
+            if let date = calendar.date(from: dateComponents),
+                   let ordinalDay = calendar.ordinality(of: .day, in: .era, for: date) {
+                self?.dateSelected = date
+                if let loadedWorkouts = self?.workouts {
+                    self?.filteredWorkouts = loadedWorkouts.filter("workoutDay == %@", ordinalDay)
+                    
+                }
+                
+            }
+            // NAVIGATION
+            //self?.performSegue(withIdentifier: "showDaySummary", sender: self)
+            
+        }
+        
         
         // add calendar to our view hierarchy
         view.addSubview(calendarView)
@@ -47,35 +120,21 @@ final class CalendarVC: UIViewController {
         
         ])
         
-        // UICalenderView approach
-//        view.backgroundColor = .black
-//        let calendarView = UICalendarView()
-//        // Apply layout constraints
-//        calendarView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        //set calendar type
-//        calendarView.calendar = .current
-//        calendarView.locale = .current
-//        calendarView.fontDesign = .rounded // looks the nicest
-//        calendarView.delegate = self
-//
-//        // add calendar to our view hierarchy
-//        view.addSubview(calendarView)
-//
-//        // set some layout constraints
-//        NSLayoutConstraint.activate([
-//            calendarView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-//            calendarView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-//            calendarView.heightAnchor.constraint(equalToConstant: 300),
-//            calendarView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-//        ])
+
     }
+    
+    // NAVIGATION
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//            if segue.identifier == "showDaySummary" {
+//                if let daySummaryVC = segue.destination as? DaySummaryVC {
+//                    // pass your data here
+//                    daySummaryVC.filteredWorkouts = self.filteredWorkouts
+//                    daySummaryVC.dateSelected = self.dateSelected
+//                }
+//            }
+//        }
     
 
 }
 
-//extension CalendarVC: UICalendarViewDelegate {
-//    func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-//        return nil
-//    }
-//}
+

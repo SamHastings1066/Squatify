@@ -21,7 +21,22 @@ class SummaryVC: UIViewController {
     //MARK: - IBActions
     
     @IBAction func deleteButtonPushed(_ sender: Any) {
-        self.performSegue(withIdentifier: "ShowCalendarVC", sender: self)
+        // NAVIGATION
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let calendarVC = storyboard.instantiateViewController(withIdentifier: "CalendarVC") as! CalendarVC
+//        self.navigationController?.pushViewController(calendarVC, animated: true)
+        //self.performSegue(withIdentifier: "ShowCalendarVC", sender: self)
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: UIButton) {
+        self.navigationController?.tabBarController?.selectedIndex = 0
+        self.navigationController?.popToRootViewController(animated: false)
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override func viewDidLoad() {

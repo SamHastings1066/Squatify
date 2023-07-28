@@ -20,7 +20,6 @@ class CountdownTimer {
     // This function starts the timer
     func start(completion: @escaping () -> Void) {
         self.completionHandler = completion
-        
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             if self.timeRemaining > 0 {
                 self.timeRemaining -= 1
