@@ -23,6 +23,7 @@
 		8447B7B42A66CAAD000C6A59 /* RestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8447B7B32A66CAAD000C6A59 /* RestVC.swift */; };
 		8448B3D92A6830F20086A9FE /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8448B3D82A6830F20086A9FE /* CountdownTimer.swift */; };
 		847C895C2A71FB0800261156 /* DaySummaryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847C895B2A71FB0800261156 /* DaySummaryVC.swift */; };
+		8480B15D2A74B1DF002ED2FE /* WorkoutDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480B15C2A74B1DF002ED2FE /* WorkoutDetailVC.swift */; };
 		8483CDCC2A6033A90018D5DB /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483CDCB2A6033A90018D5DB /* Exercise.swift */; };
 		8483CDCF2A6033C00018D5DB /* Squat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483CDCE2A6033C00018D5DB /* Squat.swift */; };
 		8483CDD12A6038830018D5DB /* Metric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483CDD02A6038830018D5DB /* Metric.swift */; };
@@ -89,6 +90,7 @@
 		8447B7B32A66CAAD000C6A59 /* RestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestVC.swift; sourceTree = "<group>"; };
 		8448B3D82A6830F20086A9FE /* CountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
 		847C895B2A71FB0800261156 /* DaySummaryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySummaryVC.swift; sourceTree = "<group>"; };
+		8480B15C2A74B1DF002ED2FE /* WorkoutDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailVC.swift; sourceTree = "<group>"; };
 		8483CDCB2A6033A90018D5DB /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 		8483CDCE2A6033C00018D5DB /* Squat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squat.swift; sourceTree = "<group>"; };
 		8483CDD02A6038830018D5DB /* Metric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metric.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				8440C0452A6E08EF0068308E /* SummaryVC.swift */,
 				849903C52A706F2D0086A9FB /* CalendarVC.swift */,
 				847C895B2A71FB0800261156 /* DaySummaryVC.swift */,
+				8480B15C2A74B1DF002ED2FE /* WorkoutDetailVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -616,6 +619,7 @@
 			files = (
 				849C2C852A59C85A00FD039B /* SquatVC.swift in Sources */,
 				849903BF2A6F2FA50086A9FB /* RealmWorkout.swift in Sources */,
+				8480B15D2A74B1DF002ED2FE /* WorkoutDetailVC.swift in Sources */,
 				8440C0442A6E06180068308E /* Constants.swift in Sources */,
 				8483CDCC2A6033A90018D5DB /* Exercise.swift in Sources */,
 				847C895C2A71FB0800261156 /* DaySummaryVC.swift in Sources */,

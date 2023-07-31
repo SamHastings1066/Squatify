@@ -8,15 +8,25 @@
 import Foundation
 import RealmSwift
 
+//class RealmRep: Object {
+//    @Persisted var repId: String = UUID().uuidString
+//    @Persisted var repNum: Int = 0
+//    @Persisted var repTime: Double = 0.0
+//    @Persisted var minSquatDepth: Double = 0.0
+//
+//    let parentSet = LinkingObjects(fromType: RealmSet.self, property: "reps")
+//
+//    override static func primaryKey() -> String? {
+//        return "repId"
+//    }
+//}
+
 class RealmRep: Object {
-    @Persisted var repId: String = UUID().uuidString
+    @Persisted(primaryKey: true) var repId: String = UUID().uuidString
     @Persisted var repNum: Int = 0
     @Persisted var repTime: Double = 0.0
     @Persisted var minSquatDepth: Double = 0.0
+    @Persisted(originProperty: "reps") var parentSet: LinkingObjects<RealmSet>
 
-    let parentSet = LinkingObjects(fromType: RealmSet.self, property: "reps")
-
-    override static func primaryKey() -> String? {
-        return "repId"
-    }
+    //let parentSet = LinkingObjects(fromType: RealmSet.self, property: "reps")
 }

@@ -39,14 +39,7 @@ class SquatVC: UIViewController {
     
     
     
-    //    private lazy var previewOverlayView: UIImageView = {
-    //
-    //      precondition(isViewLoaded)
-    //      let previewOverlayView = UIImageView(frame: .zero)
-    //      previewOverlayView.contentMode = UIView.ContentMode.scaleAspectFill
-    //      previewOverlayView.translatesAutoresizingMaskIntoConstraints = false
-    //      return previewOverlayView
-    //    }()
+
     
     private lazy var annotationOverlayView: UIView = {
         precondition(isViewLoaded)
@@ -77,8 +70,7 @@ class SquatVC: UIViewController {
     //MARK: - IBActions
        
     @IBAction func restButtonPushed(_ sender: Any) {
-        //print(workout.workoutArray)
-        // Reset repCount
+        self.hidesBottomBarWhenPushed = true
         repCount = 0
         self.repCountLabel.text = "0"
         // Create new workout
@@ -87,11 +79,6 @@ class SquatVC: UIViewController {
         setArray.append(workout)
         stopwatch.pause()
         isMonitoringPose = false
-        // NAVIGATION
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let restOverlayer = storyboard.instantiateViewController(withIdentifier: "RestVC") as! RestVC
-//        restOverlayer.delegate = self
-//        restOverlayer.appear(sender: self)
         performSegue(withIdentifier: "SquatToRestOverlay", sender: self)
 
     }
@@ -118,6 +105,7 @@ class SquatVC: UIViewController {
             destinationVC.delegate = self
             //destinationVC.appear(sender: self)
         } else if segue.identifier == "SquatToSummary" {
+            print(setArray[0].workoutArray.count)
             let destinationVC = segue.destination as! SummaryVC
             // First, initialize a new Realm
             let realm = try! Realm()
@@ -137,7 +125,7 @@ class SquatVC: UIViewController {
                 realmSet.exerciseName = workout.workoutArray.first?.exercise // replace this if multiple exercises can exist in a set
                 realmSet.numReps = workout.workoutArray.count
 
-                // For each rep in workout, create a RealmRep and append it to the current RealmSet
+//                // For each rep in workout, create a RealmRep and append it to the current RealmSet
                 for (repNum, rep) in workout.workoutArray.enumerated() {
                     let realmRep = RealmRep()
                     realmRep.repNum = repNum + 1 // repNum in 1-indexed form
@@ -156,6 +144,13 @@ class SquatVC: UIViewController {
             do {
                 try realm.write {
                     realm.add(realmWorkout)
+                    // Also add each set and each rep to the Realm
+//                    for set in realmWorkout.sets {
+//                        realm.add(set)
+//                        for rep in set.reps {
+//                            realm.add(rep)
+//                        }
+//                    }
                 }
             } catch {
                 print("Failed to write data into Realm: \(error)")
@@ -328,20 +323,20 @@ class SquatVC: UIViewController {
                         
                         
                         DispatchQueue.main.async {
-                            do {
-                                let leftFemurAngle = try self.featureEmbedder.leftFemurAngle()
-                                let leftHipAngle = try self.featureEmbedder.leftHipAngle()
-                                let leftKneeAngle = try self.featureEmbedder.leftKneeAngle()
-                                let squatCount = self.workout.workoutArray.count
-                                self.repCountLabel.text = String(squatCount)
-                                self.wristALabel.text = "Squats: \(Int(squatCount))"
-                                self.wristXLabel.text = "Fem: \(Int(leftFemurAngle))"
-                                self.wristYLabel.text = "Hip: \(Int(leftHipAngle))"
-                                self.wristZLabel.text = "Kne: \(Int(leftKneeAngle))"
-                            } catch {
-                                print("Error calculating left femur angle: \(error)")
-                                // Handle the error as appropriate for your app.
-                            }
+                            let squatCount = self.workout.workoutArray.count
+                            self.repCountLabel.text = String(squatCount)
+//                            do {
+//                                let leftFemurAngle = try self.featureEmbedder.leftFemurAngle()
+//                                let leftHipAngle = try self.featureEmbedder.leftHipAngle()
+//                                let leftKneeAngle = try self.featureEmbedder.leftKneeAngle()
+//                                self.wristALabel.text = "Squats: \(Int(squatCount))"
+//                                self.wristXLabel.text = "Fem: \(Int(leftFemurAngle))"
+//                                self.wristYLabel.text = "Hip: \(Int(leftHipAngle))"
+//                                self.wristZLabel.text = "Kne: \(Int(leftKneeAngle))"
+//                            } catch {
+//                                print("Error calculating left femur angle: \(error)")
+//                                // Handle the error as appropriate for your app.
+//                            }
                         }
                     }
                     

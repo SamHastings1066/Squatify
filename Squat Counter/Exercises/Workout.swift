@@ -10,6 +10,7 @@ import RealmSwift
 
 class Workout {
     var workoutArray: [Rep]
+    var weightOnBar = 0
 
     init(workoutArray: [Rep] = []) {
         self.workoutArray = workoutArray
