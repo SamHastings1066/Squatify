@@ -14,7 +14,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let config = Realm.Configuration(
+          schemaVersion: 1, // Increment this number as needed
+          migrationBlock: { migration, oldSchemaVersion in
+            // Check if we need to apply this migration
+            if (oldSchemaVersion < 1) {
+              migration.enumerateObjects(ofType: RealmSet.className()) { oldObject, newObject in
+                // Apply the default value for hasBeenEditted
+                newObject?["hasBeenEditted"] = false
+              }
+            }
+          })
+
+        // Tell Realm to use this new configuration object for the default Realm
+        Realm.Configuration.defaultConfiguration = config
+        
         
         
 //        let dummyData = DummyModel()

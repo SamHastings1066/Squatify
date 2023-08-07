@@ -37,9 +37,12 @@ class SquatVC: UIViewController {
     
     let synthesizer = AVSpeechSynthesizer()
     
+    // Workout parameters
+    var restInterval = 60
+    var repTarget = 0
+    var setTarget = 0
+    var weightOnBar = 0
     
-    
-
     
     private lazy var annotationOverlayView: UIView = {
         precondition(isViewLoaded)
@@ -70,42 +73,46 @@ class SquatVC: UIViewController {
     //MARK: - IBActions
        
     @IBAction func restButtonPushed(_ sender: Any) {
+        resetWorkout()
+    }
+    
+    @IBAction func stopButtonPushed(_ sender: UIButton) {
+        self.stopWorkout()
+    }
+    
+    
+    //MARK: - Navigation functions
+    
+    func resetWorkout() {
         self.hidesBottomBarWhenPushed = true
         repCount = 0
         self.repCountLabel.text = "0"
-        // Create new workout
         workout = Workout()
-        // Append to setArray
         setArray.append(workout)
         stopwatch.pause()
         isMonitoringPose = false
         performSegue(withIdentifier: "SquatToRestOverlay", sender: self)
-
     }
     
-    @IBAction func stopButtonPushed(_ sender: UIButton) {
+    func stopWorkout() {
         isMonitoringPose = false
         stopwatch.stop()
         self.hidesBottomBarWhenPushed = true
-        // NAVIGATION
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let summaryVC = storyboard.instantiateViewController(withIdentifier: "SummaryVC") as! SummaryVC
-//        summaryVC.realmWorkout = realmWorkout
-//        self.navigationController?.pushViewController(summaryVC, animated: true)
         self.performSegue(withIdentifier: "SquatToSummary", sender: self)
         self.hidesBottomBarWhenPushed = false
-        
     }
-    
-    //MARK: - Navigation functions
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SquatToRestOverlay" {
             let destinationVC = segue.destination as! RestVC
             destinationVC.delegate = self
+            destinationVC.initialRestInterval = restInterval
+            destinationVC.repTarget = repTarget
+            destinationVC.setTarget = setTarget
+            destinationVC.weightOnBar = weightOnBar
+            destinationVC.setsCompleted = setArray.count - 1
             //destinationVC.appear(sender: self)
         } else if segue.identifier == "SquatToSummary" {
-            print(setArray[0].workoutArray.count)
             let destinationVC = segue.destination as! SummaryVC
             // First, initialize a new Realm
             let realm = try! Realm()
@@ -124,6 +131,7 @@ class SquatVC: UIViewController {
                 realmSet.setNum = setNum + 1 // setNum in 1-indexed form
                 realmSet.exerciseName = workout.workoutArray.first?.exercise // replace this if multiple exercises can exist in a set
                 realmSet.numReps = workout.workoutArray.count
+                realmSet.weightLbs = workout.weightOnBar
 
 //                // For each rep in workout, create a RealmRep and append it to the current RealmSet
                 for (repNum, rep) in workout.workoutArray.enumerated() {
@@ -299,6 +307,34 @@ class SquatVC: UIViewController {
                                 return result + workout.workoutArray.count
                             }
                             totalRepsLabel.text = String(totalReps)
+                            DispatchQueue.main.async {
+                                let squatCount = self.workout.workoutArray.count
+                                let setCount = self.setArray.count
+                                self.repCountLabel.text = String(squatCount)
+                                if self.repTarget != 0 {
+                                    if squatCount == self.repTarget {
+                                        if self.setTarget != 0 && self.setTarget == setCount {
+                                            self.stopWorkout()
+                                        } else {
+                                            self.resetWorkout()
+                                        }
+                                        
+                                    }
+                                }
+    //                            do {
+    //                                let leftFemurAngle = try self.featureEmbedder.leftFemurAngle()
+    //                                let leftHipAngle = try self.featureEmbedder.leftHipAngle()
+    //                                let leftKneeAngle = try self.featureEmbedder.leftKneeAngle()
+    //                                self.wristALabel.text = "Squats: \(Int(squatCount))"
+    //                                self.wristXLabel.text = "Fem: \(Int(leftFemurAngle))"
+    //                                self.wristYLabel.text = "Hip: \(Int(leftHipAngle))"
+    //                                self.wristZLabel.text = "Kne: \(Int(leftKneeAngle))"
+    //                            } catch {
+    //                                print("Error calculating left femur angle: \(error)")
+    //                                // Handle the error as appropriate for your app.
+    //                            }
+                            }
+                            
                         }
                         
                         //print("getting here")
@@ -322,22 +358,7 @@ class SquatVC: UIViewController {
                         strongSelf.annotationOverlayView.addSubview(poseOverlayView)
                         
                         
-                        DispatchQueue.main.async {
-                            let squatCount = self.workout.workoutArray.count
-                            self.repCountLabel.text = String(squatCount)
-//                            do {
-//                                let leftFemurAngle = try self.featureEmbedder.leftFemurAngle()
-//                                let leftHipAngle = try self.featureEmbedder.leftHipAngle()
-//                                let leftKneeAngle = try self.featureEmbedder.leftKneeAngle()
-//                                self.wristALabel.text = "Squats: \(Int(squatCount))"
-//                                self.wristXLabel.text = "Fem: \(Int(leftFemurAngle))"
-//                                self.wristYLabel.text = "Hip: \(Int(leftHipAngle))"
-//                                self.wristZLabel.text = "Kne: \(Int(leftKneeAngle))"
-//                            } catch {
-//                                print("Error calculating left femur angle: \(error)")
-//                                // Handle the error as appropriate for your app.
-//                            }
-                        }
+                        
                     }
                     
                 }
@@ -540,7 +561,11 @@ extension SquatVC: AVCaptureVideoDataOutputSampleBufferDelegate {
 
 // NAVIGATION
 extension SquatVC: RestVCDelegate {
-    func didDismissOverlay() {
+    func didDismissOverlay(repTarget: Int, setTarget: Int, weightOnBar: Int) {
+        self.repTarget = repTarget
+        self.setTarget = setTarget
+        self.weightOnBar = weightOnBar
+        self.workout.weightOnBar = weightOnBar
         self.stopwatch.continue()
         isMonitoringPose = true
         setLabel.text = String(setArray.count)

@@ -18,8 +18,8 @@ class WorkoutDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         workoutTableView.dataSource = self
-//        print(selectedWorkout?.workoutId)
-//        print(selectedWorkout?.sets.count ?? 0)
+        workoutTableView.rowHeight = 80.0
+
     }
     
 
@@ -35,13 +35,20 @@ extension WorkoutDetailVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WorkoutCell", for: indexPath)
-        var content = cell.defaultContentConfiguration()
+        //var content = cell.defaultContentConfiguration()
+        var content = UIListContentConfiguration.valueCell()
+        var weightString: String?
         if let currentSet = selectedWorkout?.sets[indexPath.row] {
-            content.text = "\(currentSet.numReps) x \(currentSet.weight) \(currentSet.exerciseName ?? "no exercise")s"
+            if currentSet.weightLbs != 0 {
+                weightString = "\(currentSet.weightLbs)lbs"
+            }
+            content.text = "\(currentSet.numReps) x \(weightString ?? "bodyweight") \(currentSet.exerciseName ?? "no exercise")s"
+            content.secondaryText = "Details"
             content.image = UIImage(systemName: "dumbbell")
             // Customize appearance.
             content.imageProperties.tintColor = .orange
             content.textProperties.color = .white
+            content.secondaryTextProperties.color = .gray
         }
         cell.contentConfiguration = content
         return cell

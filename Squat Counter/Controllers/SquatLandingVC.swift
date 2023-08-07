@@ -48,6 +48,16 @@ class SquatLandingVC: UIViewController {
 
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SquatSegue" {
+            let destinationVC = segue.destination as! SquatVC
+            destinationVC.repTarget = repTarget
+            destinationVC.setTarget = setTarget
+            destinationVC.weightOnBar = weightOnBar
+            destinationVC.restInterval = restInterval
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -222,8 +232,9 @@ extension SquatLandingVC: UIPickerViewDelegate, UIPickerViewDataSource {
                 } else {
                     secs =  restData[component][row]
                 }
-                let duration = Duration.seconds(mins * 60 + secs)
-            let format = duration.formatted(.time(pattern: .minuteSecond(padMinuteToLength: 2)))
+                restInterval = mins * 60 + secs
+                let duration = Duration.seconds(restInterval)
+                let format = duration.formatted(.time(pattern: .minuteSecond(padMinuteToLength: 2)))
                 restTargetTextfield.text = format
                 //restTargetTextfield.resignFirstResponder()
             default:

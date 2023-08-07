@@ -9,7 +9,7 @@ import UIKit
 
 
 protocol RestVCDelegate: AnyObject {
-    func didDismissOverlay()
+    func didDismissOverlay(repTarget: Int, setTarget: Int, weightOnBar: Int)
 }
 
 class RestVC: UIViewController {
@@ -19,6 +19,11 @@ class RestVC: UIViewController {
     var countdown: CountdownTimer?
     let formatter = DateComponentsFormatter()
     var timer: Timer?
+    var initialRestInterval: Int?
+    var repTarget = 10
+    var setTarget = 10
+    var weightOnBar = 100
+    var setsCompleted = 5
     
     
     
@@ -28,8 +33,22 @@ class RestVC: UIViewController {
     @IBOutlet weak var countdownTimer: UILabel!
     @IBOutlet weak var contentView: UIView!
     
+    @IBOutlet weak var setCompletedLabel: UILabel!
+    @IBOutlet weak var remainingSetsLabel: UILabel!
+    @IBOutlet weak var targetRepsLabel: UILabel!
+    @IBOutlet weak var weightOnBarLabel: UILabel!
+    
     @IBOutlet weak var reduceButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
+    
+    @IBOutlet weak var fewerSetsButton: UIButton!
+    @IBOutlet weak var moreSetsButton: UIButton!
+    
+    @IBOutlet weak var fewerRepsButton: UIButton!
+    @IBOutlet weak var moreRepsButton: UIButton!
+    
+    @IBOutlet weak var lessWeightButton: UIButton!
+    @IBOutlet weak var moreWeightButton: UIButton!
     
     //MARK: - IBActions
     
@@ -39,11 +58,73 @@ class RestVC: UIViewController {
     @IBAction func addRestButton(_ sender: Any) {
         countdown?.adjustRemainingTime(secondsDelta: 10)
     }
+    
+    @IBAction func fewerSetsButtonTapped(_ sender: UIButton) {
+        if setTarget - setsCompleted > 0 {
+            setTarget -= 1
+            if setTarget - setsCompleted == 0 {
+                remainingSetsLabel.text = "No set target"
+            } else if setTarget - setsCompleted == 1 {
+                remainingSetsLabel.text = "\(setTarget-setsCompleted) more set"
+            } else {
+                remainingSetsLabel.text = "\(setTarget-setsCompleted) more sets"
+            }
+        }
+    }
+    
+    @IBAction func moreSetsButtonTapped(_ sender: UIButton) {
+        if setTarget-setsCompleted < 1 {
+            setTarget = setsCompleted + 1
+            remainingSetsLabel.text = "\(setTarget-setsCompleted) more set"
+        } else {
+            setTarget += 1
+            remainingSetsLabel.text = "\(setTarget-setsCompleted) more sets"
+        }
+        
+    }
+    
+    @IBAction func fewerRepsButtonTapped(_ sender: UIButton) {
+        if repTarget > 0 {
+            repTarget -= 1
+            if repTarget == 0 {
+                targetRepsLabel.text = "No target"
+            } else {
+                targetRepsLabel.text = "\(repTarget) reps"
+            }
+            
+        }
+        
+        
+    }
+    
+    @IBAction func moreRepsButtonTapped(_ sender: UIButton) {
+        repTarget += 1
+        targetRepsLabel.text = "\(repTarget) reps"
+    }
+    
+    @IBAction func lessWeightButtonTapped(_ sender: UIButton) {
+        if weightOnBar > 0 {
+            weightOnBar -= 5
+            if weightOnBar == 0 {
+                weightOnBarLabel.text = "Bodyweight"
+            } else {
+                weightOnBarLabel.text = "\(weightOnBar) lbs"
+            }
+            
+        }
+    }
+    
+    @IBAction func moreWeightButtonTapped(_ sender: UIButton) {
+        weightOnBar += 5
+        weightOnBarLabel.text = "\(weightOnBar) lbs"
+    }
+    
     @IBAction func dismissOverlayButton(_ sender: Any) {
         // NAVIGATION
         hide()
     }
     
+    //MARK: - View Controller
     
     
     required init?(coder: NSCoder) {
@@ -54,27 +135,42 @@ class RestVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
+        
+        setCompletedLabel.text = "Set #\(setsCompleted) complete"
+        remainingSetsLabel.text = (setTarget == 0 ? "No set target" : "\(setTarget-setsCompleted) more sets")
+        targetRepsLabel.text = (repTarget == 0 ? "No rep target" : "\(repTarget) reps")
+        weightOnBarLabel.text = (weightOnBar == 0 ? "Bodyweight" : "\(weightOnBar) lbs")
+        
+        
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .large)
         let largeSymbolImage = UIImage(systemName: "minus.circle.fill", withConfiguration: largeConfig)
         reduceButton.setImage(largeSymbolImage, for: .normal)
+        fewerSetsButton.setImage(largeSymbolImage, for: .normal)
+        fewerRepsButton.setImage(largeSymbolImage, for: .normal)
+        lessWeightButton.setImage(largeSymbolImage, for: .normal)
         let largeAddConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .large)
         let largeAddSymbolImage = UIImage(systemName: "plus.circle.fill", withConfiguration: largeAddConfig)
         addButton.setImage(largeAddSymbolImage, for: .normal)
+        moreSetsButton.setImage(largeAddSymbolImage, for: .normal)
+        moreRepsButton.setImage(largeAddSymbolImage, for: .normal)
+        moreWeightButton.setImage(largeAddSymbolImage, for: .normal)
+        
 
         configView()
-        countdown = CountdownTimer(time: 60)
+        countdown = CountdownTimer(time: initialRestInterval ?? 60)
         countdown?.start(completion: {
             // NAVIGATION
             self.hide()
         })
         // Timer to update UI label
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 //self.countdownTimer.text = String(self.countdown?.getTimeRemaining() ?? 0)
                 self.countdownTimer.text = self.formatter.string(from: TimeInterval(self.countdown?.getTimeRemaining() ?? 0))
             }
         }
+        self.countdownTimer.text = self.formatter.string(from: TimeInterval(initialRestInterval ?? 60))
         formatter.allowedUnits = [.minute, .second]
         formatter.zeroFormattingBehavior = .pad
     }
@@ -123,7 +219,7 @@ class RestVC: UIViewController {
             self.contentView.alpha = 0
         } completion: { _ in
             self.navigationController?.popViewController(animated: true)
-            self.delegate?.didDismissOverlay()
+            self.delegate?.didDismissOverlay(repTarget: self.repTarget, setTarget: self.setTarget, weightOnBar: self.weightOnBar)
         }
     }
 

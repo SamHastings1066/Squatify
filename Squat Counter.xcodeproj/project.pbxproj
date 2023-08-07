@@ -48,6 +48,7 @@
 		849C2C982A59C85B00FD039B /* Squat_CounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2C972A59C85B00FD039B /* Squat_CounterTests.swift */; };
 		849C2CA22A59C85B00FD039B /* Squat_CounterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2CA12A59C85B00FD039B /* Squat_CounterUITests.swift */; };
 		849C2CA42A59C85B00FD039B /* Squat_CounterUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C2CA32A59C85B00FD039B /* Squat_CounterUITestsLaunchTests.swift */; };
+		84B03E082A7C14E600A7428A /* EditWorkoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B03E072A7C14E600A7428A /* EditWorkoutVC.swift */; };
 		84C405BA2A5B300D0054FFF0 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C405B92A5B300D0054FFF0 /* UIUtilities.swift */; };
 		84C405BC2A5B32D30054FFF0 /* MLKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C405BB2A5B32D30054FFF0 /* MLKitExtensions.swift */; };
 		84E7B35E2A7161C000A77DD7 /* HorizonCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 84E7B35D2A7161C000A77DD7 /* HorizonCalendar */; };
@@ -119,6 +120,7 @@
 		849C2C9D2A59C85B00FD039B /* Squat CounterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Squat CounterUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		849C2CA12A59C85B00FD039B /* Squat_CounterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squat_CounterUITests.swift; sourceTree = "<group>"; };
 		849C2CA32A59C85B00FD039B /* Squat_CounterUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squat_CounterUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		84B03E072A7C14E600A7428A /* EditWorkoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorkoutVC.swift; sourceTree = "<group>"; };
 		84C405B92A5B300D0054FFF0 /* UIUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
 		84C405BB2A5B32D30054FFF0 /* MLKitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLKitExtensions.swift; sourceTree = "<group>"; };
 		84E7B35F2A717C2A00A77DD7 /* DayLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayLabel.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				849903C52A706F2D0086A9FB /* CalendarVC.swift */,
 				847C895B2A71FB0800261156 /* DaySummaryVC.swift */,
 				8480B15C2A74B1DF002ED2FE /* WorkoutDetailVC.swift */,
+				84B03E072A7C14E600A7428A /* EditWorkoutVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -625,6 +628,7 @@
 				847C895C2A71FB0800261156 /* DaySummaryVC.swift in Sources */,
 				8483CDCF2A6033C00018D5DB /* Squat.swift in Sources */,
 				849903C62A706F2D0086A9FB /* CalendarVC.swift in Sources */,
+				84B03E082A7C14E600A7428A /* EditWorkoutVC.swift in Sources */,
 				8483CDD72A6053370018D5DB /* Workout.swift in Sources */,
 				8409C8E92A61BA35009C728B /* UXUtils.swift in Sources */,
 				8448B3D92A6830F20086A9FE /* CountdownTimer.swift in Sources */,

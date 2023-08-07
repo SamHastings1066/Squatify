@@ -20,12 +20,12 @@ class SummaryVC: UIViewController {
     
     //MARK: - IBActions
     
-    @IBAction func deleteButtonPushed(_ sender: Any) {
-        // NAVIGATION
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let calendarVC = storyboard.instantiateViewController(withIdentifier: "CalendarVC") as! CalendarVC
-//        self.navigationController?.pushViewController(calendarVC, animated: true)
-        //self.performSegue(withIdentifier: "ShowCalendarVC", sender: self)
+    
+    @IBAction func editButtonTapped(_ sender: UIButton) {
+        self.hidesBottomBarWhenPushed = true
+        let destinationVC = EditWorkoutVC()
+        destinationVC.realmWorkout = realmWorkout
+        self.navigationController?.pushViewController(destinationVC, animated: true)
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
@@ -57,9 +57,13 @@ extension SummaryVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.repCellIdentifier, for: indexPath) as! RepTableCell
+        var weightString: String?
         
         if let workoutSet = workoutSets?[indexPath.row] {
-            cell.CellLabel.text = "\(workoutSet.numReps) x \(workoutSet.weight) \(workoutSet.exerciseName ?? "no exercise")s"
+            if workoutSet.weightLbs != 0 {
+                weightString = "\(workoutSet.weightLbs)lbs"
+            }
+            cell.CellLabel.text = "\(workoutSet.numReps) x \(weightString ?? "air") \(workoutSet.exerciseName ?? "no exercise")s"
         } else {
             cell.textLabel?.text = "No reps counted for this set."
         }

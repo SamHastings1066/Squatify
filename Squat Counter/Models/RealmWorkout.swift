@@ -8,20 +8,6 @@
 import Foundation
 import RealmSwift
 
-//class RealmWorkout: Object {
-//    @Persisted var workoutId: String = UUID().uuidString
-//    @Persisted var workoutDate: Date? = nil
-//    @Persisted var workoutDay: Int? = nil
-//    @Persisted var startTime: Date? = nil
-//    @Persisted var endTime: Date? = nil
-//
-//    let sets = List<RealmSet>()
-//
-//    override static func primaryKey() -> String? {
-//        return "workoutId"
-//    }
-//}
-
 class RealmWorkout: Object {
     @Persisted(primaryKey: true) var workoutId: String = UUID().uuidString
     @Persisted var workoutDate: Date? = nil
