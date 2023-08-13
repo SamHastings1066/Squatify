@@ -16,11 +16,6 @@ class EditWorkoutVC: UITableViewController {
     var currentEditingIndexPath: IndexPath?
     let exerciseNames = ["squat", "lunge"]
     var toolbar: UIToolbar?
-//    var temporaryChanges: [String:RealmSet] = [:]
-//    var saveButton = UIButton()
-//    var cancelButton = UIButton()
-    
-    
     let darkBlue = UIColor(red: 0/255, green: 18/255, blue: 37/255, alpha: 1)
     
     override func viewDidLoad() {
@@ -40,69 +35,20 @@ class EditWorkoutVC: UITableViewController {
         
         // Set the back button color to system orange
         navigationController?.navigationBar.tintColor = .orange
-        
-        
-//        // Add save button
-//        saveButton.setTitle("Save Changes", for: .normal)
-//        saveButton.backgroundColor = darkBlue
-//        saveButton.setTitleColor(.orange, for: .normal)
-//        saveButton.isEnabled = false
-//        saveButton.alpha = 0.5
-//        saveButton.addTarget(self, action: #selector(saveChanges), for: .touchUpInside)
-//        saveButton.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: 40) // Adjust the size as needed
-//        //saveButton.translatesAutoresizingMaskIntoConstraints = false
-//        let saveButtonItem = UIBarButtonItem(customView: saveButton)
-//
-//        // Add saveButtonItem to the toolbar
-//        navigationController?.toolbarItems = [saveButtonItem]
-//        navigationController?.setToolbarHidden(false, animated: false)
-        
-
-        //navigationController?.setToolbarHidden(false, animated: true)
-//        navigationController?.toolbar.addSubview(saveButton)
-//        navigationController?.toolbar.leadingAnchor.constraint(equalTo: saveButton.leadingAnchor).isActive = true
-//        navigationController?.toolbar.trailingAnchor.constraint(equalTo: saveButton.trailingAnchor).isActive = true
-//        tabBarController?.tabBar.topAnchor.constraint(equalTo: saveButton.bottomAnchor, constant: 30.0).isActive = true
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setToolbarHidden(false, animated: animated)
     }
+
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if self.isMovingFromParent {
-//            saveButton.isHidden = true
             navigationController?.setToolbarHidden(true, animated: true)
         }
     }
-    
-
-    
-//    @objc func saveChanges() {
-//        print("tapped")
-//        let realm = try! Realm()
-//
-//        try! realm.write {
-//            for (setId, set) in temporaryChanges {
-//                if let originalSet = realm.object(ofType: RealmSet.self, forPrimaryKey: setId) {
-//                    originalSet.exerciseName = set.exerciseName
-//                    originalSet.numReps = set.numReps
-//                    originalSet.weightLbs = set.weightLbs
-//                    originalSet.hasBeenEditted = true
-//                }
-//            }
-//        }
-//
-//
-//        // Clear temporary changes
-////        temporaryChanges.removeAll()
-//        navigationController?.setToolbarHidden(true, animated: true)
-//        self.navigationController?.popViewController(animated: true)
-//    }
     
  
     // MARK: - UITableViewDataSource Methods
@@ -114,8 +60,6 @@ class EditWorkoutVC: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3 // Three cells for exerciseName, numReps, weightLbs
     }
-    
-
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header")
@@ -159,10 +103,7 @@ class EditWorkoutVC: UITableViewController {
         pickerView.dataSource = self
         pickerView.delegate = self
         
-        //hide the buttons
-//        saveButton.isHidden = true
-//        saveButton.isEnabled = false
-//        saveButton.alpha = 0.5
+
         
         let cell = tableView.cellForRow(at: indexPath)
         cell?.contentView.backgroundColor = .gray // Change to the desired tap color
@@ -174,32 +115,15 @@ class EditWorkoutVC: UITableViewController {
 
         // Preselect the picker view's value
         let set = realmWorkout?.sets[indexPath.section]
-//        let tempSet = temporaryChanges[set?.setId ?? ""]
 
         switch indexPath.row {
         case 0:
-//            if let exerciseName = tempSet?.exerciseName, let index = exerciseNames.firstIndex(of: exerciseName) {
-//                pickerView.selectRow(index, inComponent: 0, animated: false)
-//            } else if let exerciseName = set?.exerciseName, let index = exerciseNames.firstIndex(of: exerciseName) {
-//                pickerView.selectRow(index, inComponent: 0, animated: false)
-//            }
             if let index = exerciseNames.firstIndex(of: (set?.exerciseName) ?? "squat") {
                 pickerView.selectRow(index, inComponent: 0, animated: false)
             }
-            
         case 1:
-//            if let numReps = tempSet?.numReps {
-//                pickerView.selectRow(numReps - 1, inComponent: 0, animated: false)
-//            } else {
-//                pickerView.selectRow(set!.numReps - 1, inComponent: 0, animated: false)
-//            }
             pickerView.selectRow(set!.numReps - 1, inComponent: 0, animated: false)
         case 2:
-//            if let weightLbs = tempSet?.weightLbs {
-//                pickerView.selectRow(weightLbs / 5, inComponent: 0, animated: false)
-//            } else {
-//                pickerView.selectRow(set!.weightLbs / 5, inComponent: 0, animated: false)
-//            }
             pickerView.selectRow(set!.weightLbs / 5, inComponent: 0, animated: false)
         default: break
         }
@@ -237,18 +161,12 @@ class EditWorkoutVC: UITableViewController {
         // Add the toolbar and picker view to the view hierarchy
         view.addSubview(toolbar)
         view.addSubview(pickerView)
+        
     }
     
 
     @objc func donePicker() {
-        //show the buttons
-//        cancelButton.isHidden = false
-//        saveButton.isHidden = false
         dismissCurrentPicker()
-//        if temporaryChanges.count > 0 {
-//            saveButton.isEnabled = true
-//            saveButton.alpha = 1.0
-//        }
     }
     
     func dismissCurrentPicker() {
@@ -289,10 +207,11 @@ extension EditWorkoutVC: UIPickerViewDelegate, UIPickerViewDataSource {
         case 1:
             title = "\(row + 1)"
         case 2:
-             title = "\(row * 5)"
+            title = "\(row * 5)"
         default:
-                title = "Data not found"
+            title = "Data not found"
         }
+        print("pickerview opened")
         return NSAttributedString(string: title, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
     }
     
@@ -300,24 +219,7 @@ extension EditWorkoutVC: UIPickerViewDelegate, UIPickerViewDataSource {
     // updates the relevant RealmSet and then reloads the tableView with the updated realmSet Values
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         guard let indexPath = currentEditingIndexPath, let set = realmWorkout?.sets[indexPath.section] else {return}
-//        let tempSet = temporaryChanges[set.setId] ?? RealmSet(value: set)
         var valueSelected: String?
-//        switch indexPath.row{
-//        case 0:
-////            tempSet.exerciseName = exerciseNames[row]
-//            valueSelected = exerciseNames[row]
-//            set.exerciseName = exerciseNames[row]
-//        case 1:
-////            tempSet.numReps = row + 1
-//            valueSelected = "\(row + 1)"
-//            set.numReps = row + 1
-//        case 2:
-////            tempSet.weightLbs = row * 5
-//            valueSelected = "\(row * 5)"
-//            set.weightLbs = row * 5
-//        default:
-//            break
-//        }
         do {
             let realm = try Realm()
             

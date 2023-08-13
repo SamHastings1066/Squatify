@@ -21,6 +21,8 @@ struct DayLabel: CalendarItemViewRepresentable {
     struct Content: Equatable {
         let day: Day
         var textColor: UIColor  // Variable textColor in Content
+        var layerBackgroundColour: CGColor
+        var layerBorderColour: CGColor
     }
     
     // The type of view that will be created by this view representable.
@@ -37,7 +39,6 @@ struct DayLabel: CalendarItemViewRepresentable {
 
         label.backgroundColor = invariantViewProperties.backgroundColor
         label.font = invariantViewProperties.font
-        //label.textColor = invariantViewProperties.textColor
 
         label.textAlignment = .center
         label.clipsToBounds = true
@@ -47,8 +48,15 @@ struct DayLabel: CalendarItemViewRepresentable {
     }
 
     static func setViewModel(_ viewModel: Content, on view: UILabel) {
-            view.text = "\(viewModel.day.day)"
-            view.textColor = viewModel.textColor
+
+        view.text = "\(viewModel.day.day)"
+        view.textColor = viewModel.textColor
+        view.layer.backgroundColor = viewModel.layerBackgroundColour
+        view.layer.borderWidth = 4
+        view.layer.cornerRadius = 23 // change this from hard coded to progrzmmatic
+        view.layer.borderColor = viewModel.layerBorderColour
+        
+        
     }
 
 }

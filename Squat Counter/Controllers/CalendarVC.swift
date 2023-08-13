@@ -19,6 +19,11 @@ class CalendarVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .black
+        
+        navigationItem.titleView?.tintColor = .white
+        navigationItem.titleView?.backgroundColor = .black
+        
         do {
             let realm = try Realm()
             workouts = realm.objects(RealmWorkout.self)
@@ -41,7 +46,7 @@ class CalendarVC: UIViewController {
             print("Error loading Realm \(error.localizedDescription)")
         }
         
-        //overrideUserInterfaceStyle = .dark
+        overrideUserInterfaceStyle = .dark
         //createCalendar()
     }
     
@@ -61,6 +66,7 @@ class CalendarVC: UIViewController {
     private func createCalendar(){
         let calendar = Calendar.current
         let startDate = calendar.date(from: DateComponents(year:  2023, month: 7, day: 1))!
+        let todaysDate = Date()
         let endDate = calendar.date(from: DateComponents(year:  2023, month: 12, day: 31))!
         let content = CalendarViewContent(
             calendar: calendar,
@@ -68,12 +74,12 @@ class CalendarVC: UIViewController {
             monthsLayout: .vertical(options: VerticalMonthsLayoutOptions())
         )
             .interMonthSpacing(10)
-//            .dayOfWeekItemProvider({ month, weekdayIndex in
-//
-//            })
+            .verticalDayMargin(8)
+            .horizontalDayMargin(8)
             .dayItemProvider { day in
                 
-                var content = DayLabel.Content(day: day, textColor: .black)  // Default textColor to blue
+                
+                var content = DayLabel.Content(day: day, textColor: .white, layerBackgroundColour: UIColor.black.cgColor, layerBorderColour: UIColor.black.cgColor)  // Default textColor to white
                 
 
                 let dateComponents = DateComponents(year: day.components.year,
@@ -83,9 +89,12 @@ class CalendarVC: UIViewController {
                 if let date = calendar.date(from: dateComponents),
                        let ordinalDay = calendar.ordinality(of: .day, in: .era, for: date) {
                             if let loadedWorkouts = self.workouts {
+                                // filter for all workouts on the current date
                                 let matchingWorkouts = loadedWorkouts.filter("workoutDay == %@", ordinalDay)
+                                // if there are any workouts on the current date, colour the date orange
                                 if !matchingWorkouts.isEmpty {
                                     content.textColor = .orange  // Change textColor if there's a workout on this day
+                                    content.layerBorderColour = UIColor.orange.cgColor
                                 }
                             }
                     }
@@ -93,9 +102,14 @@ class CalendarVC: UIViewController {
                 return DayLabel.calendarItemModel(
                         invariantViewProperties: .init(font: UIFont.systemFont(ofSize: 18), backgroundColor: .clear),
                         viewModel: content)
-        }
+            }
+
             
         let calendarView = CalendarView(initialContent: content)
+        calendarView.scroll(
+          toDayContaining: todaysDate,
+          scrollPosition: .centered,
+          animated: true)
         calendarView.daySelectionHandler = { [weak self] day in
             
             let dateComponents = DateComponents(year: day.components.year,
@@ -128,12 +142,5 @@ class CalendarVC: UIViewController {
             calendarView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         
         ])
-        
-
     }
-    
-    
-
 }
-
-

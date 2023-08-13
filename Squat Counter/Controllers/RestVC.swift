@@ -24,6 +24,8 @@ class RestVC: UIViewController {
     var setTarget = 10
     var weightOnBar = 100
     var setsCompleted = 5
+    var largeCountdownLabel: UILabel!
+
     
     
     
@@ -136,6 +138,29 @@ class RestVC: UIViewController {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
         
+        // Disable phone from going to sleep when app is idle
+        UIApplication.shared.isIdleTimerDisabled = true
+        
+        // Configure the large countdown text
+        largeCountdownLabel = UILabel()
+        largeCountdownLabel.font = UIFont.systemFont(ofSize: 400, weight: .bold) // Large font size
+        largeCountdownLabel.textColor = .white // White text
+        largeCountdownLabel.textAlignment = .center // Center aligned
+        largeCountdownLabel.adjustsFontSizeToFitWidth = true // Adjust font size to fit width
+        largeCountdownLabel.minimumScaleFactor = 0.2 // Set minimum scale factor
+        largeCountdownLabel.numberOfLines = 1 // Ensure the text stays in one line
+        largeCountdownLabel.isHidden = true // Initially hidden
+
+        self.view.addSubview(largeCountdownLabel)
+
+        // Constraints to center the label
+        largeCountdownLabel.translatesAutoresizingMaskIntoConstraints = false
+        largeCountdownLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        largeCountdownLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        largeCountdownLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        largeCountdownLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+
+        
         setCompletedLabel.text = "Set #\(setsCompleted) complete"
         remainingSetsLabel.text = (setTarget == 0 ? "No set target" : "\(setTarget-setsCompleted) more sets")
         targetRepsLabel.text = (repTarget == 0 ? "No rep target" : "\(repTarget) reps")
@@ -165,14 +190,37 @@ class RestVC: UIViewController {
         // Timer to update UI label
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
+            let remainingTime = self.countdown?.getTimeRemaining() ?? 0
             DispatchQueue.main.async {
                 //self.countdownTimer.text = String(self.countdown?.getTimeRemaining() ?? 0)
-                self.countdownTimer.text = self.formatter.string(from: TimeInterval(self.countdown?.getTimeRemaining() ?? 0))
+                self.countdownTimer.text = self.formatter.string(from: TimeInterval(remainingTime))
+                
+                // update the largeCountdownLabel text
+                if remainingTime == 0 {
+                    self.largeCountdownLabel.text = "GO!"
+                    self.largeCountdownLabel.isHidden = false }
+                else if remainingTime <= 3 {
+                    self.largeCountdownLabel.text = "\(remainingTime)"
+                    self.largeCountdownLabel.isHidden = false
+                } else {
+                    self.largeCountdownLabel.isHidden = true
+                }
             }
         }
         self.countdownTimer.text = self.formatter.string(from: TimeInterval(initialRestInterval ?? 60))
         formatter.allowedUnits = [.minute, .second]
         formatter.zeroFormattingBehavior = .pad
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.isIdleTimerDisabled = true
+    }
+
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        // UIApplication.shared.isIdleTimerDisabled = false
     }
     
     // NAVIGATION
@@ -213,6 +261,7 @@ class RestVC: UIViewController {
     
 
     func hide() {
+        largeCountdownLabel.isHidden = true
         timer?.invalidate()
         timer = nil
         UIView.animate(withDuration: 0, delay: 0.0, options: .curveEaseOut) {

@@ -23,6 +23,7 @@ class SummaryVC: UIViewController {
     
     @IBAction func editButtonTapped(_ sender: UIButton) {
         self.hidesBottomBarWhenPushed = true
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         let destinationVC = EditWorkoutVC()
         destinationVC.realmWorkout = realmWorkout
         self.navigationController?.pushViewController(destinationVC, animated: true)

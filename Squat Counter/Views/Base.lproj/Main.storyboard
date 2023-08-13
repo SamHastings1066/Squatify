@@ -57,7 +57,7 @@
         <!--Squats-->
         <scene sceneID="xTT-gS-sNX">
             <objects>
-                <navigationController id="I3v-uM-rya" sceneMemberID="viewController">
+                <navigationController id="I3v-uM-rya" customClass="SquatsNC" customModule="Squat_Counter" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Squats" image="dumbbell.fill" catalog="system" id="6J1-2o-7vU"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mMk-P6-Bru">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -336,7 +336,7 @@
         <!--SquatVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" userLabel="SquatVC" customClass="SquatVC" customModule="Squat_Counter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SquatVC" id="BYZ-38-t0r" userLabel="SquatVC" customClass="SquatVC" customModule="Squat_Counter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -386,6 +386,7 @@
                                                     </label>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="tintColor" systemColor="systemOrangeColor"/>
                                                 <constraints>
                                                     <constraint firstItem="7QY-o9-14F" firstAttribute="centerX" secondItem="iVi-3d-bDe" secondAttribute="centerX" id="KNn-Gw-ces"/>
                                                     <constraint firstAttribute="width" constant="120" id="cCs-ui-sCo"/>
@@ -889,12 +890,12 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="aMT-qy-hOI" userLabel="ButtonsStack">
-                                <rect key="frame" x="57.333333333333343" y="704.66666666666663" width="278.66666666666663" height="34.333333333333371"/>
+                                <rect key="frame" x="44.666666666666657" y="704.66666666666663" width="304" height="34.333333333333371"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FKH-Zc-LwR" userLabel="SaveWorkout">
-                                        <rect key="frame" x="0.0" y="0.0" width="129.33333333333334" height="34.333333333333336"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="142" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="Save Workout">
+                                        <buttonConfiguration key="configuration" style="tinted" title="Done">
                                             <backgroundConfiguration key="background"/>
                                             <color key="baseForegroundColor" systemColor="systemOrangeColor"/>
                                         </buttonConfiguration>
@@ -903,9 +904,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LSd-Uj-Ygc" userLabel="Edit Workout">
-                                        <rect key="frame" x="149.33333333333331" y="0.0" width="129.33333333333331" height="34.333333333333336"/>
+                                        <rect key="frame" x="162" y="0.0" width="142" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="Edit Workout">
+                                        <buttonConfiguration key="configuration" style="tinted" title="Delete Workout">
                                             <backgroundConfiguration key="background"/>
                                             <color key="baseForegroundColor" systemColor="systemOrangeColor"/>
                                         </buttonConfiguration>
@@ -942,7 +943,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="wqd-bp-0BY"/>
+        <segue reference="aB7-aM-P7p"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="calendar" catalog="system" width="128" height="107"/>
