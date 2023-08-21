@@ -84,24 +84,11 @@ class StartWorkoutTV: UITableViewController {
         view.backgroundColor = .black
         tableView.backgroundColor = .black
 
-    
-        
-        //self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     //MARK: - Navigation
     
     @objc func startSquatting() {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        guard let squatVC = storyboard.instantiateViewController(withIdentifier: "SquatVC") as? SquatVC else { return }
-//        squatVC.repTarget = repTarget
-//        squatVC.setTarget = setTarget
-//        squatVC.weightOnBar = weight
-//        squatVC.restInterval = restIntervalSeconds
-//
-//       self.hidesBottomBarWhenPushed = true
-//       navigationController?.pushViewController(squatVC, animated: true)
-//       self.hidesBottomBarWhenPushed = false
         
         let introVC = IntroductionVideo()
         introVC.repTarget = repTarget
@@ -112,6 +99,19 @@ class StartWorkoutTV: UITableViewController {
         self.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(introVC, animated: false)
         self.hidesBottomBarWhenPushed = false
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // Reset cellTexts to starting value
+        cellTexts = [
+            "No rep target",
+            "No set target",
+            "Bodyweight",
+            "01:00"
+        ]
+        tableView.reloadData()
     }
 
     // MARK: - Table view methods
@@ -123,10 +123,6 @@ class StartWorkoutTV: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return sectionTitles[section]
-//    }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()

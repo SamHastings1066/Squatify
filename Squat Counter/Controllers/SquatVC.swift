@@ -135,13 +135,6 @@ class SquatVC: UIViewController {
         do {
             try realm.write {
                 realm.add(realmWorkout)
-                // Also add each set and each rep to the Realm
-//                    for set in realmWorkout.sets {
-//                        realm.add(set)
-//                        for rep in set.reps {
-//                            realm.add(rep)
-//                        }
-//                    }
             }
         } catch {
             print("Failed to write data into Realm: \(error)")
@@ -167,58 +160,6 @@ class SquatVC: UIViewController {
             destinationVC.weightOnBar = weightOnBar
             destinationVC.setsCompleted = setArray.count - 1
             //destinationVC.appear(sender: self)
-        } else if segue.identifier == "SquatToSummary" {
-            let destinationVC = segue.destination as! SummaryVC
-            // First, initialize a new Realm
-            let realm = try! Realm()
-
-            // Next, we create the RealmWorkout object
-            let realmWorkout = RealmWorkout()
-            let today = Date()
-            realmWorkout.workoutDate = today // set the workoutDate to current date
-            realmWorkout.workoutDay = calendar.ordinality(of: .day, in: .era, for: today)
-            realmWorkout.startTime = startTime
-            realmWorkout.endTime = today
-
-            // Now, we loop over all workouts in setArray to create the RealmSet and RealmRep objects
-            for (setNum, workout) in setArray.enumerated() {
-                let realmSet = RealmSet()
-                realmSet.setNum = setNum + 1 // setNum in 1-indexed form
-                realmSet.exerciseName = workout.workoutArray.first?.exercise // replace this if multiple exercises can exist in a set
-                realmSet.numReps = workout.workoutArray.count
-                realmSet.weightLbs = workout.weightOnBar
-
-//                // For each rep in workout, create a RealmRep and append it to the current RealmSet
-                for (repNum, rep) in workout.workoutArray.enumerated() {
-                    let realmRep = RealmRep()
-                    realmRep.repNum = repNum + 1 // repNum in 1-indexed form
-                    realmRep.repTime = rep.time
-                    realmRep.minSquatDepth = rep.metricValues["minSquatDepth"] ?? 0.0
-
-                    // Append the RealmRep to the current RealmSet
-                    realmSet.reps.append(realmRep)
-                }
-
-                // After all reps in a workout have been processed, append the RealmSet to the current RealmWorkout
-                realmWorkout.sets.append(realmSet)
-            }
-
-            // Finally, write all data into Realm in a write transaction
-            do {
-                try realm.write {
-                    realm.add(realmWorkout)
-                    // Also add each set and each rep to the Realm
-//                    for set in realmWorkout.sets {
-//                        realm.add(set)
-//                        for rep in set.reps {
-//                            realm.add(rep)
-//                        }
-//                    }
-                }
-            } catch {
-                print("Failed to write data into Realm: \(error)")
-            }
-            destinationVC.realmWorkout = realmWorkout
         }
     }
     
@@ -275,12 +216,6 @@ class SquatVC: UIViewController {
         
         setArray.append(workout)
     }
-    
-    
-
-   
-    
-    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -412,9 +347,6 @@ class SquatVC: UIViewController {
                             }
                         )
                         strongSelf.annotationOverlayView.addSubview(poseOverlayView)
-                        
-                        
-                        
                     }
                     
                 }
@@ -508,16 +440,6 @@ class SquatVC: UIViewController {
         }
     }
     
-    //    private func setUpPreviewOverlayView() {
-    //      cameraView.addSubview(previewOverlayView)
-    //      NSLayoutConstraint.activate([
-    //        previewOverlayView.centerXAnchor.constraint(equalTo: cameraView.centerXAnchor),
-    //        previewOverlayView.centerYAnchor.constraint(equalTo: cameraView.centerYAnchor),
-    //        previewOverlayView.leadingAnchor.constraint(equalTo: cameraView.leadingAnchor),
-    //        previewOverlayView.trailingAnchor.constraint(equalTo: cameraView.trailingAnchor),
-    //
-    //      ])
-    //    }
     
     private func setUpAnnotationOverlayView() {
         cameraView.addSubview(annotationOverlayView)
@@ -541,15 +463,7 @@ class SquatVC: UIViewController {
         return nil
     }
     
-    //    private func updatePreviewOverlayViewWithLastFrame() {
-    //      guard let lastFrame = lastFrame,
-    //        let imageBuffer = CMSampleBufferGetImageBuffer(lastFrame)
-    //      else {
-    //        return
-    //      }
-    //      self.updatePreviewOverlayViewWithImageBuffer(imageBuffer)
-    //      self.removeDetectionAnnotations()
-    //    }
+
     
     private func removeDetectionAnnotations() {
         for annotationView in annotationOverlayView.subviews {
@@ -557,14 +471,6 @@ class SquatVC: UIViewController {
         }
     }
     
-    //    private func updatePreviewOverlayViewWithImageBuffer(_ imageBuffer: CVImageBuffer?) {
-    //      guard let imageBuffer = imageBuffer else {
-    //        return
-    //      }
-    //      let orientation: UIImage.Orientation = isUsingFrontCamera ? .leftMirrored : .right
-    //      let image = UIUtilities.createUIImage(from: imageBuffer, orientation: orientation)
-    //      previewOverlayView.image = image
-    //    }
     
     private func normalizedPoint(
         fromVisionPoint point: VisionPoint,

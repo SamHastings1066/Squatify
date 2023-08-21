@@ -25,6 +25,7 @@ class RestVC: UIViewController {
     var weightOnBar = 100
     var setsCompleted = 5
     var largeCountdownLabel: UILabel!
+    var startOverlayTimerHasBeenStarted = false
 
     
     
@@ -140,25 +141,6 @@ class RestVC: UIViewController {
         
         // Disable phone from going to sleep when app is idle
         UIApplication.shared.isIdleTimerDisabled = true
-        
-        // Configure the large countdown text
-        largeCountdownLabel = UILabel()
-        largeCountdownLabel.font = UIFont.systemFont(ofSize: 400, weight: .bold) // Large font size
-        largeCountdownLabel.textColor = .white // White text
-        largeCountdownLabel.textAlignment = .center // Center aligned
-        largeCountdownLabel.adjustsFontSizeToFitWidth = true // Adjust font size to fit width
-        largeCountdownLabel.minimumScaleFactor = 0.2 // Set minimum scale factor
-        largeCountdownLabel.numberOfLines = 1 // Ensure the text stays in one line
-        largeCountdownLabel.isHidden = true // Initially hidden
-
-        self.view.addSubview(largeCountdownLabel)
-
-        // Constraints to center the label
-        largeCountdownLabel.translatesAutoresizingMaskIntoConstraints = false
-        largeCountdownLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        largeCountdownLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        largeCountdownLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        largeCountdownLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 
         
         setCompletedLabel.text = "Set #\(setsCompleted) complete"
@@ -183,10 +165,7 @@ class RestVC: UIViewController {
 
         configView()
         countdown = CountdownTimer(time: initialRestInterval ?? 60)
-        countdown?.start(completion: {
-            // NAVIGATION
-            self.hide()
-        })
+        countdown?.start()
         // Timer to update UI label
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
@@ -194,16 +173,9 @@ class RestVC: UIViewController {
             DispatchQueue.main.async {
                 //self.countdownTimer.text = String(self.countdown?.getTimeRemaining() ?? 0)
                 self.countdownTimer.text = self.formatter.string(from: TimeInterval(remainingTime))
-                
-                // update the largeCountdownLabel text
-                if remainingTime == 0 {
-                    self.largeCountdownLabel.text = "GO!"
-                    self.largeCountdownLabel.isHidden = false }
-                else if remainingTime <= 3 {
-                    self.largeCountdownLabel.text = "\(remainingTime)"
-                    self.largeCountdownLabel.isHidden = false
-                } else {
-                    self.largeCountdownLabel.isHidden = true
+                if remainingTime == 0 && !self.startOverlayTimerHasBeenStarted {
+                    self.startOverlayTimerHasBeenStarted = true
+                    self.startOverlayTimer()
                 }
             }
         }
@@ -261,7 +233,7 @@ class RestVC: UIViewController {
     
 
     func hide() {
-        largeCountdownLabel.isHidden = true
+        //largeCountdownLabel.isHidden = true
         timer?.invalidate()
         timer = nil
         UIView.animate(withDuration: 0, delay: 0.0, options: .curveEaseOut) {
@@ -269,6 +241,61 @@ class RestVC: UIViewController {
         } completion: { _ in
             self.navigationController?.popViewController(animated: true)
             self.delegate?.didDismissOverlay(repTarget: self.repTarget, setTarget: self.setTarget, weightOnBar: self.weightOnBar)
+        }
+    }
+    
+    func startOverlayTimer() {
+
+        let safeArea = view.safeAreaLayoutGuide
+        // Create a view to cover the entire screen
+        let countdownView = UIView(frame: safeArea.layoutFrame)
+        countdownView.backgroundColor = .black
+        view.addSubview(countdownView)
+
+        // Create a label to display the countdown
+        let countdownLabel = UILabel()
+        countdownLabel.font = UIFont.systemFont(ofSize: 400, weight: .bold)
+        countdownLabel.textColor = .white
+        countdownLabel.textAlignment = .center
+        countdownLabel.alpha = 1.0 // Make sure the label is initially visible
+        
+        countdownLabel.adjustsFontSizeToFitWidth = true // Adjust font size to fit width
+        countdownLabel.minimumScaleFactor = 0.2 // Set minimum scale factor
+        countdownLabel.numberOfLines = 1 // Ensure the text stays in one line
+        countdownView.addSubview(countdownLabel)
+
+        // Constraints to center the label
+        countdownLabel.translatesAutoresizingMaskIntoConstraints = false
+        countdownLabel.centerXAnchor.constraint(equalTo: countdownView.centerXAnchor).isActive = true
+        countdownLabel.centerYAnchor.constraint(equalTo: countdownView.centerYAnchor).isActive = true
+        countdownLabel.leadingAnchor.constraint(equalTo: countdownView.leadingAnchor).isActive = true
+        countdownLabel.trailingAnchor.constraint(equalTo: countdownView.trailingAnchor).isActive = true
+        
+        
+        // Start the countdown animation
+        animateCountdown(from: 3, label: countdownLabel, completion: { [weak self] in
+            countdownView.removeFromSuperview()
+            self?.hide()
+        })
+    }
+    
+    func animateCountdown(from startNumber: Int, label: UILabel, completion: @escaping () -> Void) {
+        label.text = "\(startNumber)"
+        UIView.animate(withDuration: 1, animations: {
+            label.alpha = 0.0
+        }) { _ in
+            if startNumber > 1 {
+                label.text = "\(startNumber - 1)"
+                label.alpha = 1.0
+                self.animateCountdown(from: startNumber - 1, label: label, completion: completion)
+            } else {
+                label.text = "GO!"
+                label.alpha = 1.0
+                // Delaying the transition to the next view controller to let "GO!" be visible
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    completion()
+                }
+            }
         }
     }
 

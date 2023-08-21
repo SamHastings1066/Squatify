@@ -27,6 +27,39 @@ class DaySummaryVC: UIViewController {
         dayTableView.dataSource = self
         dayTableView.delegate = self
         dayTableView.rowHeight = 80.0
+        // Create Date Formatter
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, YYYY"
+        
+        navigationItem.title = dateFormatter.string(from: dateSelected!)
+        
+        // Set the title of the back button for the next view controller
+        dateFormatter.dateFormat = "MMM d"
+        let backButton = UIBarButtonItem()
+        backButton.title = dateFormatter.string(from: dateSelected!)
+        navigationItem.backBarButtonItem = backButton
+        
+        // Add the header view with user instructions
+        
+        let headerLabel = UILabel()
+        headerLabel.text = "Swipe a workout to the left to edit or delete it."
+        headerLabel.numberOfLines = 0
+        headerLabel.textColor = .white
+        headerLabel.textAlignment = .center
+        headerLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 80))
+        headerView.addSubview(headerLabel)
+        
+        NSLayoutConstraint.activate([
+            headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 30),
+            headerLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -30),
+            headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 15),
+            headerLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -15)
+        ])
+        
+        dayTableView.tableHeaderView = headerView
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -36,6 +69,10 @@ class DaySummaryVC: UIViewController {
             destinationVC.selectedWorkout = filteredWorkouts?[indexPath.row]
                 }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        dayTableView.reloadData()
+    }
 }
 
 
@@ -43,25 +80,49 @@ class DaySummaryVC: UIViewController {
 
 extension DaySummaryVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredWorkouts?.count ?? 0
+        if (filteredWorkouts?.count)! > 0 {
+            return (filteredWorkouts?.count)!
+        } else {
+            return 1
+        }
+
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // create a cell
-        let cell = dayTableView.dequeueReusableCell(withIdentifier: "WorkoutCell", for: indexPath) as! SwipeTableViewCell
-        cell.delegate = self
-        var content = UIListContentConfiguration.valueCell()
-        // Configure content.
-        content.text = "Workout \(indexPath.row + 1)"
-        content.secondaryText = "Details"
-        content.image = UIImage(systemName: "star")
-        // Customize appearance.
-        content.imageProperties.tintColor = .orange
-        content.textProperties.color = .white
-        content.secondaryTextProperties.color = .gray
         
-        cell.contentConfiguration = content
-        return cell
+        if (filteredWorkouts?.count)! > 0 {
+            let cell = dayTableView.dequeueReusableCell(withIdentifier: "WorkoutCell", for: indexPath) as! SwipeTableViewCell
+            cell.delegate = self
+            var content = UIListContentConfiguration.valueCell()
+            // Configure content.
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "h:mm a"
+            let startTimeString = dateFormatter.string(from: filteredWorkouts?[indexPath.row].startTime ?? Date())
+            let endTimeString = dateFormatter.string(from: filteredWorkouts?[indexPath.row].endTime ?? Date())
+            content.text = "Workout \(indexPath.row + 1)"
+            content.secondaryText = "\(startTimeString) - \(endTimeString)"
+            content.image = UIImage(systemName: "star")
+            // Customize appearance.
+            content.imageProperties.tintColor = .orange
+            content.textProperties.color = .white
+            content.secondaryTextProperties.color = .gray
+            
+            cell.contentConfiguration = content
+            return cell
+        } else {
+            let cell = dayTableView.dequeueReusableCell(withIdentifier: "WorkoutCell", for: indexPath)
+            var content = cell.defaultContentConfiguration()
+            content.text = "No workouts recorded."
+            content.image = UIImage(systemName: "star")
+            // Customize appearance.
+            content.imageProperties.tintColor = .orange
+            content.textProperties.color = .white
+            
+            cell.contentConfiguration = content
+            return cell
+        }
+        
     }
     
     
@@ -70,7 +131,12 @@ extension DaySummaryVC: UITableViewDataSource {
 
 extension DaySummaryVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "DayToWorkoutDetail", sender: self)
+        if (filteredWorkouts?.count)! > 0 {
+            self.performSegue(withIdentifier: "DayToWorkoutDetail", sender: self)
+        } else {
+            return
+        }
+        
     }
     
    
@@ -123,17 +189,14 @@ extension DaySummaryVC: SwipeTableViewCellDelegate {
         // customize the action appearance
         deleteAction.backgroundColor = .red
         deleteAction.image = UIImage(named: "delete-icon")
+        
         let configuration = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .medium)
-        let image = UIImage(systemName: "arrow.counterclockwise.circle.fill", withConfiguration: configuration)
+        //deleteAction.image = UIImage(systemName: "trash.fill", withConfiguration: configuration)
+        let image = UIImage(systemName: "pencil", withConfiguration: configuration)
         editAction.image = image
         
 
         return [deleteAction, editAction]
     }
     
-//    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
-//        var options = SwipeOptions()
-//        options.expansionStyle = .destructive
-//        return options
-//    }
 }

@@ -18,11 +18,14 @@ class CalendarVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .black
-        
-        navigationItem.titleView?.tintColor = .white
-        navigationItem.titleView?.backgroundColor = .black
+
+//        // Set the title color to white
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+
+        // Prevent the navigation bar from changing appearance on scroll
+        navigationController?.navigationBar.isTranslucent = false
+
+        navigationItem.title = "Calendar"
         
         do {
             let realm = try Realm()
@@ -33,10 +36,14 @@ class CalendarVC: UIViewController {
                 switch changes {
                 case .initial:
                     // Results are now populated and can be accessed without blocking the UI
-                    self?.createCalendar()
+                    DispatchQueue.main.async {
+                                self?.createCalendar()
+                    }
                 case .update(_, _, _, _):
                     // Query results have changed, so update the calendar.
-                    self?.createCalendar()
+                    DispatchQueue.main.async {
+                                self?.createCalendar()
+                    }
                 case .error(let error):
                     // An error occurred while opening the Realm file on the background worker thread
                     fatalError("\(error)")
@@ -65,9 +72,10 @@ class CalendarVC: UIViewController {
     
     private func createCalendar(){
         let calendar = Calendar.current
-        let startDate = calendar.date(from: DateComponents(year:  2023, month: 7, day: 1))!
+        // date(from:) - returns a date created from the specified components
+        let startDate = calendar.date(from: DateComponents(year:  2023, month: 6, day: 1))!
         let todaysDate = Date()
-        let endDate = calendar.date(from: DateComponents(year:  2023, month: 12, day: 31))!
+        let endDate = calendar.date(byAdding: .day, value: 29, to: todaysDate)!
         let content = CalendarViewContent(
             calendar: calendar,
             visibleDateRange: startDate...endDate,
@@ -81,22 +89,16 @@ class CalendarVC: UIViewController {
                 
                 var content = DayLabel.Content(day: day, textColor: .white, layerBackgroundColour: UIColor.black.cgColor, layerBorderColour: UIColor.black.cgColor)  // Default textColor to white
                 
+                if let (startOfDayUTC, endOfDayUTC) = self.dateRangeInUTC(for: day) {
+                        let predicate = NSPredicate(format: "startTime >= %@ AND endTime <= %@", startOfDayUTC as NSDate, endOfDayUTC as NSDate)
 
-                let dateComponents = DateComponents(year: day.components.year,
-                                                    month: day.components.month,
-                                                    day: day.components.day)
-
-                if let date = calendar.date(from: dateComponents),
-                       let ordinalDay = calendar.ordinality(of: .day, in: .era, for: date) {
-                            if let loadedWorkouts = self.workouts {
-                                // filter for all workouts on the current date
-                                let matchingWorkouts = loadedWorkouts.filter("workoutDay == %@", ordinalDay)
-                                // if there are any workouts on the current date, colour the date orange
-                                if !matchingWorkouts.isEmpty {
-                                    content.textColor = .orange  // Change textColor if there's a workout on this day
-                                    content.layerBorderColour = UIColor.orange.cgColor
-                                }
+                        if let loadedWorkouts = self.workouts {
+                            let matchingWorkouts = loadedWorkouts.filter(predicate)
+                            if !matchingWorkouts.isEmpty {
+                                content.textColor = .orange
+                                content.layerBorderColour = UIColor.orange.cgColor
                             }
+                        }
                     }
 
                 return DayLabel.calendarItemModel(
@@ -109,28 +111,25 @@ class CalendarVC: UIViewController {
         calendarView.scroll(
           toDayContaining: todaysDate,
           scrollPosition: .centered,
-          animated: true)
-        calendarView.daySelectionHandler = { [weak self] day in
-            
-            let dateComponents = DateComponents(year: day.components.year,
-                                                month: day.components.month,
-                                                day: day.components.day)
-            if let date = calendar.date(from: dateComponents),
-                   let ordinalDay = calendar.ordinality(of: .day, in: .era, for: date) {
-                self?.dateSelected = date
-                if let loadedWorkouts = self?.workouts {
-                    self?.filteredWorkouts = loadedWorkouts.filter("workoutDay == %@", ordinalDay)
-                    
-                }
-                
-            }
-            
-            self?.performSegue(withIdentifier: "CalendarToDayView", sender: self)
+          animated: false)
 
-            
+
+        calendarView.daySelectionHandler = { [weak self] day in
+            if let (startOfDayUTC, endOfDayUTC) = self?.dateRangeInUTC(for: day) {
+                let predicate = NSPredicate(format: "startTime >= %@ AND endTime <= %@", startOfDayUTC as NSDate, endOfDayUTC as NSDate)
+                if let loadedWorkouts = self?.workouts {
+                    self?.filteredWorkouts = loadedWorkouts.filter(predicate)
+                }
+                let dateComponents = DateComponents(year: day.components.year,
+                                                    month: day.components.month,
+                                                    day: day.components.day)
+                if let date = calendar.date(from: dateComponents) {
+                    self?.dateSelected = date
+                }
+            }
+            self?.performSegue(withIdentifier: "CalendarToDayView", sender: self)
         }
-        
-        
+
         // add calendar to our view hierarchy
         view.addSubview(calendarView)
         
@@ -140,7 +139,24 @@ class CalendarVC: UIViewController {
             calendarView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             calendarView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             calendarView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-        
         ])
+    }
+    
+    func dateRangeInUTC(for day: Day) -> (start: Date, end: Date)? {
+        let calendar = Calendar.current
+        let dateComponents = DateComponents(year: day.components.year, month: day.components.month, day: day.components.day)
+
+        guard let date = calendar.date(from: dateComponents) else { return nil }
+
+        let startOfDayLocal = calendar.startOfDay(for: date)
+        let endOfDayLocal = calendar.date(byAdding: DateComponents(day: 1, second: -1), to: startOfDayLocal)!
+
+        let localTimeZone = TimeZone.current
+        let localTimeZoneOffset = TimeInterval(localTimeZone.secondsFromGMT(for: date))
+        
+        let startOfDayUTC = startOfDayLocal.addingTimeInterval(-localTimeZoneOffset)
+        let endOfDayUTC = endOfDayLocal.addingTimeInterval(-localTimeZoneOffset)
+        
+        return (start: startOfDayUTC, end: endOfDayUTC)
     }
 }

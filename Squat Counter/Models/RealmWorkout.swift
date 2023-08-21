@@ -15,6 +15,4 @@ class RealmWorkout: Object {
     @Persisted var startTime: Date? = nil
     @Persisted var endTime: Date? = nil
     @Persisted var sets = List<RealmSet>()
-
-    //let sets = List<RealmSet>()
 }

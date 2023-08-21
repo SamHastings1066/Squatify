@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 
+
 class EditWorkoutVC: UITableViewController {
     
     var realmWorkout: RealmWorkout?
@@ -17,12 +18,18 @@ class EditWorkoutVC: UITableViewController {
     let exerciseNames = ["squat", "lunge"]
     var toolbar: UIToolbar?
     let darkBlue = UIColor(red: 0/255, green: 18/255, blue: 37/255, alpha: 1)
+    var overlayView: UIView?
+    var tapGestureRecognizer: UITapGestureRecognizer?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "valueCell")
         tableView.backgroundColor = .black
         
+        //tableView.tableFooterView = UIView(frame: .zero)
+
+
         // Register a default header footer view
         tableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "header")
         
@@ -37,18 +44,18 @@ class EditWorkoutVC: UITableViewController {
         navigationController?.navigationBar.tintColor = .orange
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setToolbarHidden(false, animated: animated)
-    }
-
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if self.isMovingFromParent {
-            navigationController?.setToolbarHidden(true, animated: true)
-        }
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        navigationController?.setToolbarHidden(true, animated: animated)
+//    }
+//
+//    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        if self.isMovingFromParent {
+//            navigationController?.setToolbarHidden(true, animated: true)
+//        }
+//    }
     
  
     // MARK: - UITableViewDataSource Methods
@@ -64,9 +71,20 @@ class EditWorkoutVC: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header")
         headerView?.textLabel?.text = "Set \(section + 1)"
-        headerView?.textLabel?.textColor = .systemGray // Change to desired color
+        headerView?.textLabel?.textColor = .systemGray
+        headerView?.backgroundView = UIView(frame: headerView!.bounds)
+        headerView?.backgroundView?.backgroundColor = .black
         return headerView
     }
+    
+//    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return 0
+//    }
+//
+//    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        return UIView()
+//    }
+
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "valueCell", for: indexPath)
@@ -79,10 +97,13 @@ class EditWorkoutVC: UITableViewController {
             content.secondaryText = set?.exerciseName
         case 1:
             content.text = "Reps"
-            content.secondaryText = "\(set?.numReps ?? 0)"
+            content.secondaryText = "\(set?.numReps ?? 0) reps"
         case 2:
             content.text = "Weight"
-            content.secondaryText = "\(set?.weightLbs ?? 0)"
+            if let weight = set?.weightLbs {
+                content.secondaryText = weight == 0 ? "Bodyweight" : "\(weight) lbs"
+            }
+            //content.secondaryText = "\(set?.weightLbs ?? 0)"
         default:
             break
         }
@@ -122,57 +143,69 @@ class EditWorkoutVC: UITableViewController {
                 pickerView.selectRow(index, inComponent: 0, animated: false)
             }
         case 1:
-            pickerView.selectRow(set!.numReps - 1, inComponent: 0, animated: false)
+            pickerView.selectRow(set!.numReps, inComponent: 0, animated: false)
         case 2:
             pickerView.selectRow(set!.weightLbs / 5, inComponent: 0, animated: false)
         default: break
         }
         
         pickerView.backgroundColor = darkBlue
+        guard let window = (self.view.window?.windowScene?.windows.first { $0.isKeyWindow }) else { return }
 
-        // Add the picker view to the bottom of the screen (you can customize its frame as needed)
-        pickerView.frame = CGRect(x: 0, y: view.frame.height - 200, width: view.frame.width, height: 100)
-        view.addSubview(pickerView)
-        
-        // Create the toolbar
+        // This gets the height of the tab bar.
+        let pickerViewHeight: CGFloat = 100
+
+        // Adjust the y-origin of the picker view based on the height of the tab bar.
+        let pickerViewY: CGFloat = UIScreen.main.bounds.height - pickerViewHeight - window.safeAreaInsets.bottom
+        pickerView.frame = CGRect(x: 0, y: pickerViewY, width: view.frame.width, height: pickerViewHeight)
+
         let toolbar = UIToolbar()
         self.toolbar = toolbar
-        toolbar.frame = CGRect(x: 0, y: pickerView.frame.origin.y - 44, width: view.frame.width, height: 44)
-
-
-        // Create the "Done" button
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(donePicker))
-
-        // Create a flexible space to center the buttons
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-
-        // Set the toolbar's items
-        toolbar.setItems([flexSpace, doneButton, flexSpace], animated: false)
-        
-        // Set the background color of the toolbar
+        toolbar.frame = CGRect(x: 0, y: pickerViewY - 44, width: view.frame.width, height: 44)
         toolbar.barTintColor = darkBlue
 
-        // Change the text color of the "Cancel" button
-        //cancelButton.tintColor = .orange
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(donePicker))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
 
-        // Change the text color of the "Done" button
+        toolbar.setItems([flexSpace, doneButton, flexSpace], animated: false)
         doneButton.tintColor = .orange
-
-        // Add the toolbar and picker view to the view hierarchy
-        view.addSubview(toolbar)
-        view.addSubview(pickerView)
         
+        overlayView = UIView(frame: window.bounds)
+        overlayView?.backgroundColor = UIColor(white: 0, alpha: 0.6) // semi-transparent black
+        window.insertSubview(overlayView!, belowSubview: toolbar) // add it below the toolbar
+
+        window.addSubview(toolbar)
+        window.addSubview(pickerView)
+        
+        // Add a tap gesture recognizer to detect taps outside the picker
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsidePicker(_:)))
+        window.addGestureRecognizer(tapGestureRecognizer!)
     }
     
+    @objc func handleTapOutsidePicker(_ gesture: UITapGestureRecognizer) {
+        //let touchPoint = gesture.location(in: self.view.window)
+        // Regardless of where the touch is, dismiss the picker
+        dismissCurrentPicker()
+        self.view.window?.removeGestureRecognizer(tapGestureRecognizer!)
+        tapGestureRecognizer = nil
+    }
 
     @objc func donePicker() {
         dismissCurrentPicker()
+        self.view.window?.removeGestureRecognizer(tapGestureRecognizer!)
+        tapGestureRecognizer = nil
     }
     
     func dismissCurrentPicker() {
+        guard let window = (self.view.window?.windowScene?.windows.first { $0.isKeyWindow }) else { return }
         pickerView?.removeFromSuperview()
         toolbar?.removeFromSuperview()
-        view.endEditing(true)
+        //view.endEditing(true)
+        window.endEditing(true)
+        overlayView?.removeFromSuperview()
+        overlayView = nil
+
+
     }
 
 }
@@ -205,13 +238,12 @@ extension EditWorkoutVC: UIPickerViewDelegate, UIPickerViewDataSource {
         case 0:
             title = exerciseNames[row]
         case 1:
-            title = "\(row + 1)"
+            title = "\(row) reps"
         case 2:
-            title = "\(row * 5)"
+            title = row == 0 ? "Bodyweight" : "\(row * 5) lbs"
         default:
             title = "Data not found"
         }
-        print("pickerview opened")
         return NSAttributedString(string: title, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
     }
     
@@ -229,10 +261,10 @@ extension EditWorkoutVC: UIPickerViewDelegate, UIPickerViewDataSource {
                     valueSelected = exerciseNames[row]
                     set.exerciseName = exerciseNames[row]
                 case 1:
-                    valueSelected = "\(row + 1)"
-                    set.numReps = row + 1
+                    valueSelected = "\(row) reps"
+                    set.numReps = row
                 case 2:
-                    valueSelected = "\(row * 5)"
+                    valueSelected = row == 0 ? "Bodyweight" : "\(row * 5) lbs"
                     set.weightLbs = row * 5
                 default:
                     break
@@ -243,7 +275,6 @@ extension EditWorkoutVC: UIPickerViewDelegate, UIPickerViewDataSource {
             print("Error updating Realm object: \(error)")
         }
         
-//        temporaryChanges[set.setId] = tempSet
         DispatchQueue.main.async { [weak self] in
                 // Update the table view cell's secondary text
             if let cell = self?.tableView.cellForRow(at: indexPath), var content = cell.contentConfiguration as? UIListContentConfiguration {

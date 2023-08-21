@@ -5,13 +5,15 @@
 //  Created by sam hastings on 10/08/2023.
 //
 
+
+
 import UIKit
 import AVKit
 
 class IntroductionVideo: UIViewController {
     
     var player: AVPlayer?
-    
+
     // Workout parameters
     var restInterval = 60
     var repTarget = 0
@@ -21,84 +23,85 @@ class IntroductionVideo: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
+        view.backgroundColor = .black // or any other color you prefer
         
-        // Configure audio session to allow other audio to mix
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, options: [.mixWithOthers])
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print("Failed to set audio session category. Error: \(error)")
-        }
-
-        
-        // Create a video player
+        setupVideoPlayer()
+        setupInstructionLabel()
+        setupStartButton()
+    }
+    
+    func setupVideoPlayer() {
+        // Get the video path
         guard let path = Bundle.main.path(forResource: "intro-comp", ofType: "mp4") else { return }
         player = AVPlayer(url: URL(fileURLWithPath: path))
         player?.isMuted = true
+        
+        // Create the player layer
         let playerLayer = AVPlayerLayer(player: player)
-        player?.actionAtItemEnd = .none
-        playerLayer.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height * 0.8)
+        playerLayer.videoGravity = .resizeAspect
+        
+        // Calculate the frame
+        let playerLayerHeight = view.bounds.height * 0.8
+        playerLayer.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: playerLayerHeight)
+        
+        // Add the player layer to the view's layer
         view.layer.addSublayer(playerLayer)
         
-//        // Add a notification for when the video finishes playing
-//        NotificationCenter.default.addObserver(self, selector: #selector(videoDidEnd), name: .AVPlayerItemDidPlayToEndTime, object: nil)
-        
-        // Looping observer: return video to start and then ply it again
+        // Handle video end
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player?.currentItem, queue: .main) { [weak self] _ in
             self?.player?.seek(to: CMTime.zero)
             self?.player?.play()
         }
         
-        // Create a background view for the bottom 20%
-        let backgroundView = UIView(frame: CGRect(x: 0, y: view.bounds.height * 0.8, width: view.bounds.width, height: view.bounds.height * 0.2))
-        backgroundView.backgroundColor = .black
-        view.addSubview(backgroundView)
-        
-        // Create a label for instructions
+        // Start the video
+        player?.play()
+    }
+    
+    func setupInstructionLabel() {
         let instructionLabel = UILabel()
         instructionLabel.text = "Place your phone in a stable position so that your entire body is visible before you begin squatting"
         instructionLabel.numberOfLines = 0
         instructionLabel.textColor = .white
         instructionLabel.textAlignment = .center
-        backgroundView.addSubview(instructionLabel)
+        
+        // Add to view
+        view.addSubview(instructionLabel)
+        
+        // Disable autoresizing and set constraints
         instructionLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            instructionLabel.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 10),
-            instructionLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -10),
-            instructionLabel.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 0)
+            instructionLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height * 0.65),
+            instructionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            instructionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
-        
-        // Create a "Skip" button
+    }
+    
+    func setupStartButton() {
         let startButton = UIButton(type: .system)
         startButton.setTitle("Start Squatting", for: .normal)
         startButton.setTitleColor(.orange, for: .normal)
         startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         startButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24.0)
-        backgroundView.addSubview(startButton)
+        
+        // Add to view
+        view.addSubview(startButton)
+        
+        // Disable autoresizing and set constraints
         startButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            startButton.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-            startButton.topAnchor.constraint(equalTo: instructionLabel.bottomAnchor, constant: 10)
+            //startButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height * 0.8 + 30), // Adjust this constant value to control the gap between label and button
+            startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            startButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
-        
-        // Start playing the video
-        player?.play()
     }
-    
-//    @objc func videoDidEnd() {
-//        navigateToSquatVC()
-//    }
-    
-//    @objc func startButtonTapped() {
-//        player?.pause()
-//        navigateToSquatVC()
-//    }
+
     
     @objc func startButtonTapped() {
         player?.pause()
 
+        let safeArea = view.safeAreaLayoutGuide
         // Create a view to cover the entire screen
-        let countdownView = UIView(frame: view.bounds)
+        let countdownView = UIView(frame: safeArea.layoutFrame)
         countdownView.backgroundColor = .black
         view.addSubview(countdownView)
 
@@ -122,23 +125,6 @@ class IntroductionVideo: UIViewController {
         countdownLabel.trailingAnchor.constraint(equalTo: countdownView.trailingAnchor).isActive = true
         
         
-
-//        // Countdown logic
-//        var countdownNumber = 5
-//        let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
-//            if countdownNumber == 0 {
-//                countdownLabel.text = "GO!"
-//            } else if countdownNumber < 0 {
-//                timer.invalidate()
-//                countdownView.removeFromSuperview()
-//                self?.navigateToSquatVC()
-//                return
-//            } else {
-//                countdownLabel.text = "\(countdownNumber)"
-//            }
-//            countdownNumber -= 1
-//        }
-//        timer.fire()
         // Start the countdown animation
         animateCountdown(from: 5, label: countdownLabel, completion: { [weak self] in
             countdownView.removeFromSuperview()
@@ -165,13 +151,6 @@ class IntroductionVideo: UIViewController {
             }
         }
     }
-
-
-
-
-
-
-
     
     func navigateToSquatVC() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import HorizonCalendar
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -16,7 +17,47 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+//        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        // Set the global appearance for all UINavigationBars
+        UINavigationBar.appearance().barTintColor = .black
+        UINavigationBar.appearance().barStyle = .black
+        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        UINavigationBar.appearance().tintColor = .orange
+        // Prevent the navigation bar from changing appearance on scroll
+        UINavigationBar.appearance().isTranslucent = false
+        
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        let window = UIWindow(windowScene: windowScene)
+        
+        let tabBarController = UITabBarController()
+
+        // Set up CalendarNC with CalendarVC
+        let calendarVC = CalendarDisplayVC(monthsLayout: .vertical(options: VerticalMonthsLayoutOptions(pinDaysOfWeekToTop: false))) // come back to this to make it true
+        let calendarNC = UINavigationController(rootViewController: calendarVC)
+        calendarNC.tabBarItem = UITabBarItem(title: "Calendar", image: UIImage(systemName: "calendar"), tag: 0)
+        //calendarNC.isToolbarHidden = true
+
+
+        // Set up SquatsNC
+        //let squatsNC = SquatsNC()
+        let startWorkoutTV = StartWorkoutTV()
+        
+        let squatsNC = UINavigationController(rootViewController: startWorkoutTV)
+        squatsNC.tabBarItem = UITabBarItem(title: "Squats", image: UIImage(systemName: "dumbbell.fill"), tag: 1)
+        
+        tabBarController.viewControllers = [calendarNC, squatsNC]
+        tabBarController.tabBar.barTintColor = .black
+        tabBarController.tabBar.tintColor = .orange
+        tabBarController.tabBar.isTranslucent = false
+        
+        window.rootViewController = tabBarController
+        window.makeKeyAndVisible()
+        
+        self.window = window
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

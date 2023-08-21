@@ -11,6 +11,7 @@ import RealmSwift
 class WorkoutDetailVC: UIViewController {
     
     var selectedWorkout: RealmWorkout?
+    let realm = try! Realm()
     //var selectedWorkoutID: String?
 
     @IBOutlet weak var workoutTableView: UITableView!
@@ -19,9 +20,68 @@ class WorkoutDetailVC: UIViewController {
         super.viewDidLoad()
         workoutTableView.dataSource = self
         workoutTableView.rowHeight = 80.0
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+        let startTimeString = dateFormatter.string(from: selectedWorkout?.startTime ?? Date())
+        let endTimeString = dateFormatter.string(from: selectedWorkout?.endTime ?? Date())
+        
+        navigationItem.title = "\(startTimeString) - \(endTimeString)"
+        
+        configureBarButtonItems()
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        workoutTableView.reloadData()
+    }
+    
+    private func configureBarButtonItems() {
+        let deleteButton = UIBarButtonItem(image: UIImage(systemName: "trash"),
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(deleteButtonTapped))
+        
+        let editButton = UIBarButtonItem(image: UIImage(systemName: "pencil"),
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(editButtonTapped))
+        deleteButton.tintColor = .orange
+        editButton.tintColor = .orange
+        
+        navigationItem.rightBarButtonItems = [deleteButton, editButton]
+    }
+    
+    
+    @objc func deleteButtonTapped() {
+        let alert = UIAlertController(title: "Are you sure you want to delete this workout?", message: "This action cannot be undone", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            if let workoutToDelete = self.selectedWorkout {
+                do {
+                    
+                    try self.realm.write {
+                        self.realm.delete(workoutToDelete)
+
+                    }
+                    self.navigationController?.popViewController(animated: true)
+                } catch {
+                    print("Could not delete item \(error)")
+                }
+                
+            }
+        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Default action"), style: .cancel, handler: { _ in
+            self.workoutTableView.reloadData()
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func editButtonTapped() {
+        let destinationVC = EditWorkoutVC()
+        destinationVC.realmWorkout = self.selectedWorkout
+        self.navigationController?.pushViewController(destinationVC, animated: true)
+        
+    }
 
 
 }
@@ -51,6 +111,7 @@ extension WorkoutDetailVC: UITableViewDataSource {
             content.secondaryTextProperties.color = .gray
         }
         cell.contentConfiguration = content
+        cell.selectionStyle = .none
         return cell
     }
     

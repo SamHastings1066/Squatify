@@ -29,7 +29,7 @@ class FinishWorkoutTV: UITableViewController {
         
         // Set up page title
         navigationItem.title = "Workout Summary"
-        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.orange]
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         
         
@@ -145,12 +145,13 @@ class FinishWorkoutTV: UITableViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(titleLabel)
         
-        NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-            titleLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),
-            titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),
-            titleLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -5)
-        ])
+        //HERE
+//        NSLayoutConstraint.activate([
+//            titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
+//            titleLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),
+//            titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),
+//            titleLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -5)
+//        ])
         
         return headerView
     }
