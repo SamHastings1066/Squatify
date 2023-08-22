@@ -515,19 +515,47 @@
                                             </stackView>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6e-pE-QyL">
-                                        <rect key="frame" x="151.66666666666666" y="595" width="90" height="88.666666666666742"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="90" id="OGt-Dk-FSj"/>
-                                            <constraint firstAttribute="height" constant="90" id="hqb-jE-Qn9"/>
-                                        </constraints>
-                                        <color key="tintColor" systemColor="systemRedColor"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" backgroundImage="xmark.circle.fill" catalog="system"/>
-                                        <connections>
-                                            <action selector="dismissOverlayButton:" destination="OZg-Rj-ccP" eventType="touchUpInside" id="DOk-GN-neu"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="1sj-2W-1VI">
+                                        <rect key="frame" x="86.666666666666686" y="594" width="220" height="90"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pqe-ec-3Hv">
+                                                <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6e-pE-QyL">
+                                                        <rect key="frame" x="0.0" y="1" width="90" height="88.666666666666671"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="90" id="OGt-Dk-FSj"/>
+                                                            <constraint firstAttribute="height" constant="90" id="hqb-jE-Qn9"/>
+                                                        </constraints>
+                                                        <color key="tintColor" systemColor="systemMintColor"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" backgroundImage="play.circle.fill" catalog="system"/>
+                                                        <connections>
+                                                            <action selector="dismissOverlayButton:" destination="OZg-Rj-ccP" eventType="touchUpInside" id="DOk-GN-neu"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8vI-5p-RR8">
+                                                <rect key="frame" x="130" y="0.0" width="90" height="90"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3zg-6w-Jo9">
+                                                        <rect key="frame" x="0.0" y="1" width="90" height="88.666666666666671"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="90" id="aBd-IJ-3xL"/>
+                                                            <constraint firstAttribute="width" constant="90" id="oss-dJ-scN"/>
+                                                        </constraints>
+                                                        <color key="tintColor" systemColor="systemRedColor"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" backgroundImage="xmark.circle.fill" catalog="system"/>
+                                                        <connections>
+                                                            <action selector="stopWorkoutButtonTapped:" destination="OZg-Rj-ccP" eventType="touchUpInside" id="VSW-Bd-0ya"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -566,12 +594,16 @@
     </scenes>
     <resources>
         <image name="minus.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="play.circle.fill" catalog="system" width="128" height="123"/>
         <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
         <image name="stop.circle.fill" catalog="system" width="128" height="123"/>
         <image name="timer.circle.fill" catalog="system" width="128" height="123"/>
         <image name="xmark.circle.fill" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemMintColor">
+            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

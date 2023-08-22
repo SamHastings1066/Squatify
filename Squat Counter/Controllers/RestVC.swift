@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 
 protocol RestVCDelegate: AnyObject {
@@ -26,6 +27,10 @@ class RestVC: UIViewController {
     var setsCompleted = 5
     var largeCountdownLabel: UILabel!
     var startOverlayTimerHasBeenStarted = false
+    var setArray: [Workout] = []
+    var startTime: Date?
+    var calendar = Calendar.current
+    var stopwatch = Stopwatch()
 
     
     
@@ -124,9 +129,12 @@ class RestVC: UIViewController {
     
     @IBAction func dismissOverlayButton(_ sender: Any) {
         // NAVIGATION
-        hide()
+        self.startOverlayTimer()
     }
     
+    @IBAction func stopWorkoutButtonTapped(_ sender: UIButton) {
+        stopWorkout()
+    }
     //MARK: - View Controller
     
     
@@ -297,6 +305,63 @@ class RestVC: UIViewController {
                 }
             }
         }
+    }
+    
+    func stopWorkout() {
+        timer?.invalidate()
+        timer = nil
+        stopwatch.stop()
+        let finishedWorkoutTV = FinishWorkoutTV()
+        let realm = try! Realm()
+
+        // Next, we create the RealmWorkout object
+        let realmWorkout = RealmWorkout()
+        let today = Date()
+        realmWorkout.workoutDate = today // set the workoutDate to current date
+        realmWorkout.workoutDay = calendar.ordinality(of: .day, in: .era, for: today)
+        realmWorkout.startTime = startTime
+        realmWorkout.endTime = today
+
+        // Now, we loop over all workouts in setArray to create the RealmSet and RealmRep objects
+        for (setNum, workout) in setArray.enumerated() {
+            let realmSet = RealmSet()
+            realmSet.setNum = setNum + 1 // setNum in 1-indexed form
+            realmSet.exerciseName = workout.workoutArray.first?.exercise // replace this if multiple exercises can exist in a set
+            realmSet.numReps = workout.workoutArray.count
+            realmSet.weightLbs = workout.weightOnBar
+
+//                // For each rep in workout, create a RealmRep and append it to the current RealmSet
+            for (repNum, rep) in workout.workoutArray.enumerated() {
+                let realmRep = RealmRep()
+                realmRep.repNum = repNum + 1 // repNum in 1-indexed form
+                realmRep.repTime = rep.time
+                realmRep.minSquatDepth = rep.metricValues["minSquatDepth"] ?? 0.0
+
+                // Append the RealmRep to the current RealmSet
+                realmSet.reps.append(realmRep)
+            }
+
+            // After all reps in a workout have been processed, append the RealmSet to the current RealmWorkout
+            realmWorkout.sets.append(realmSet)
+        }
+
+        // Finally, write all data into Realm in a write transaction
+        do {
+            try realm.write {
+                realm.add(realmWorkout)
+            }
+        } catch {
+            print("Failed to write data into Realm: \(error)")
+        }
+        finishedWorkoutTV.realmWorkout = realmWorkout
+        
+        // Turn Idle timer back on
+        UIApplication.shared.isIdleTimerDisabled = false
+        
+        self.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(finishedWorkoutTV, animated: true)
+        //self.performSegue(withIdentifier: "SquatToSummary", sender: self)
+        self.hidesBottomBarWhenPushed = false
     }
 
   

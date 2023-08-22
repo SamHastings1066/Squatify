@@ -24,16 +24,16 @@ class SquatVC: UIViewController {
     private var lastFrame: CMSampleBuffer?
     
     private var workout = Workout()
-    private var startTime: Date?
+    var startTime: Date?
     var setArray: [Workout] = []
     private var squat = Squat()
-    private var stopwatch = Stopwatch()
+    var stopwatch = Stopwatch()
     private var cancellables: Set<AnyCancellable> = []
     private var featureEmbedder = FeatureEmbedder()
     private lazy var poseClassifier = PoseClassifier(exercises: [self.squat])
     private var repCount = 0
     private var isMonitoringPose = true
-    private let calendar = Calendar.current
+    let calendar = Calendar.current
     
     let synthesizer = AVSpeechSynthesizer()
     
@@ -87,8 +87,6 @@ class SquatVC: UIViewController {
         self.hidesBottomBarWhenPushed = true
         repCount = 0
         self.repCountLabel.text = "0"
-        workout = Workout()
-        setArray.append(workout)
         stopwatch.pause()
         isMonitoringPose = false
         performSegue(withIdentifier: "SquatToRestOverlay", sender: self)
@@ -158,7 +156,11 @@ class SquatVC: UIViewController {
             destinationVC.repTarget = repTarget
             destinationVC.setTarget = setTarget
             destinationVC.weightOnBar = weightOnBar
+            destinationVC.setArray = setArray
             destinationVC.setsCompleted = setArray.count - 1
+            destinationVC.stopwatch = stopwatch
+            destinationVC.calendar = calendar
+            destinationVC.startTime = startTime
             //destinationVC.appear(sender: self)
         }
     }
@@ -524,6 +526,8 @@ extension SquatVC: AVCaptureVideoDataOutputSampleBufferDelegate {
 // NAVIGATION
 extension SquatVC: RestVCDelegate {
     func didDismissOverlay(repTarget: Int, setTarget: Int, weightOnBar: Int) {
+        workout = Workout()
+        setArray.append(workout)
         self.repTarget = repTarget
         self.setTarget = setTarget
         self.weightOnBar = weightOnBar

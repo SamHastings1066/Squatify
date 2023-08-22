@@ -49,7 +49,7 @@ class EditWorkoutVC: UITableViewController {
 //        navigationController?.setToolbarHidden(true, animated: animated)
 //    }
 //
-//    
+//
 //    override func viewWillDisappear(_ animated: Bool) {
 //        super.viewWillDisappear(animated)
 //        if self.isMovingFromParent {
@@ -77,13 +77,7 @@ class EditWorkoutVC: UITableViewController {
         return headerView
     }
     
-//    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return 0
-//    }
-//
-//    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        return UIView()
-//    }
+
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
