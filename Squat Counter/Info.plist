@@ -8,7 +8,7 @@
 		<string>CourierPrime-Bold.ttf</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
-	<string>Application uses camera.</string>
+	<string>The camera will be used to monitor your body as you exercise and count your reps and sets.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

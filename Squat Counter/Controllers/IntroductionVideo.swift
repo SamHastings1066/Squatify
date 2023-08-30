@@ -79,9 +79,10 @@ class IntroductionVideo: UIViewController {
     func setupStartButton() {
         let startButton = UIButton(type: .system)
         startButton.setTitle("Start Squatting", for: .normal)
-        startButton.setTitleColor(.orange, for: .normal)
+        startButton.applyCustomConfiguration()
+//        startButton.setTitleColor(.orange, for: .normal)
         startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
-        startButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24.0)
+//        startButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24.0)
         
         // Add to view
         view.addSubview(startButton)

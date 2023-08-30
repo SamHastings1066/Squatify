@@ -70,8 +70,8 @@ class BaseDemoViewController: UIViewController, BaseCalendarViewController {
         calendarView.trailingAnchor.constraint(
           lessThanOrEqualTo: view.layoutMarginsGuide.trailingAnchor),
         calendarView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        calendarView.widthAnchor.constraint(lessThanOrEqualToConstant: 375),
-        calendarView.widthAnchor.constraint(equalToConstant: 375).prioritize(at: .defaultLow),
+        //calendarView.widthAnchor.constraint(lessThanOrEqualToConstant: 375),
+        //calendarView.widthAnchor.constraint(equalToConstant: 375).prioritize(at: .defaultLow),
       ])
     case .horizontal:
       NSLayoutConstraint.activate([

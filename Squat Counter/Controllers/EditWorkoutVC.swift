@@ -124,6 +124,7 @@ class EditWorkoutVC: UITableViewController {
         cell?.contentView.backgroundColor = .gray // Change to the desired tap color
 
         // Restore the original color after a brief delay
+        // TODO: remove this and handle it properly
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
             cell?.contentView.backgroundColor = .black // Change back to the original color
         }

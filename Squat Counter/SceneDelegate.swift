@@ -7,8 +7,9 @@
 
 import UIKit
 import HorizonCalendar
+import AVFoundation
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarControllerDelegate {
 
     var window: UIWindow?
 
@@ -18,6 +19,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 //        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        // Allow audio from my app's audio session to mix with audio from active sessions in other audio apps. 
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, options: [.mixWithOthers])
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Failed to set audio session category. Error: \(error)")
+        }
         
         // Set the global appearance for all UINavigationBars
         UINavigationBar.appearance().barTintColor = .black
@@ -32,31 +41,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         
-        let tabBarController = UITabBarController()
-
-        // Set up CalendarNC with CalendarVC
-        let calendarVC = CalendarDisplayVC(monthsLayout: .vertical(options: VerticalMonthsLayoutOptions(pinDaysOfWeekToTop: false))) // come back to this to make it true
-        let calendarNC = UINavigationController(rootViewController: calendarVC)
-        calendarNC.tabBarItem = UITabBarItem(title: "Calendar", image: UIImage(systemName: "calendar"), tag: 0)
-        //calendarNC.isToolbarHidden = true
-
-
-        // Set up SquatsNC
-        //let squatsNC = SquatsNC()
-        let startWorkoutTV = StartWorkoutTV()
-        
-        let squatsNC = UINavigationController(rootViewController: startWorkoutTV)
-        squatsNC.tabBarItem = UITabBarItem(title: "Squats", image: UIImage(systemName: "dumbbell.fill"), tag: 1)
-        
-        tabBarController.viewControllers = [calendarNC, squatsNC]
-        tabBarController.tabBar.barTintColor = .black
-        tabBarController.tabBar.tintColor = .orange
-        tabBarController.tabBar.isTranslucent = false
-        
-        window.rootViewController = tabBarController
-        window.makeKeyAndVisible()
-        
         self.window = window
+            
+        let isFirstTime: Bool
+        if UserDefaults.standard.object(forKey: "hasOpenedBefore") == nil {
+            isFirstTime = true
+            UserDefaults.standard.set(true, forKey: "hasOpenedBefore")
+            UserDefaults.standard.synchronize()
+        } else {
+            isFirstTime = false
+        }
+        
+        if isFirstTime {
+            let onboardingVC = OnboardingVC(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+            let navigationController = UINavigationController(rootViewController: onboardingVC)
+            window.rootViewController = navigationController
+        } else {
+            window.rootViewController = setupMainTabBarController()
+        }
+            
+        window.makeKeyAndVisible()
         
     }
 
@@ -87,6 +91,40 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+    
+    func setupMainTabBarController() -> UITabBarController {
+        let tabBarController = UITabBarController()
+
+        // Set up CalendarNC with CalendarVC
+        let calendarVC = CalendarDisplayVC(monthsLayout: .vertical(options: VerticalMonthsLayoutOptions(pinDaysOfWeekToTop: false)))
+        let calendarNC = UINavigationController(rootViewController: calendarVC)
+        calendarNC.tabBarItem = UITabBarItem(title: "Calendar", image: UIImage(systemName: "calendar"), tag: 0)
+
+        // Set up SquatsNC
+        let startWorkoutTV = StartWorkoutTV()
+        let squatsNC = UINavigationController(rootViewController: startWorkoutTV)
+        squatsNC.tabBarItem = UITabBarItem(title: "Squats", image: UIImage(systemName: "dumbbell.fill"), tag: 1)
+        
+        tabBarController.viewControllers = [calendarNC, squatsNC]
+        tabBarController.tabBar.barTintColor = .black
+        tabBarController.tabBar.tintColor = .orange
+        tabBarController.tabBar.isTranslucent = false
+        
+        tabBarController.delegate = self
+
+        return tabBarController
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        print("Selected \(viewController)")
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        // Here you can put any logic you want to decide if a tab should be selectable or not
+        // In this example, we're simply allowing all tabs to be selected
+        return true
+    }
+
 
 
 }

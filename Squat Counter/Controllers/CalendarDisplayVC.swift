@@ -33,6 +33,7 @@ final class CalendarDisplayVC: BaseDemoViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        overrideUserInterfaceStyle = .dark
         title = "Calendar"
         
         do {
@@ -41,14 +42,14 @@ final class CalendarDisplayVC: BaseDemoViewController {
         } catch let error as NSError {
             print("Error loading Realm \(error.localizedDescription)")
         }
-        
+      
         
         calendarView.scroll(
           toDayContaining: todaysDate,
           scrollPosition: .centered,
           animated: false)
         calendarView.daySelectionHandler = { [weak self] day in
-            
+
             if let (startOfDayUTC, endOfDayUTC) = self?.dateRangeInUTC(for: day) {
                 let predicate = NSPredicate(format: "startTime >= %@ AND endTime <= %@", startOfDayUTC as NSDate, endOfDayUTC as NSDate)
                 if let loadedWorkouts = self?.workouts {
@@ -61,7 +62,7 @@ final class CalendarDisplayVC: BaseDemoViewController {
                     self?.dateSelected = date
                 }
             }
-            
+
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
             if let daySummaryVC = storyboard.instantiateViewController(withIdentifier: "DaySummaryVC") as? DaySummaryVC {
@@ -71,7 +72,7 @@ final class CalendarDisplayVC: BaseDemoViewController {
             }
 
         }
-        overrideUserInterfaceStyle = .dark
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

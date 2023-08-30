@@ -20,7 +20,8 @@ class StartWorkoutTV: UITableViewController {
     var restIntervalSeconds = 60
     
     var overlayView: UIView?
-    var tapGestureRecognizer: UITapGestureRecognizer?
+    // TODO: add the gesture recognizer code back in once you've corrected the unresponsiveness issue. jecy ctrl + F 'tapGestureRecognizer'
+    //var tapGestureRecognizer: UITapGestureRecognizer?
     
     
     let sectionTitles = [
@@ -58,8 +59,15 @@ class StartWorkoutTV: UITableViewController {
         headerView.addSubview(headerLabel)
         
         NSLayoutConstraint.activate([
-            headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),
-            headerLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),
+//            headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 30),
+//            headerLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -30),
+            // Center the label within the headerView
+            headerLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            headerLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            
+                // Set the width to be 90% of the headerView's width
+            headerLabel.widthAnchor.constraint(equalTo: headerView.widthAnchor, multiplier: 0.9),
+        
             headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 15),
             headerLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -15)
         ])
@@ -67,22 +75,50 @@ class StartWorkoutTV: UITableViewController {
         tableView.tableHeaderView = headerView
         
 
-        // set up buttons below tableView
-        let customView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 100))
+//        // set up buttons below tableView
+//        let startButton = UIButton(type: .system)
+//        startButton.applyCustomConfiguration()
+//        startButton.setTitle("Start Squatting", for: .normal)
+//
+//        startButton.addTarget(self, action: #selector(startSquatting), for: .touchUpInside)
+//
+//        startButton.translatesAutoresizingMaskIntoConstraints = false // Enable Auto Layout
+//
+//        // Add to view
+//        view.addSubview(startButton)
+//
+//        // Disable autoresizing and set constraints
+//        startButton.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            //startButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height * 0.8 + 30), // Adjust this constant value to control the gap between label and button
+//            startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            startButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+//        ])
+        // Setting up the startButton
         let startButton = UIButton(type: .system)
+        startButton.applyCustomConfiguration()
         startButton.setTitle("Start Squatting", for: .normal)
-        startButton.setTitleColor(.orange, for: .normal)
         startButton.addTarget(self, action: #selector(startSquatting), for: .touchUpInside)
-        startButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24.0)
-        startButton.translatesAutoresizingMaskIntoConstraints = false // Enable Auto Layout
-        customView.addSubview(startButton)
+        
+        // Create a footerView to contain the button
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 80)) // Adjust height as necessary
+        footerView.addSubview(startButton)
+        tableView.tableFooterView = footerView
+        
+        // Set constraints for startButton within footerView
+        startButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            startButton.centerXAnchor.constraint(equalTo: footerView.centerXAnchor),
+            startButton.centerYAnchor.constraint(equalTo: footerView.centerYAnchor),
+            //startButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 20),
+            //startButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -20)
+        ])
+        
+        let startBarButtonItem = UIBarButtonItem(title: "Start Squatting", style: .done, target: self, action: #selector(startSquatting))
+        self.navigationItem.rightBarButtonItem = startBarButtonItem
 
-        // Center the button horizontally
-        startButton.centerXAnchor.constraint(equalTo: customView.centerXAnchor).isActive = true
-        // Set the top constraint 20 points from the top of customView
-        startButton.topAnchor.constraint(equalTo: customView.topAnchor, constant: 50).isActive = true
 
-        tableView.tableFooterView = customView
+
         
         view.backgroundColor = .black
         tableView.backgroundColor = .black
@@ -218,22 +254,22 @@ class StartWorkoutTV: UITableViewController {
         window.addSubview(pickerView)
         
         // Add a tap gesture recognizer to detect taps outside the picker
-        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsidePicker(_:)))
-        window.addGestureRecognizer(tapGestureRecognizer!)
+        //tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsidePicker(_:)))
+        //window.addGestureRecognizer(tapGestureRecognizer!)
     }
     
     @objc func handleTapOutsidePicker(_ gesture: UITapGestureRecognizer) {
         //let touchPoint = gesture.location(in: self.view.window)
         // Regardless of where the touch is, dismiss the picker
         dismissCurrentPicker()
-        self.view.window?.removeGestureRecognizer(tapGestureRecognizer!)
-        tapGestureRecognizer = nil
+        //self.view.window?.removeGestureRecognizer(tapGestureRecognizer!)
+        //tapGestureRecognizer = nil
     }
 
     @objc func donePicker() {
         dismissCurrentPicker()
-        self.view.window?.removeGestureRecognizer(tapGestureRecognizer!)
-        tapGestureRecognizer = nil
+        //self.view.window?.removeGestureRecognizer(tapGestureRecognizer!)
+        //tapGestureRecognizer = nil
     }
     
     func dismissCurrentPicker() {
@@ -247,69 +283,6 @@ class StartWorkoutTV: UITableViewController {
 
 
     }
-//        // Set the frame for the picker at the bottom of the view
-//        let pickerViewHeight: CGFloat = 130
-//        let tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0 // If there's no tab bar controller, this will be 0
-//        pickerView.frame = CGRect(x: 0, y: view.frame.height - pickerViewHeight - tabBarHeight, width: view.frame.width, height: pickerViewHeight)
-//        pickerView.backgroundColor = darkBlue
-//
-//        let toolbar = UIToolbar()
-//        self.toolbar = toolbar
-//        toolbar.frame = CGRect(x: 0, y: pickerView.frame.origin.y - 44, width: view.frame.width, height: 44)
-//        toolbar.barTintColor = darkBlue
-//
-//
-//        // Create the "Done" button
-//        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(donePicker))
-//        doneButton.tintColor = .orange
-//
-//        // Create a flexible space to center the buttons
-//        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//
-//        // Set the toolbar's items
-//        toolbar.setItems([flexSpace, doneButton, flexSpace], animated: false)
-//
-//        // Add the toolbar and picker view to the view hierarchy
-//        view.addSubview(toolbar)
-//        view.addSubview(pickerView)
-//
-//        // Add a tap gesture recognizer to detect taps outside the picker
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsidePicker(_:)))
-//        view.addGestureRecognizer(tapGesture)
-//    }
-//
-//    @objc func donePicker() {
-//        pickerView?.removeFromSuperview()
-//        toolbar?.removeFromSuperview()
-//        view.endEditing(true)
-//    }
-//
-//    @objc func handleTapOutsidePicker(_ gesture: UITapGestureRecognizer) {
-//        let touchPoint = gesture.location(in: view)
-//        for subview in view.subviews {
-//            if let picker = subview as? UIPickerView, picker.frame.contains(touchPoint) {
-//                return // Touch is inside the picker, so do nothing
-//            }
-//        }
-//
-//        // Touch is outside the picker, so remove it
-//        for subview in view.subviews {
-//            if let picker = subview as? UIPickerView {
-//                picker.removeFromSuperview()
-//                toolbar?.removeFromSuperview()
-//            }
-//        }
-//
-//
-//        // Remove the gesture recognizer
-//        view.removeGestureRecognizer(gesture)
-//
-//        // Find the table view cell that was tapped
-//        let touchPointInTableView = gesture.location(in: tableView)
-//        if let indexPath = tableView.indexPathForRow(at: touchPointInTableView) {
-//            tableView(tableView, didSelectRowAt: indexPath)
-//        }
-//    }
     
 }
 
@@ -352,30 +325,6 @@ extension StartWorkoutTV: UIPickerViewDelegate, UIPickerViewDataSource {
         }
     }
     
-//    // Define how each row should be displayed
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        switch pickerView.tag {
-//        case 0:
-//            return repTargetArray[row] == 0 ? "No rep target" : "\(repTargetArray[row]) reps"
-//        case 1:
-//            return setTargetArray[row] == 0 ? "No set target" : "\(setTargetArray[row]) sets"
-//        case 2:
-//            return weightArray[row] == 0 ? "Bodyweight" : "\(weightArray[row]) lbs"
-//        case 3:
-//            switch component {
-//            case 0:
-//                return "\(String(format: "%02d", row)) mins"
-//            case 1:
-//                return ":" // Static colon text
-//            case 2:
-//                return "\(String(format: "%02d", row)) secs"
-//            default:
-//                return ""
-//            }
-//        default:
-//            return ""
-//        }
-//    }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         var title = ""

@@ -103,7 +103,7 @@ extension WorkoutDetailVC: UITableViewDataSource {
                 weightString = "\(currentSet.weightLbs)lbs"
             }
             content.text = "\(currentSet.numReps) x \(weightString ?? "bodyweight") \(currentSet.exerciseName ?? "no exercise")s"
-            content.secondaryText = "Details"
+            content.secondaryText = ""//"Details"
             content.image = UIImage(systemName: "dumbbell")
             // Customize appearance.
             content.imageProperties.tintColor = .orange

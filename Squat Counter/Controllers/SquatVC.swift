@@ -157,7 +157,7 @@ class SquatVC: UIViewController {
             destinationVC.setTarget = setTarget
             destinationVC.weightOnBar = weightOnBar
             destinationVC.setArray = setArray
-            destinationVC.setsCompleted = setArray.count - 1
+            destinationVC.setsCompleted = setArray.count
             destinationVC.stopwatch = stopwatch
             destinationVC.calendar = calendar
             destinationVC.startTime = startTime
@@ -171,14 +171,29 @@ class SquatVC: UIViewController {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
         
+        checkCameraAuthorization { [weak self] granted in
+            guard let strongSelf = self else { return }
+            
+            if granted {
+                DispatchQueue.main.async {
+                    self?.setUpCaptureSessionOutput()
+                    self?.setUpCaptureSessionInput()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    strongSelf.promptForCameraAccess()
+                }
+            }
+        }
+        
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer.frame = cameraView.bounds
         previewLayer.videoGravity = .resizeAspectFill
         cameraView.layer.addSublayer(previewLayer)
         //setUpPreviewOverlayView()
         setUpAnnotationOverlayView()
-        setUpCaptureSessionOutput()
-        setUpCaptureSessionInput()
+//        setUpCaptureSessionOutput()
+//        setUpCaptureSessionInput()
         
         // Base pose detector with streaming, when depending on the PoseDetection SDK
         let options = PoseDetectorOptions()
@@ -206,15 +221,6 @@ class SquatVC: UIViewController {
         stopwatch.start()
         
         startTime = Date()
-        
-        
-        
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, options: [.mixWithOthers])
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print("Failed to set audio session category. Error: \(error)")
-        }
         
         setArray.append(workout)
     }
@@ -299,6 +305,7 @@ class SquatVC: UIViewController {
                             let totalReps = setArray.reduce(0) { (result, workout) -> Int in
                                 return result + workout.workoutArray.count
                             }
+                            calsLabel.text = String(Int(0.4 * Double(totalReps)))
                             totalRepsLabel.text = String(totalReps)
                             DispatchQueue.main.async {
                                 let squatCount = self.workout.workoutArray.count
@@ -355,6 +362,44 @@ class SquatVC: UIViewController {
             }
         }
     }
+    
+    func checkCameraAuthorization(completion: @escaping (Bool) -> Void) {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized: // The user has previously granted access to the camera.
+            completion(true)
+            
+        case .notDetermined: // The user has not yet been asked for camera access.
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                completion(granted)
+            }
+            
+        case .denied: // The user has previously denied access.
+            completion(false)
+            
+        case .restricted: // The user can't grant access due to restrictions.
+            completion(false)
+        default:
+            completion(false)
+        }
+    }
+    
+    func promptForCameraAccess() {
+        let alert = UIAlertController(title: "Camera Access Needed", message: "Please grant access to the camera to use this feature.", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Go to Settings", style: .default, handler: { _ in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+            
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: nil)
+            }
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+
+
     
     
     

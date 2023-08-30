@@ -197,6 +197,16 @@ class FinishWorkoutTV: UITableViewController {
 
         // Preselect the picker view's value
         let set = realmWorkout?.sets[indexPath.section]
+        
+        let toolbar = UIToolbar()
+        self.toolbar = toolbar
+        guard let window = (self.view.window?.windowScene?.windows.first { $0.isKeyWindow }) else { return }
+        overlayView = UIView(frame: window.bounds)
+        overlayView?.backgroundColor = UIColor(white: 0, alpha: 0.6) // semi-transparent black
+        window.insertSubview(overlayView!, belowSubview: toolbar) // add it below the toolbar
+
+        window.addSubview(toolbar)
+        window.addSubview(pickerView)
 
 
         // Set the selected row to current value
@@ -207,7 +217,7 @@ class FinishWorkoutTV: UITableViewController {
         }
         
         pickerView.backgroundColor = darkBlue
-        guard let window = (self.view.window?.windowScene?.windows.first { $0.isKeyWindow }) else { return }
+        
 
         // This gets the height of the tab bar.
         let pickerViewHeight: CGFloat = 100
@@ -216,8 +226,7 @@ class FinishWorkoutTV: UITableViewController {
         let pickerViewY: CGFloat = UIScreen.main.bounds.height - pickerViewHeight - window.safeAreaInsets.bottom
         pickerView.frame = CGRect(x: 0, y: pickerViewY, width: view.frame.width, height: pickerViewHeight)
 
-        let toolbar = UIToolbar()
-        self.toolbar = toolbar
+        
         toolbar.frame = CGRect(x: 0, y: pickerViewY - 44, width: view.frame.width, height: 44)
         toolbar.barTintColor = darkBlue
 
@@ -227,12 +236,7 @@ class FinishWorkoutTV: UITableViewController {
         toolbar.setItems([flexSpace, doneButton, flexSpace], animated: false)
         doneButton.tintColor = .orange
         
-        overlayView = UIView(frame: window.bounds)
-        overlayView?.backgroundColor = UIColor(white: 0, alpha: 0.6) // semi-transparent black
-        window.insertSubview(overlayView!, belowSubview: toolbar) // add it below the toolbar
-
-        window.addSubview(toolbar)
-        window.addSubview(pickerView)
+        
         
         // Add a tap gesture recognizer to detect taps outside the picker
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsidePicker(_:)))
@@ -264,73 +268,6 @@ class FinishWorkoutTV: UITableViewController {
 
 
     }
-        
-//        guard let window = (self.view.window?.windowScene?.windows.first { $0.isKeyWindow }) else { return }
-//        // Set the frame for the picker at the bottom of the view
-//        let pickerHeight: CGFloat = 130
-//        let tabBarHeight: CGFloat = tabBarController?.tabBar.frame.height ?? 0 // If there's no tab bar controller, this will be 0
-//        picker.frame = CGRect(x: 0, y: view.frame.height - pickerHeight - tabBarHeight, width: view.frame.width, height: pickerHeight)
-//        picker.backgroundColor = darkBlue
-//
-//        let toolbar = UIToolbar()
-//        self.toolbar = toolbar
-//        toolbar.frame = CGRect(x: 0, y: picker.frame.origin.y - 44, width: view.frame.width, height: 44)
-//        toolbar.barTintColor = darkBlue
-//
-//
-//        // Create the "Done" button
-//        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(donePicker))
-//        doneButton.tintColor = .orange
-//
-//        // Create a flexible space to center the buttons
-//        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//
-//        // Set the toolbar's items
-//        toolbar.setItems([flexSpace, doneButton, flexSpace], animated: false)
-//
-//        // Add the toolbar and picker view to the view hierarchy
-//        view.addSubview(toolbar)
-//        view.addSubview(picker)
-//
-//        // Add a tap gesture recognizer to detect taps outside the picker
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsidePicker(_:)))
-//        view.addGestureRecognizer(tapGesture)
-//
-//    }
-//
-//    @objc func donePicker() {
-//        picker?.removeFromSuperview()
-//        toolbar?.removeFromSuperview()
-//        view.endEditing(true)
-//    }
-//
-//    @objc func handleTapOutsidePicker(_ gesture: UITapGestureRecognizer) {
-//        let touchPoint = gesture.location(in: view)
-//        for subview in view.subviews {
-//            if let picker = subview as? UIPickerView, picker.frame.contains(touchPoint) {
-//                return // Touch is inside the picker, so do nothing
-//            }
-//        }
-//
-//        // Touch is outside the picker, so remove it
-//        for subview in view.subviews {
-//            if let picker = subview as? UIPickerView {
-//                picker.removeFromSuperview()
-//                toolbar?.removeFromSuperview()
-//            }
-//        }
-//
-//
-//        // Remove the gesture recognizer
-//        view.removeGestureRecognizer(gesture)
-//
-//        // Find the table view cell that was tapped
-//        let touchPointInTableView = gesture.location(in: tableView)
-//        if let indexPath = tableView.indexPathForRow(at: touchPointInTableView) {
-//            tableView(tableView, didSelectRowAt: indexPath)
-//        }
-//    }
-
     
 }
 
