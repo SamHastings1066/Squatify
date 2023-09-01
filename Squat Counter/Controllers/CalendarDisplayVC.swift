@@ -21,29 +21,29 @@ final class CalendarDisplayVC: BaseDemoViewController {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
+
 // MARK: - Internal
-    
-    
-    var workouts: Results<RealmWorkout>?
+
+
+    var workouts: Results<RealmWorkout>? = nil
     var filteredWorkouts: Results<RealmWorkout>?
     var dateSelected: Date?
     let todaysDate = Date()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         overrideUserInterfaceStyle = .dark
         title = "Calendar"
-        
+
         do {
             let realm = try Realm()
             workouts = realm.objects(RealmWorkout.self)
         } catch let error as NSError {
             print("Error loading Realm \(error.localizedDescription)")
         }
-      
-        
+
+
         calendarView.scroll(
           toDayContaining: todaysDate,
           scrollPosition: .centered,
@@ -72,9 +72,9 @@ final class CalendarDisplayVC: BaseDemoViewController {
             }
 
         }
-        
+
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.reloadCalendar()
@@ -83,7 +83,7 @@ final class CalendarDisplayVC: BaseDemoViewController {
   override func makeContent() -> CalendarViewContent {
       let startDate = calendar.date(from: DateComponents(year:  2023, month: 6, day: 1))!
       let endDate = calendar.date(byAdding: .day, value: 29, to: todaysDate)!
-      
+
       return CalendarViewContent(
         calendar: calendar,
         visibleDateRange: startDate...endDate,
@@ -94,8 +94,8 @@ final class CalendarDisplayVC: BaseDemoViewController {
       .dayItemProvider { [calendar, dayDateFormatter] day in
           var invariantViewProperties = DayView.InvariantViewProperties.baseInteractive
 
-        
-          
+
+
           if let (startOfDayUTC, endOfDayUTC) = self.dateRangeInUTC(for: day) {
                   let predicate = NSPredicate(format: "startTime >= %@ AND endTime <= %@", startOfDayUTC as NSDate, endOfDayUTC as NSDate)
 
@@ -118,11 +118,11 @@ final class CalendarDisplayVC: BaseDemoViewController {
   }
 
     // MARK: - Helper Functions
-    
+
     func reloadCalendar() {
         self.calendarView.setContent(self.makeContent())
     }
-    
+
     func dateRangeInUTC(for day: Day) -> (start: Date, end: Date)? {
         let calendar = Calendar.current
         let dateComponents = DateComponents(year: day.components.year, month: day.components.month, day: day.components.day)
@@ -134,13 +134,13 @@ final class CalendarDisplayVC: BaseDemoViewController {
 
         let localTimeZone = TimeZone.current
         let localTimeZoneOffset = TimeInterval(localTimeZone.secondsFromGMT(for: date))
-        
+
         let startOfDayUTC = startOfDayLocal.addingTimeInterval(-localTimeZoneOffset)
         let endOfDayUTC = endOfDayLocal.addingTimeInterval(-localTimeZoneOffset)
-        
+
         return (start: startOfDayUTC, end: endOfDayUTC)
     }
-    
+
 
 
 }

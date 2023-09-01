@@ -23,6 +23,7 @@ class DaySummaryVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .black
         // tell dayTableView to lok for its data source in the DaySummaryVC - specifically the delegate methods in the extension.
         dayTableView.dataSource = self
         dayTableView.delegate = self
@@ -71,6 +72,7 @@ class DaySummaryVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        view.backgroundColor = .black
         dayTableView.reloadData()
     }
 }
@@ -80,9 +82,14 @@ class DaySummaryVC: UIViewController {
 
 extension DaySummaryVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (filteredWorkouts?.count)! > 0 {
-            return (filteredWorkouts?.count)!
-        } else {
+        if let filtered = filteredWorkouts {
+            if filtered.count > 0 {
+                return (filteredWorkouts?.count)!
+            } else {
+                return 1
+            }
+        }
+         else {
             return 1
         }
 
@@ -91,25 +98,40 @@ extension DaySummaryVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // create a cell
         
-        if (filteredWorkouts?.count)! > 0 {
-            let cell = dayTableView.dequeueReusableCell(withIdentifier: "WorkoutCell", for: indexPath) as! SwipeTableViewCell
-            cell.delegate = self
-            var content = UIListContentConfiguration.valueCell()
-            // Configure content.
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "h:mm a"
-            let startTimeString = dateFormatter.string(from: filteredWorkouts?[indexPath.row].startTime ?? Date())
-            let endTimeString = dateFormatter.string(from: filteredWorkouts?[indexPath.row].endTime ?? Date())
-            content.text = "Workout \(indexPath.row + 1)"
-            content.secondaryText = "\(startTimeString) - \(endTimeString)"
+        if let filtered = filteredWorkouts {
+            if filtered.count > 0 {
+                //if (filteredWorkouts?.count)! > 0 {
+                let cell = dayTableView.dequeueReusableCell(withIdentifier: "WorkoutCell", for: indexPath) as! SwipeTableViewCell
+                cell.delegate = self
+                var content = UIListContentConfiguration.valueCell()
+                // Configure content.
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "h:mm a"
+                let startTimeString = dateFormatter.string(from: filteredWorkouts?[indexPath.row].startTime ?? Date())
+                let endTimeString = dateFormatter.string(from: filteredWorkouts?[indexPath.row].endTime ?? Date())
+                content.text = "Workout \(indexPath.row + 1)"
+                content.secondaryText = "\(startTimeString) - \(endTimeString)"
+                content.image = UIImage(systemName: "star")
+                // Customize appearance.
+                content.imageProperties.tintColor = .orange
+                content.textProperties.color = .white
+                content.secondaryTextProperties.color = .gray
+                
+                cell.contentConfiguration = content
+                return cell
+            }
+            else {
+            let cell = dayTableView.dequeueReusableCell(withIdentifier: "WorkoutCell", for: indexPath)
+            var content = cell.defaultContentConfiguration()
+            content.text = "No workouts recorded."
             content.image = UIImage(systemName: "star")
             // Customize appearance.
             content.imageProperties.tintColor = .orange
             content.textProperties.color = .white
-            content.secondaryTextProperties.color = .gray
             
             cell.contentConfiguration = content
             return cell
+        }
         } else {
             let cell = dayTableView.dequeueReusableCell(withIdentifier: "WorkoutCell", for: indexPath)
             var content = cell.defaultContentConfiguration()
@@ -131,8 +153,14 @@ extension DaySummaryVC: UITableViewDataSource {
 
 extension DaySummaryVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (filteredWorkouts?.count)! > 0 {
-            self.performSegue(withIdentifier: "DayToWorkoutDetail", sender: self)
+        if let filtered = filteredWorkouts {
+            if filtered.count > 0 {
+                //if (filteredWorkouts?.count)! > 0 {
+                self.performSegue(withIdentifier: "DayToWorkoutDetail", sender: self)
+            }
+            else {
+                return
+            }
         } else {
             return
         }

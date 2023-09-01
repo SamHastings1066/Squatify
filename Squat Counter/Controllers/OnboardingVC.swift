@@ -14,7 +14,7 @@ class OnboardingVC: UIPageViewController, UIPageViewControllerDataSource, UIPage
         // You can adjust the content of these view controllers based on your requirements.
         let vc1 = OnboardingContentVC()
         vc1.pageIndex = 0
-        vc1.titleText = "Welcome to Sqatify"
+        vc1.titleText = "Welcome to Squatify"
         // setup other properties as needed
         
         let vc2 = OnboardingContentVC()

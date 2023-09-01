@@ -7,7 +7,7 @@
 
 import UIKit
 import RealmSwift
-import HorizonCalendar
+//import HorizonCalendar
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

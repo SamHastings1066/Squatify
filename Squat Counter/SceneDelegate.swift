@@ -20,14 +20,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarControllerDeleg
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 //        guard let _ = (scene as? UIWindowScene) else { return }
         
-        // Allow audio from my app's audio session to mix with audio from active sessions in other audio apps. 
+        // Allow audio from my app's audio session to mix with audio from active sessions in other audio apps.
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, options: [.mixWithOthers])
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             print("Failed to set audio session category. Error: \(error)")
         }
-        
+
         // Set the global appearance for all UINavigationBars
         UINavigationBar.appearance().barTintColor = .black
         UINavigationBar.appearance().barStyle = .black
@@ -38,11 +38,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarControllerDeleg
         UINavigationBar.appearance().isTranslucent = false
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
-        let window = UIWindow(windowScene: windowScene)
-        
-        self.window = window
-            
+        window = UIWindow(frame: UIScreen.main.bounds)
+//
+//        guard let windowScene = (scene as? UIWindowScene) else { return }
+//
+////        let window = UIWindow(windowScene: windowScene)
+////
+////        self.window = window
+//        window = UIWindow(windowScene: windowScene)
+//
         let isFirstTime: Bool
         if UserDefaults.standard.object(forKey: "hasOpenedBefore") == nil {
             isFirstTime = true
@@ -51,16 +55,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarControllerDeleg
         } else {
             isFirstTime = false
         }
-        
+
         if isFirstTime {
             let onboardingVC = OnboardingVC(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
             let navigationController = UINavigationController(rootViewController: onboardingVC)
-            window.rootViewController = navigationController
+            window?.rootViewController = navigationController
         } else {
-            window.rootViewController = setupMainTabBarController()
+            window?.rootViewController = setupMainTabBarController()
         }
-            
-        window.makeKeyAndVisible()
+
+
+        
+        
+        
+        
+        
+        //window?.rootViewController = setupMainTabBarController()
+        
+
+        
+        
+        window?.makeKeyAndVisible()
+        window?.windowScene = windowScene
         
     }
 
@@ -94,8 +110,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarControllerDeleg
     
     func setupMainTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
+        tabBarController.view.backgroundColor = .black // <-- THIS LINE. THIS LINE!!!!! Means that the tab bar icons are now responsive.
+        // Possibly because sometimes, explicitly setting properties like background color can have the side effect of prompting certain parts of the UI to complete their view drawing lifecycle more predictably. This might lead to more consistent layout and presentation, indirectly resolving issues.
 
         // Set up CalendarNC with CalendarVC
+        //let calendarVC = CalendarDisplayVC()
         let calendarVC = CalendarDisplayVC(monthsLayout: .vertical(options: VerticalMonthsLayoutOptions(pinDaysOfWeekToTop: false)))
         let calendarNC = UINavigationController(rootViewController: calendarVC)
         calendarNC.tabBarItem = UITabBarItem(title: "Calendar", image: UIImage(systemName: "calendar"), tag: 0)
@@ -105,7 +124,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarControllerDeleg
         let squatsNC = UINavigationController(rootViewController: startWorkoutTV)
         squatsNC.tabBarItem = UITabBarItem(title: "Squats", image: UIImage(systemName: "dumbbell.fill"), tag: 1)
         
-        tabBarController.viewControllers = [calendarNC, squatsNC]
+        //tabBarController.viewControllers = [calendarNC, squatsNC]
+        tabBarController.setViewControllers([calendarNC, squatsNC], animated: false)
         tabBarController.tabBar.barTintColor = .black
         tabBarController.tabBar.tintColor = .orange
         tabBarController.tabBar.isTranslucent = false
@@ -116,7 +136,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarControllerDeleg
     }
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        print("Selected \(viewController)")
+        print("Selected \(viewController.description)")
     }
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {

@@ -321,21 +321,27 @@ extension FinishWorkoutTV: UIPickerViewDelegate, UIPickerViewDataSource {
         guard let indexPath = currentEditingIndexPath, let set = realmWorkout?.sets[indexPath.section] else { return }
         
         // Updating the relevant set properties and saving to Realm
-        try! realm.write {
-            switch component {
-            case 0:
-                set.numReps = repsArray[row]
-            case 1:
-                set.weightLbs = weightArray[row]
-            case 2:
-                set.exerciseName = exerciserArray[row]
-            default:
-                break
+        do {
+            try realm.write {
+                switch component {
+                case 0:
+                    set.numReps = repsArray[row]
+                case 1:
+                    set.weightLbs = weightArray[row]
+                case 2:
+                    set.exerciseName = exerciserArray[row]
+                default:
+                    break
+                }
+                
+                // Always setting the hasBeenEdited flag to true
+                set.hasBeenEditted = true
             }
-            
-            // Always setting the hasBeenEdited flag to true
-            set.hasBeenEditted = true
+        } catch {
+            print("Error writing to realm \(error)")
         }
+        
+        
         
         // Update the cell text
         if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: indexPath.section)) {

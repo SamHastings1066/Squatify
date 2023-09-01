@@ -307,6 +307,7 @@ class RestVC: UIViewController {
         }
     }
     
+    // TODO: extract this into a function and use that function here and in SquatVC
     func stopWorkout() {
         timer?.invalidate()
         timer = nil

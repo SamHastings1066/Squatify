@@ -18,6 +18,7 @@ class WorkoutDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .black
         workoutTableView.dataSource = self
         workoutTableView.rowHeight = 80.0
         
@@ -33,6 +34,7 @@ class WorkoutDetailVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        view.backgroundColor = .black
         workoutTableView.reloadData()
     }
     
