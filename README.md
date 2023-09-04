@@ -38,5 +38,5 @@ This is the public repo for Squatify, an iOS fitness tracker tailored to squats.
 - 📅 **Detailed Workout History**: Keep an eye on your progress with a calendar-based workout history and detailed exercise metrics.
 - 💪 **Motivation & Progress**: Visualize your achievements and stay motivated.
 
-Squatify is a blend of user-centric design and robust functionality. Please get in contact if you wish to collaborate (:
+Squatify uses state-of-the-art pose estimation software. Since this is a fast moving field the software used in Squatify is likely to change - especially as Apple improves the models in its VisionOS. Please get in contact if you wish to collaborate (:
 
