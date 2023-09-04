@@ -117,7 +117,7 @@
 		849903BE2A6F2FA50086A9FB /* RealmWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmWorkout.swift; sourceTree = "<group>"; };
 		849903C12A705BBE0086A9FB /* RepTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepTableCell.swift; sourceTree = "<group>"; };
 		849903C22A705BBE0086A9FB /* RepTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RepTableCell.xib; sourceTree = "<group>"; };
-		849C2C7D2A59C85A00FD039B /* Squat Counter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Squat Counter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		849C2C7D2A59C85A00FD039B /* Squatify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Squatify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		849C2C802A59C85A00FD039B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		849C2C822A59C85A00FD039B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		849C2C842A59C85A00FD039B /* SquatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquatVC.swift; sourceTree = "<group>"; };
@@ -125,11 +125,12 @@
 		849C2C892A59C85B00FD039B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		849C2C8C2A59C85B00FD039B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		849C2C8E2A59C85B00FD039B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		849C2C932A59C85B00FD039B /* Squat CounterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Squat CounterTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		849C2C932A59C85B00FD039B /* SquatifyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SquatifyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		849C2C972A59C85B00FD039B /* Squat_CounterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squat_CounterTests.swift; sourceTree = "<group>"; };
-		849C2C9D2A59C85B00FD039B /* Squat CounterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Squat CounterUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		849C2C9D2A59C85B00FD039B /* SquatifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SquatifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		849C2CA12A59C85B00FD039B /* Squat_CounterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squat_CounterUITests.swift; sourceTree = "<group>"; };
 		849C2CA32A59C85B00FD039B /* Squat_CounterUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squat_CounterUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		84AC0E932AA6104B0010CD33 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		84B03E072A7C14E600A7428A /* EditWorkoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorkoutVC.swift; sourceTree = "<group>"; };
 		84C405B92A5B300D0054FFF0 /* UIUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
 		84C405BB2A5B32D30054FFF0 /* MLKitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLKitExtensions.swift; sourceTree = "<group>"; };
@@ -281,6 +282,7 @@
 		849C2C742A59C85A00FD039B = {
 			isa = PBXGroup;
 			children = (
+				84AC0E932AA6104B0010CD33 /* README.md */,
 				849C2C7F2A59C85A00FD039B /* Squat Counter */,
 				849C2C962A59C85B00FD039B /* Squat CounterTests */,
 				849C2CA02A59C85B00FD039B /* Squat CounterUITests */,
@@ -293,9 +295,9 @@
 		849C2C7E2A59C85A00FD039B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				849C2C7D2A59C85A00FD039B /* Squat Counter.app */,
-				849C2C932A59C85B00FD039B /* Squat CounterTests.xctest */,
-				849C2C9D2A59C85B00FD039B /* Squat CounterUITests.xctest */,
+				849C2C7D2A59C85A00FD039B /* Squatify.app */,
+				849C2C932A59C85B00FD039B /* SquatifyTests.xctest */,
+				849C2C9D2A59C85B00FD039B /* SquatifyUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -354,9 +356,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		849C2C7C2A59C85A00FD039B /* Squat Counter */ = {
+		849C2C7C2A59C85A00FD039B /* Squatify */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 849C2CA72A59C85B00FD039B /* Build configuration list for PBXNativeTarget "Squat Counter" */;
+			buildConfigurationList = 849C2CA72A59C85B00FD039B /* Build configuration list for PBXNativeTarget "Squatify" */;
 			buildPhases = (
 				162DA5C339E88D4BDFD2EE7F /* [CP] Check Pods Manifest.lock */,
 				849C2C792A59C85A00FD039B /* Sources */,
@@ -369,19 +371,19 @@
 			);
 			dependencies = (
 			);
-			name = "Squat Counter";
+			name = Squatify;
 			packageProductDependencies = (
 				8440C01A2A6AEC940068308E /* Realm */,
 				8440C01C2A6AEC940068308E /* RealmSwift */,
 				84E7B35D2A7161C000A77DD7 /* HorizonCalendar */,
 			);
 			productName = "Squat Counter";
-			productReference = 849C2C7D2A59C85A00FD039B /* Squat Counter.app */;
+			productReference = 849C2C7D2A59C85A00FD039B /* Squatify.app */;
 			productType = "com.apple.product-type.application";
 		};
-		849C2C922A59C85B00FD039B /* Squat CounterTests */ = {
+		849C2C922A59C85B00FD039B /* SquatifyTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 849C2CAA2A59C85B00FD039B /* Build configuration list for PBXNativeTarget "Squat CounterTests" */;
+			buildConfigurationList = 849C2CAA2A59C85B00FD039B /* Build configuration list for PBXNativeTarget "SquatifyTests" */;
 			buildPhases = (
 				79A81EF46B9B21B83D0DEAA5 /* [CP] Check Pods Manifest.lock */,
 				849C2C8F2A59C85B00FD039B /* Sources */,
@@ -393,14 +395,14 @@
 			dependencies = (
 				849C2C952A59C85B00FD039B /* PBXTargetDependency */,
 			);
-			name = "Squat CounterTests";
+			name = SquatifyTests;
 			productName = "Squat CounterTests";
-			productReference = 849C2C932A59C85B00FD039B /* Squat CounterTests.xctest */;
+			productReference = 849C2C932A59C85B00FD039B /* SquatifyTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		849C2C9C2A59C85B00FD039B /* Squat CounterUITests */ = {
+		849C2C9C2A59C85B00FD039B /* SquatifyUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 849C2CAD2A59C85B00FD039B /* Build configuration list for PBXNativeTarget "Squat CounterUITests" */;
+			buildConfigurationList = 849C2CAD2A59C85B00FD039B /* Build configuration list for PBXNativeTarget "SquatifyUITests" */;
 			buildPhases = (
 				71C76964396815DC0C1B9CD5 /* [CP] Check Pods Manifest.lock */,
 				849C2C992A59C85B00FD039B /* Sources */,
@@ -414,9 +416,9 @@
 			dependencies = (
 				849C2C9F2A59C85B00FD039B /* PBXTargetDependency */,
 			);
-			name = "Squat CounterUITests";
+			name = SquatifyUITests;
 			productName = "Squat CounterUITests";
-			productReference = 849C2C9D2A59C85B00FD039B /* Squat CounterUITests.xctest */;
+			productReference = 849C2C9D2A59C85B00FD039B /* SquatifyUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -442,7 +444,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 849C2C782A59C85A00FD039B /* Build configuration list for PBXProject "Squat Counter" */;
+			buildConfigurationList = 849C2C782A59C85A00FD039B /* Build configuration list for PBXProject "Squatify" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -459,9 +461,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				849C2C7C2A59C85A00FD039B /* Squat Counter */,
-				849C2C922A59C85B00FD039B /* Squat CounterTests */,
-				849C2C9C2A59C85B00FD039B /* Squat CounterUITests */,
+				849C2C7C2A59C85A00FD039B /* Squatify */,
+				849C2C922A59C85B00FD039B /* SquatifyTests */,
+				849C2C9C2A59C85B00FD039B /* SquatifyUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -701,12 +703,12 @@
 /* Begin PBXTargetDependency section */
 		849C2C952A59C85B00FD039B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 849C2C7C2A59C85A00FD039B /* Squat Counter */;
+			target = 849C2C7C2A59C85A00FD039B /* Squatify */;
 			targetProxy = 849C2C942A59C85B00FD039B /* PBXContainerItemProxy */;
 		};
 		849C2C9F2A59C85B00FD039B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 849C2C7C2A59C85A00FD039B /* Squat Counter */;
+			target = 849C2C7C2A59C85A00FD039B /* Squatify */;
 			targetProxy = 849C2C9E2A59C85B00FD039B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -938,7 +940,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Squat Counter.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Squat Counter";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Squatify.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Squatify";
 			};
 			name = Debug;
 		};
@@ -960,7 +962,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Squat Counter.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Squat Counter";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Squatify.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Squatify";
 			};
 			name = Release;
 		};
@@ -1008,7 +1010,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		849C2C782A59C85A00FD039B /* Build configuration list for PBXProject "Squat Counter" */ = {
+		849C2C782A59C85A00FD039B /* Build configuration list for PBXProject "Squatify" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				849C2CA52A59C85B00FD039B /* Debug */,
@@ -1017,7 +1019,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		849C2CA72A59C85B00FD039B /* Build configuration list for PBXNativeTarget "Squat Counter" */ = {
+		849C2CA72A59C85B00FD039B /* Build configuration list for PBXNativeTarget "Squatify" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				849C2CA82A59C85B00FD039B /* Debug */,
@@ -1026,7 +1028,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		849C2CAA2A59C85B00FD039B /* Build configuration list for PBXNativeTarget "Squat CounterTests" */ = {
+		849C2CAA2A59C85B00FD039B /* Build configuration list for PBXNativeTarget "SquatifyTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				849C2CAB2A59C85B00FD039B /* Debug */,
@@ -1035,7 +1037,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		849C2CAD2A59C85B00FD039B /* Build configuration list for PBXNativeTarget "Squat CounterUITests" */ = {
+		849C2CAD2A59C85B00FD039B /* Build configuration list for PBXNativeTarget "SquatifyUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				849C2CAE2A59C85B00FD039B /* Debug */,
