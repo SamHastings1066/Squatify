@@ -22,3 +22,17 @@
 [![App Version](https://img.shields.io/badge/version-1.1-blue)]()
 
 
+
+Squatify is an innovative iOS fitness tracker tailored for squat enthusiasts. Using your device's camera, it provides a hands-free experience in counting reps, tracking sets, and timing rest intervals.
+
+![SQuatify Preview](./trimmed_preview.gif)
+
+
+- 🎥 **Camera-Assisted Tracking**: Just position your device upright, and Squatify will automatically count your squats.
+- ⏱ **Auto Rest Timer**: After each set, the rest timer kicks in automatically.
+- 🎯 **Dynamic Adjustments**: Modify your rep target, set goal, rest interval, and added weight on-the-fly.
+- 📅 **Detailed Workout History**: Keep an eye on your progress with a calendar-based workout history and detailed exercise metrics.
+- 💪 **Motivation & Progress**: Visualize your achievements and stay motivated with Squatify!
+
+Whether you're a fitness enthusiast striving for better performance or a developer interested in cutting-edge app development, Squatify is a blend of user-centric design and robust functionality. Feel free to explore the code, raise issues, or contribute!
+
