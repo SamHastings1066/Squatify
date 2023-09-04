@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  Track workouts with your smart camera
+  Track squats with your smart camera.
 </p>
 
 <p align="center">
@@ -14,3 +14,11 @@
     <img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/0n2zqHD.png" width="140">
   </a>
 </p>
+
+
+## Introduction
+
+[![Platform](https://img.shields.io/badge/iOS-green)]()
+[![App Version](https://img.shields.io/badge/version-1.1-blue)]()
+
+
