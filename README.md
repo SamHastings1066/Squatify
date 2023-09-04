@@ -23,7 +23,7 @@
 
 
 
-Squatify is an innovative iOS fitness tracker tailored for squat enthusiasts. Using your device's camera, it provides a hands-free experience in counting reps, tracking sets, and timing rest intervals.
+Squatify is an iOS fitness tracker tailored squats. It uses the device camera to provide a hands-free experience for counting reps, tracking sets, and timing rest intervals. It also allows users to visualise their workout history. The intention is to also provide form correction in the next major release.
 
 <p align="center">
   <img src="./trimmed_preview.gif" alt="Squatify Preview" width="32%">
@@ -32,11 +32,11 @@ Squatify is an innovative iOS fitness tracker tailored for squat enthusiasts. Us
 </p>
 
 
-- 🎥 **Camera-Assisted Tracking**: Just position your device upright, and Squatify will automatically count your squats.
+- 🎥 **Camera-Assisted Tracking**: Position your device upright, and Squatify will automatically count your squats.
 - ⏱ **Auto Rest Timer**: After each set, the rest timer kicks in automatically.
-- 🎯 **Dynamic Adjustments**: Modify your rep target, set goal, rest interval, and added weight on-the-fly.
+- 🎯 **Dynamic Adjustments**: Modify your rep target, set goal, rest interval, and add weight on-the-fly.
 - 📅 **Detailed Workout History**: Keep an eye on your progress with a calendar-based workout history and detailed exercise metrics.
-- 💪 **Motivation & Progress**: Visualize your achievements and stay motivated with Squatify!
+- 💪 **Motivation & Progress**: Visualize your achievements and stay motivated.
 
-Whether you're a fitness enthusiast striving for better performance or a developer interested in cutting-edge app development, Squatify is a blend of user-centric design and robust functionality. Feel free to explore the code, raise issues, or contribute!
+Squatify is a blend of user-centric design and robust functionality. Feel free to explore the code, raise issues, or contribute!
 
