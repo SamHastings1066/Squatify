@@ -18,7 +18,7 @@
 
 ## Introduction
 
-[![Platform](https://img.shields.io/badge/iOS-green)]()
+[![Platform](https://img.shields.io/badge/platform-iOS-green)]()
 [![App Version](https://img.shields.io/badge/version-1.1-blue)]()
 
 
